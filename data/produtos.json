@@ -1,0 +1,153 @@
+[
+  {
+    "slug": "vaso-rose",
+    "nome": "Vaso Rosé",
+    "categoria": "Decorativas",
+    "descricao": "Vaso modelado à mão em tom rosa suave, acabamento fosco. Uma peça que já chega pronta pra abraçar uma flor ou ficar sozinha na estante.",
+    "medidas": "Altura 20cm, diâmetro 12cm",
+    "tecnica": "Modelagem manual",
+    "preco": 28.0,
+    "tipo": "modelo-repetivel",
+    "status": "disponivel",
+    "destaque": true,
+    "imagens": [
+      "https://picsum.photos/seed/vaso-rose-1/600/600",
+      "https://picsum.photos/seed/vaso-rose-2/600/600"
+    ]
+  },
+  {
+    "slug": "xicara-aconchego",
+    "nome": "Xícara Aconchego",
+    "categoria": "Utilitárias",
+    "descricao": "Xícara pequena, perfeita pra um chá no fim de tarde. Feita em pequenos lotes, sempre com um toque diferente entre uma e outra.",
+    "medidas": "Altura 8cm, 150ml",
+    "tecnica": "Torno",
+    "preco": 18.0,
+    "tipo": "modelo-repetivel",
+    "status": "disponivel",
+    "destaque": false,
+    "imagens": [
+      "https://picsum.photos/seed/xicara-aconchego-1/600/600"
+    ]
+  },
+  {
+    "slug": "prato-petit",
+    "nome": "Prato Petit",
+    "categoria": "Utilitárias",
+    "descricao": "Pratinho versátil pra doces, entradas ou só pra decorar a mesa do café da manhã.",
+    "medidas": "Diâmetro 15cm",
+    "tecnica": "Torno",
+    "preco": 15.0,
+    "tipo": "modelo-repetivel",
+    "status": "disponivel",
+    "destaque": false,
+    "imagens": [
+      "https://picsum.photos/seed/prato-petit-1/600/600"
+    ]
+  },
+  {
+    "slug": "tigela-flor",
+    "nome": "Tigela Flor",
+    "categoria": "Decorativas",
+    "descricao": "Peça única com bordas onduladas inspiradas em pétalas. Feita sob encomenda especialmente pra quem encomendar.",
+    "medidas": "Diâmetro 18cm, altura 7cm",
+    "tecnica": "Modelagem manual",
+    "preco": 30.0,
+    "tipo": "unica",
+    "status": "sob-encomenda",
+    "destaque": true,
+    "imagens": [
+      "https://picsum.photos/seed/tigela-flor-1/600/600"
+    ]
+  },
+  {
+    "slug": "porta-velas-luna",
+    "nome": "Porta-velas Luna",
+    "categoria": "Decorativas",
+    "descricao": "Porta-velas em tom pastel, com recortes que deixam a luz escapar em pontinhos pela parede.",
+    "medidas": "Altura 10cm, diâmetro 9cm",
+    "tecnica": "Modelagem manual",
+    "preco": 20.0,
+    "tipo": "modelo-repetivel",
+    "status": "vendida",
+    "destaque": false,
+    "imagens": [
+      "https://picsum.photos/seed/porta-velas-luna-1/600/600"
+    ]
+  },
+  {
+    "slug": "caneca-mimmo",
+    "nome": "Caneca Mimmo",
+    "categoria": "Utilitárias",
+    "descricao": "A caneca do dia a dia, com alça confortável e capacidade generosa pro café ou chocolate quente.",
+    "medidas": "Altura 9cm, 300ml",
+    "tecnica": "Torno",
+    "preco": 22.0,
+    "tipo": "modelo-repetivel",
+    "status": "disponivel",
+    "destaque": false,
+    "imagens": [
+      "https://picsum.photos/seed/caneca-mimmo-1/600/600"
+    ]
+  },
+  {
+    "slug": "vaso-pequeno-terra",
+    "nome": "Vaso Pequeno Terra",
+    "categoria": "Decorativas",
+    "descricao": "Vaso pequeno, ideal pra suculentas. Peça única, feita sob encomenda com o tom que combinar com você.",
+    "medidas": "Altura 10cm, diâmetro 8cm",
+    "tecnica": "Modelagem manual",
+    "preco": 26.0,
+    "tipo": "unica",
+    "status": "sob-encomenda",
+    "destaque": false,
+    "imagens": [
+      "https://picsum.photos/seed/vaso-pequeno-terra-1/600/600"
+    ]
+  },
+  {
+    "slug": "conjunto-mini-pratos",
+    "nome": "Conjunto Mini Pratos",
+    "categoria": "Utilitárias",
+    "descricao": "Conjunto de mini pratos pra petiscos, ótimo pra quem gosta de receber os amigos em casa.",
+    "medidas": "Diâmetro 10cm cada, conjunto com 4 unidades",
+    "tecnica": "Torno",
+    "preco": 24.0,
+    "tipo": "modelo-repetivel",
+    "status": "disponivel",
+    "destaque": false,
+    "imagens": [
+      "https://picsum.photos/seed/conjunto-mini-pratos-1/600/600"
+    ]
+  },
+  {
+    "slug": "escultura-coracao",
+    "nome": "Escultura Coração",
+    "categoria": "Decorativas",
+    "descricao": "Pequena escultura decorativa em formato de coração, feita como peça única — já vendida, mas serve de inspiração pra próxima encomenda.",
+    "medidas": "Altura 7cm, largura 9cm",
+    "tecnica": "Modelagem manual",
+    "preco": 30.0,
+    "tipo": "unica",
+    "status": "vendida",
+    "destaque": false,
+    "imagens": [
+      "https://picsum.photos/seed/escultura-coracao-1/600/600"
+    ]
+  },
+  {
+    "slug": "xicara-cha-flor",
+    "nome": "Xícara de Chá Flor",
+    "categoria": "Utilitárias",
+    "descricao": "Xícara com detalhe floral pintado à mão, feita sob encomenda pra ficar do seu jeito.",
+    "medidas": "Altura 8cm, 180ml",
+    "tecnica": "Torno",
+    "preco": 19.0,
+    "tipo": "modelo-repetivel",
+    "status": "sob-encomenda",
+    "destaque": true,
+    "imagens": [
+      "https://picsum.photos/seed/xicara-cha-flor-1/600/600"
+    ]
+  }
+]

@@ -20,11 +20,15 @@ contato.
   (`R$ 000,00`) e um selo de status conforme o campo `status`
   (ver `docs/design/DESIGN.md` §2):
   - `disponivel` → selo "Pronta entrega".
-  - `sob-encomenda` → selo "Sob encomenda" (comum em peças `tipo: "unica"`).
+  - `sob-encomenda` → selo **"Sob encomenda — pronta em até 3 dias"**
+    (prazo de produção da Flávia, PRD §4; não deixar o termo vago).
   - `vendida` → card esmaecido, selo "Vendida", não clicável para contato
     (ver SPEC-0003 RF-01).
 - Peças `tipo: "unica"` podem opcionalmente exibir um selo adicional "Peça
   única" no card, para reforçar que não haverá reposição igual.
+- O site **não exibe quantidade em estoque** (ex. "restam 2 unidades"),
+  mesmo para peças `modelo-repetivel` — decisão de PRD §4 para simplificar
+  a manutenção semanal do catálogo.
 
 ### RF-02: Filtro por categoria
 

@@ -23,6 +23,11 @@ conduzir a visitante até o catálogo.
   com foto opcional do ateliê ou processo.
 - Conteúdo vem de `data/config.json` (campo `sobre`), não hardcoded no HTML,
   para permitir edição sem mexer em marcação.
+- O texto deve transmitir o diferencial "feito com carinho, handmade"
+  (autoria pessoal da Flávia, PRD §2) e mencionar a região de entrega:
+  foco em Brasília/DF, com abertura para outras cidades/estados mediante
+  combinação (PRD §4) — evita a visitante presumir que só atende
+  localmente ou que envia para qualquer lugar sem checar antes.
 
 ### RF-03: Navegação
 

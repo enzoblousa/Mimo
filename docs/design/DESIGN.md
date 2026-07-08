@@ -129,28 +129,66 @@ WhatsApp (wa.me, nova aba)
 
 ## 4. Direção visual
 
-Paleta e tipografia definitivas são escolhidas na implementação usando a
-skill de design de front-end do projeto (evitar "cara de template
-genérico"). Diretrizes vêm do PRD (`docs/PRD.md` §2 e §9) — marca nova,
-tom de voz aconchegante, colorido e intimista:
+Sistema de tokens definido a partir do PRD (`docs/PRD.md` §2 e §9) — marca
+nova, tom de voz aconchegante, colorido e intimista, paleta pastel
+explicitamente pedida (rosa claro, vermelho suave, branco), evitando a
+direção terrosa/terracota descartada e o "azul corporativo/gradiente SaaS"
+genérico. Implementado em `assets/css/base.css`.
 
-- **Tom**: aconchegante, clean, intimista — não corporativo/tech. Evitar
-  azul corporativo genérico e gradientes tipo SaaS.
-- **Paleta de referência** (ajustável na implementação, tons exatos a
-  definir na skill de design): **pastéis** — rosa claro, vermelho suave/
-  pastel, branco, mantendo a sensação clean e aconchegante pedida no PRD.
-  Evitar tons terrosos/terracota saturados (direção descartada após
-  confirmação da Flávia) e evitar preto puro (#000) para manter o clima
-  suave.
-- **Tipografia**: uma fonte com personalidade e calor humano para títulos
-  (ex. serifada humanista ou script discreta — decidir na implementação,
-  evitando algo frio/geométrico demais), sans-serif legível para corpo de
-  texto. Escala tipográfica consistente (ver skill de design).
-- **Fotografia**: peças fotografadas com luz natural, fundo neutro,
-  consistente entre produtos — mais importante para a percepção de qualidade
-  do que qualquer efeito de UI.
-- **Cards de produto**: foto em destaque, cantos suavemente arredondados,
-  espaçamento generoso (menos é mais — não competir com a peça).
+### Cor
+
+| Token | Hex | Uso |
+|---|---|---|
+| `--cor-fundo` | `#FBF3EF` | Fundo geral — creme rosado, nunca branco puro |
+| `--cor-superficie` | `#FFFDFB` | Cards e blocos elevados |
+| `--cor-primaria` | `#EAB4AC` | Rosa claro — destaques suaves, fundos de selo |
+| `--cor-acento` | `#C1594E` | Vermelho pastel queimado — CTAs, links, preço |
+| `--cor-acento-escuro` | `#A8483F` | Hover/active do acento |
+| `--cor-texto` | `#3A2620` | Marrom espresso — texto principal, nunca preto puro |
+| `--cor-texto-suave` | `#7A6058` | Texto secundário/legendas |
+| `--cor-borda` | `#E4D6CC` | Divisores e bordas sutis |
+
+### Tipografia
+
+- **Display** (`--fonte-display`): `'Fraunces', serif` — serifada de
+  contornos orgânicos e levemente "tortos" (ótica soft/wonky), remete à
+  imperfeição bonita de uma peça feita à mão. Uso restrito: nome da loja,
+  títulos de seção, preço em destaque. Peso 500-600; itálico da família
+  reservado para toques de destaque pontuais (ex. uma palavra no hero).
+  Fallback: `Georgia, serif`.
+- **Corpo** (`--fonte-corpo`): `'Nunito Sans', sans-serif` — humanista, com
+  terminações arredondadas que conversam com o clima aconchegante/pastel,
+  sem competir com a serifada. Uso: parágrafos, navegação, botões, labels.
+  Fallback: `system-ui, sans-serif`.
+- Escala tipográfica em `base.css` via `--texto-*` (xs/sm/base/lg/xl/2xl/3xl),
+  em `rem`, razão ~1.25.
+
+### Layout e forma — sinal de identidade
+
+- **Cantos "torneados"**: em vez de `border-radius` uniforme, cards, botões
+  e selos usam um raio assimétrico (`--raio-organico:
+  12px 22px 12px 26px`), como se cada elemento tivesse sido moldado à mão
+  — nunca perfeitamente simétrico, mas nunca desalinhado a ponto de parecer
+  erro.
+- **Etiqueta de preço**: o preço de cada peça aparece numa "tag" rotacionada
+  (-2° a -4°), como uma etiqueta de papel amarrada com barbante numa feira
+  de artesanato — reforça o storytelling de presente (PRD §3: peças também
+  compradas como presente). Implementado como componente em
+  `componentes.css` (Fase 2 de TASKS.md), token de rotação definido aqui:
+  `--rotacao-tag: -3deg`.
+- **Sombra**: sombra suave com tom quente (derivada de `--cor-texto` em
+  baixa opacidade), nunca cinza/preto puro — mantém a paleta coesa mesmo
+  em elementos elevados.
+- **Espaçamento**: generoso, escala em `rem` (`--espaco-1` a `--espaco-6`)
+  — "menos é mais", a peça (foto) é sempre o elemento principal do card.
+
+### Fotografia
+
+- Peças fotografadas com luz natural, fundo neutro, consistente entre
+  produtos — mais importante para a percepção de qualidade do que
+  qualquer efeito de UI.
+- Enquanto não há fotos reais, placeholders usam `picsum.photos` (seed por
+  slug, ver `data/produtos.json`) — ver risco registrado em ADR-0006.
 
 ## 5. Decisões de implementação
 
