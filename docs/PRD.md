@@ -35,9 +35,10 @@ implementação.
   (@flaviamangabeirab) até a migração. Ou seja: `config.json` precisa ser
   fácil de atualizar o handle do Instagram sem tocar em outro código quando
   essa migração acontecer (já coberto por ADR-0003/DESIGN.md).
-- **Diferencial**: [A PREENCHER — feitas à mão pela própria Flávia é o
-  diferencial natural (autoria pessoal, não é revenda); sem detalhe adicional
-  de técnica/estilo por ora]
+- **Diferencial**: Feito com carinho, handmade — autoria pessoal da Flávia,
+  sem detalhe técnico adicional (não é sobre uma técnica específica de
+  cerâmica, é sobre o cuidado artesanal). Este é o ângulo a usar no texto
+  de "Sobre" (SPEC-0002 RF-02).
 - **Tom de voz da marca**: Aconchegante, colorido, intimista (confirmado).
 
 ## 3. Público-alvo
@@ -50,9 +51,14 @@ implementação.
 ## 4. Catálogo de produtos
 
 - **Quantas peças ativas hoje**: Zero ainda fotografadas/prontas para
-  publicar. O catálogo inicial vai ao ar com **imagens placeholder da
+  publicar. **Escopo inicial de lançamento: 10 peças** (catálogo pequeno de
+  propósito). O catálogo inicial vai ao ar com **imagens placeholder da
   internet** (não fotos reais das peças da Flávia) enquanto as fotos reais
   não ficam prontas — ver nota de risco na seção 7.
+  > **Impacto em SPEC/DESIGN**: com apenas 10 peças, a busca textual
+  > (SPEC-0001 RF-03) é ainda menos prioritária do que já estava marcada —
+  > pode ficar para uma fase posterior sem prejuízo de uso. O filtro por
+  > categoria (RF-02) continua valendo, mas com poucas categorias.
 - **Categorias existentes**: Genéricas por ora (ex.: "Decorativas",
   "Utilitárias") — sem uma lista fechada ainda; o site deve continuar
   derivando categorias dinamicamente dos dados (RF-02 do SPEC-0001), não
@@ -66,6 +72,23 @@ implementação.
   disponíveis em mais de uma unidade). Isso muda o modelo de dados: não dá
   para tratar `disponivel` como um booleano simples — precisamos de um
   status por peça (ver nota de impacto abaixo).
+- **Controle de estoque/quantidade**: **Decisão: não mostrar quantidade
+  restante no site por enquanto** (ex. nada de "restam 2 unidades"). Mesmo
+  para peças de modelo repetível, o site só indica
+  disponível/sob-encomenda/vendida — sem número. Simplifica o schema (não
+  precisa de campo `quantidade`) e evita a Flávia ter que manter uma
+  contagem exata atualizada toda semana.
+- **Prazo de produção sob encomenda**: **3 dias** após confirmação do
+  pedido, quando a peça não está pronta em mãos. Usar esse prazo no texto
+  do site perto do selo "Sob encomenda" (ex. "Sob encomenda — pronta em
+  até 3 dias após confirmação"), em vez de deixar o termo vago — ajusta
+  SPEC-0001 RF-01.
+- **Entrega**: Foco em entregas na região do **DF (Brasília)**, com
+  abertura para enviar a outras cidades/estados mediante combinação. O
+  site deve deixar isso claro (ex. no "Sobre" ou perto do CTA de contato),
+  para não parecer que só atende Brasília nem prometer envio automático
+  para qualquer lugar sem checagem — ajusta SPEC-0002 RF-02 (texto de
+  "Sobre").
 - **Frequência de novas peças/coleções**: Toda semana, peça nova.
   **Impacto**: reforça que editar `data/produtos.json` precisa ser
   realmente simples e rápido (ADR-0003) — este é o fluxo mais frequente de
@@ -115,8 +138,11 @@ implementação.
   > Ver ADR-0006 a ser criado.
 - **Texto "sobre a loja" já existe ou precisa ser escrito**: Precisa ser
   escrito — nada pronto ainda.
-- **Logo/identidade visual já existe?**: [A PREENCHER — provavelmente não,
-  dado que a loja é nova; assumir que não até dito o contrário]
+- **Logo/identidade visual já existe?**: **Não existe ainda — decisão:
+  pular por ora.** O site usa um logotipo simples baseado em tipografia
+  (nome "Mimmo" estilizado), sem ilustração/símbolo próprio, com
+  possibilidade de trocar por um logo de verdade no futuro sem mudar a
+  estrutura do site (é só um asset em `assets/imagens/site/`).
 
 ## 8. Restrições e prazo
 

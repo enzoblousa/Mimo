@@ -6,24 +6,29 @@ aplicável (ver `docs/evidence/README.md`).
 
 ## Fase 0 — Base do projeto
 
-- [ ] Criar estrutura de pastas conforme `docs/design/DESIGN.md` (§1).
-- [ ] Criar `data/config.json` com dados reais da loja (nome "Mimmo",
+- [x] Criar estrutura de pastas conforme `docs/design/DESIGN.md` (§1).
+- [x] Criar `data/config.json` com dados reais da loja (nome "Mimmo",
       WhatsApp `5561995793905`, Instagram `@flaviamangabeirab`, texto
       "sobre" a escrever — ver PRD §2, §5, §7).
-- [ ] Criar `data/produtos.json` com peças de exemplo usando **imagens
-      placeholder** (PRD §7, ADR-0006) até existirem fotos reais das
-      peças da Flávia. Usar preços na faixa R$ 15-30 (PRD §4) e cobrir os
-      dois `tipo` (`unica`, `modelo-repetivel`) e os três `status`
-      (`disponivel`, `sob-encomenda`, `vendida`) para testar a UI.
-- [ ] Criar `assets/css/base.css` com variáveis de cor/tipografia definidas
-      na direção visual (DESIGN.md §4).
+- [x] Criar `data/produtos.json` com **10 peças de exemplo** (escopo de
+      lançamento, PRD §4) usando **imagens placeholder** (`picsum.photos`,
+      PRD §7, ADR-0006) até existirem fotos reais das peças da Flávia.
+      Preços na faixa R$ 15-30 (PRD §4), sem campo de quantidade em
+      estoque, cobrindo os dois `tipo` (`unica`, `modelo-repetivel`) e os
+      três `status` (`disponivel`, `sob-encomenda`, `vendida`).
+- [x] Criar `assets/css/base.css` com variáveis de cor/tipografia/forma
+      definidas na direção visual (DESIGN.md §4: paleta pastel, Fraunces +
+      Nunito Sans, raio orgânico, tag de preço rotacionada).
 
 ## Fase 1 — Página inicial (SPEC-0002)
 
 - [ ] Estrutura semântica de `index.html` (header, hero, sobre, destaques,
       footer).
 - [ ] Hero com nome da loja, posicionamento e CTA "Ver catálogo".
-- [ ] Seção "Sobre" lendo texto de `config.json`.
+- [ ] Seção "Sobre" lendo texto de `config.json` — escrever o texto
+      cobrindo diferencial "feito com carinho, handmade" e região de
+      entrega (foco DF, aberto a combinar outras localidades) (PRD §2, §4;
+      SPEC-0002 RF-02).
 - [ ] Seção de destaques renderizando peças com `destaque: true` (ou
       omitida se não houver nenhuma).
 - [ ] Header responsivo com menu hambúrguer em mobile.

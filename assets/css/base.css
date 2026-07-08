@@ -1,0 +1,135 @@
+/*
+  Mimmo — tokens base (cor, tipografia, forma).
+  Ver docs/design/DESIGN.md §4 para a justificativa de cada escolha.
+  Camadas seguintes (layout.css, componentes.css) consomem estas variáveis
+  e não devem declarar cor/fonte cruas.
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap");
+
+:root {
+  /* Cor */
+  --cor-fundo: #fbf3ef;
+  --cor-superficie: #fffdfb;
+  --cor-primaria: #eab4ac;
+  --cor-acento: #c1594e;
+  --cor-acento-escuro: #a8483f;
+  --cor-texto: #3a2620;
+  --cor-texto-suave: #7a6058;
+  --cor-borda: #e4d6cc;
+
+  /* Sombra — tom quente derivado de --cor-texto, nunca cinza puro */
+  --sombra-suave: 0 2px 10px rgba(58, 38, 32, 0.08);
+  --sombra-elevada: 0 8px 24px rgba(58, 38, 32, 0.14);
+
+  /* Tipografia */
+  --fonte-display: "Fraunces", Georgia, serif;
+  --fonte-corpo: "Nunito Sans", system-ui, sans-serif;
+
+  --texto-xs: 0.75rem;
+  --texto-sm: 0.875rem;
+  --texto-base: 1rem;
+  --texto-lg: 1.25rem;
+  --texto-xl: 1.563rem;
+  --texto-2xl: 1.953rem;
+  --texto-3xl: 2.441rem;
+
+  /* Espaçamento */
+  --espaco-1: 0.25rem;
+  --espaco-2: 0.5rem;
+  --espaco-3: 1rem;
+  --espaco-4: 1.5rem;
+  --espaco-5: 2.5rem;
+  --espaco-6: 4rem;
+
+  /* Forma — cantos "torneados", nunca um retângulo perfeito */
+  --raio-organico: 12px 22px 12px 26px;
+  --raio-tag: 999px 12px 999px 12px;
+  --rotacao-tag: -3deg;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-corpo);
+  font-size: var(--texto-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--fonte-display);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 var(--espaco-3);
+  color: var(--cor-texto);
+}
+
+h1 {
+  font-size: var(--texto-3xl);
+}
+h2 {
+  font-size: var(--texto-2xl);
+}
+h3 {
+  font-size: var(--texto-xl);
+}
+
+p {
+  margin: 0 0 var(--espaco-3);
+}
+
+a {
+  color: var(--cor-acento);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  color: var(--cor-acento-escuro);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Foco visível consistente — SPEC-0004, acessibilidade */
+:focus-visible {
+  outline: 2px solid var(--cor-acento);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background-color: var(--cor-primaria);
+  color: var(--cor-texto);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
