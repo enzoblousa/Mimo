@@ -1,4 +1,4 @@
-const ROTULO_STATUS = {
+export const ROTULO_STATUS = {
   disponivel: "Pronta entrega",
   "sob-encomenda": "Sob encomenda — pronta em até 3 dias",
   vendida: "Vendida",

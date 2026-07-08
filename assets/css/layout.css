@@ -145,6 +145,17 @@
   margin-bottom: var(--espaco-5);
 }
 
+/* Página do catálogo */
+
+.catalogo {
+  padding-block: var(--espaco-5) var(--espaco-6);
+}
+
+.catalogo__cabecalho {
+  text-align: center;
+  margin-bottom: var(--espaco-3);
+}
+
 .grade-produtos {
   display: grid;
   grid-template-columns: 1fr;

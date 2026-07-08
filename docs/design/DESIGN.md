@@ -18,9 +18,10 @@ Documento de design técnico e visual. Implementa os requisitos de
 │   │   ├── config.js       # Fetch de data/config.json (nome, contato, sobre)
 │   │   ├── produtos.js     # Fetch de data/produtos.json + criarCardProduto()
 │   │   ├── inicio.js       # Bootstrap de index.html (usa config.js e produtos.js)
-│   │   ├── filtro.js       # Lógica de filtro/busca do catálogo
-│   │   ├── modal.js        # Abrir/fechar detalhe da peça, focus trap
-│   │   └── contato.js      # Construção de links wa.me a partir de config.json
+│   │   ├── filtro.js       # Categorias dinâmicas + busca textual
+│   │   ├── contato.js      # Link wa.me por peça (mensagem varia por status)
+│   │   ├── modal.js        # <dialog> de detalhe, deep-link por slug
+│   │   └── catalogo.js     # Bootstrap de catalogo.html (usa os módulos acima)
 │   └── imagens/
 │       ├── produtos/<slug>.jpg
 │       └── site/ (hero, sobre, favicon, og-image)
@@ -194,9 +195,13 @@ genérico. Implementado em `assets/css/base.css`.
 
 ## 5. Decisões de implementação
 
-- Modal de detalhe é implementado com `<dialog>` nativo do HTML quando
-  suportado, com fallback simples de `div` + `aria-modal` — evita reimplementar
-  focus trap do zero.
+- Modal de detalhe é implementado com `<dialog>` nativo do HTML
+  (`showModal()`), sem fallback de `div` + `aria-modal` — o suporte a
+  `<dialog>` é amplo o suficiente hoje (todos os browsers evergreen) para
+  não justificar reimplementar focus trap/Esc na mão para este projeto
+  pequeno. Deep-link por `#slug` é tratado via evento `hashchange`
+  (`assets/js/modal.js`), tanto para abrir direto de `index.html` quanto
+  para navegação dentro do próprio `catalogo.html`.
 - Filtro de categoria é derivado via `[...new Set(produtos.map(p =>
   p.categoria))]` — nunca lista hardcoded (RF-02 do SPEC-0001).
 - `scripts/validar-produtos.js` roda com `node scripts/validar-produtos.js`

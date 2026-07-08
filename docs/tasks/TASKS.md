@@ -46,25 +46,42 @@ aplicável (ver `docs/evidence/README.md`).
 
 ## Fase 2 — Catálogo (SPEC-0001)
 
-- [ ] `assets/js/produtos.js`: fetch de `produtos.json` e render dos cards.
-- [ ] `assets/js/filtro.js`: filtro por categoria (derivado dos dados) +
-      busca textual.
-- [ ] Estado vazio ("nenhuma peça encontrada") para busca sem resultado e
-      para catálogo vazio.
-- [ ] Selos de `status` (pronta entrega / sob encomenda / vendida) e
-      esmaecimento + remoção de CTA apenas para `status: "vendida"`
-      (SPEC-0001 RF-01 revisado).
-- [ ] `assets/js/modal.js`: modal/detalhe da peça com todas as fotos,
-      descrição, medidas, técnica, preço.
+- [x] `assets/js/produtos.js`: fetch de `produtos.json` e render dos cards
+      (feito na Fase 1, reaproveitado aqui na grade completa).
+- [x] `assets/js/filtro.js`: filtro por categoria (derivado dos dados) +
+      busca textual, combináveis.
+- [x] Estado vazio ("nenhuma peça encontrada") para busca sem resultado e
+      para catálogo vazio (`catalogo.html` + `catalogo.js`).
+- [x] Selos de `status` (pronta entrega / sob encomenda / vendida) e
+      esmaecimento apenas visual para `status: "vendida"` — **correção**:
+      o card vendida continua clicável (abre o detalhe), só o modal não
+      mostra CTA de contato (SPEC-0001 RF-01 + SPEC-0003 RF-01).
+- [x] `assets/js/modal.js`: `<dialog>` nativo com galeria (miniaturas),
+      descrição, medidas/técnica (linhas ocultas se ausentes), preço, selo
+      de status e deep-link via `#slug` (evento `hashchange`).
+- [x] `catalogo.html`: filtros dinâmicos, busca, grade e modal integrados.
 
 ## Fase 3 — Contato e conversão (SPEC-0003)
 
-- [ ] `assets/js/contato.js`: gera link `wa.me` com mensagem pré-preenchida
-      por peça, a partir de `slug`/`nome` + `config.json`.
-- [ ] Links de contato geral (WhatsApp, Instagram) no header/footer, lidos
-      de `config.json`.
-- [ ] Checar que todos os links abrem em nova aba com
-      `rel="noopener noreferrer"`.
+- [x] `assets/js/contato.js`: gera link `wa.me` com mensagem pré-preenchida
+      por peça (varia por `status`), a partir de `nome` + `config.json`;
+      retorna `null` (sem CTA) para peça `vendida`.
+- [x] Links de contato geral (WhatsApp, Instagram) no header/footer, lidos
+      de `config.json` (feito na Fase 1, presente em `index.html` e
+      `catalogo.html`).
+- [x] Checar que todos os links abrem em nova aba com
+      `rel="noopener noreferrer"` (header, footer e CTA do modal).
+
+> **Verificação parcial** (Fase 2 e 3): sintaxe de todos os `.js` checada
+> com `node --check --input-type=module`; `catalogo.html` e os módulos
+> novos retornam 200 num servidor estático local; lógica revisada
+> manualmente (nomes de classe/seletor `data-*` batendo entre JS e CSS,
+> fluxo de hash/modal). **Não verificado visualmente num navegador** — sem
+> Playwright/Chromium neste projeto (ver CLAUDE.md). Recomenda-se abrir
+> `catalogo.html` manualmente antes de considerar a Fase 2/3 100%
+> fechadas: testar filtro, busca, abrir/fechar modal (Esc, clique fora,
+> botão fechar), deep-link `catalogo.html#<slug>` e o link do WhatsApp por
+> peça.
 
 ## Fase 4 — Não-funcionais (SPEC-0004)
 

@@ -70,8 +70,10 @@
 
 .card-produto--vendida {
   opacity: 0.55;
-  pointer-events: none;
 }
+
+/* Nota: card vendida continua clicável (abre o detalhe — SPEC-0001 RF-04)
+   só não tem CTA de contato dentro do modal (SPEC-0003 RF-01). */
 
 /* Selo de status, sobre a imagem */
 
@@ -114,4 +116,164 @@
   color: var(--cor-texto);
   border-radius: var(--raio-tag);
   transform: rotate(var(--rotacao-tag));
+}
+
+/* Filtros e busca (SPEC-0001 RF-02, RF-03) */
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-3);
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--espaco-4);
+}
+
+.filtros__lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+}
+
+.filtro-item {
+  padding: var(--espaco-1) var(--espaco-3);
+  border: 1.5px solid var(--cor-borda);
+  border-radius: var(--raio-tag);
+  background-color: var(--cor-superficie);
+  color: var(--cor-texto);
+  font-weight: 600;
+  font-size: var(--texto-sm);
+  cursor: pointer;
+}
+
+.filtro-item[aria-pressed="true"] {
+  background-color: var(--cor-acento);
+  border-color: var(--cor-acento);
+  color: var(--cor-superficie);
+}
+
+.campo-busca {
+  padding: var(--espaco-2) var(--espaco-3);
+  border: 1.5px solid var(--cor-borda);
+  border-radius: var(--raio-organico);
+  background-color: var(--cor-superficie);
+  color: var(--cor-texto);
+  font-family: var(--fonte-corpo);
+  font-size: var(--texto-sm);
+  min-width: 14rem;
+}
+
+.catalogo-vazio {
+  text-align: center;
+  color: var(--cor-texto-suave);
+  padding-block: var(--espaco-5);
+}
+
+/* Modal de detalhe da peça (SPEC-0001 RF-04) */
+
+.modal-produto {
+  width: min(34rem, calc(100vw - var(--espaco-4) * 2));
+  max-height: 85vh;
+  overflow-y: auto;
+  border: none;
+  border-radius: var(--raio-organico);
+  background-color: var(--cor-superficie);
+  color: var(--cor-texto);
+  box-shadow: var(--sombra-elevada);
+  padding: var(--espaco-4);
+}
+
+.modal-produto::backdrop {
+  background-color: rgba(58, 38, 32, 0.45);
+}
+
+.modal-produto__fechar {
+  float: right;
+  border: none;
+  background: none;
+  font-size: var(--texto-2xl);
+  line-height: 1;
+  color: var(--cor-texto-suave);
+  cursor: pointer;
+  padding: var(--espaco-1);
+}
+
+.modal-produto__fechar:hover {
+  color: var(--cor-acento);
+}
+
+.modal-produto__galeria-principal {
+  position: relative;
+  clear: both;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--raio-organico);
+  overflow: hidden;
+  margin-bottom: var(--espaco-3);
+}
+
+.modal-produto__galeria-principal img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-produto__miniaturas {
+  display: flex;
+  gap: var(--espaco-2);
+  margin-bottom: var(--espaco-4);
+}
+
+.modal-produto__miniatura {
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0;
+  border: 1.5px solid var(--cor-borda);
+  border-radius: var(--espaco-1);
+  overflow: hidden;
+  cursor: pointer;
+  background: none;
+}
+
+.modal-produto__miniatura img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-produto__categoria {
+  color: var(--cor-texto-suave);
+  font-size: var(--texto-sm);
+}
+
+.modal-produto__specs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  margin: var(--espaco-3) 0;
+  font-size: var(--texto-sm);
+}
+
+.modal-produto__specs > div {
+  display: flex;
+  gap: var(--espaco-2);
+}
+
+.modal-produto__specs dt {
+  font-weight: 700;
+  color: var(--cor-texto-suave);
+}
+
+.modal-produto__specs dd {
+  margin: 0;
+}
+
+.modal-produto__corpo .tag-preco {
+  display: block;
+  width: fit-content;
+  margin-block: var(--espaco-3);
+}
+
+.modal-produto__corpo .botao {
+  display: block;
+  text-align: center;
 }
