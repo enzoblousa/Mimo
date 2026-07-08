@@ -22,16 +22,27 @@ aplicável (ver `docs/evidence/README.md`).
 
 ## Fase 1 — Página inicial (SPEC-0002)
 
-- [ ] Estrutura semântica de `index.html` (header, hero, sobre, destaques,
+- [x] Estrutura semântica de `index.html` (header, hero, sobre, destaques,
       footer).
-- [ ] Hero com nome da loja, posicionamento e CTA "Ver catálogo".
-- [ ] Seção "Sobre" lendo texto de `config.json` — escrever o texto
-      cobrindo diferencial "feito com carinho, handmade" e região de
-      entrega (foco DF, aberto a combinar outras localidades) (PRD §2, §4;
-      SPEC-0002 RF-02).
-- [ ] Seção de destaques renderizando peças com `destaque: true` (ou
-      omitida se não houver nenhuma).
-- [ ] Header responsivo com menu hambúrguer em mobile.
+- [x] Hero com nome da loja, posicionamento e CTA "Ver catálogo".
+- [x] Seção "Sobre" lendo texto de `config.json` — texto cobrindo
+      diferencial "feito com carinho, handmade" e região de entrega (foco
+      DF, aberto a combinar outras localidades) (PRD §2, §4; SPEC-0002
+      RF-02).
+- [x] Seção de destaques renderizando peças com `destaque: true` (omitida
+      via `hidden` se não houver nenhuma — testado com 3 peças em destaque
+      nos dados de exemplo).
+- [x] Header responsivo com menu hambúrguer em mobile (`assets/js/inicio.js`
+      + `assets/css/layout.css`).
+
+> **Verificação parcial**: sintaxe JS checada (`node --check
+> --input-type=module`), todos os assets referenciados retornam 200 via
+> `curl` num servidor estático local, dados (`config.json`/`produtos.json`)
+> validados como JSON. **Não foi verificado visualmente num navegador de
+> verdade** — este projeto não usa Playwright/Chromium para isso (ver
+> CLAUDE.md, "Verificação"). Recomenda-se abrir `index.html` manualmente
+> (`python3 -m http.server` + navegador) antes de considerar a Fase 1
+> 100% fechada.
 
 ## Fase 2 — Catálogo (SPEC-0001)
 

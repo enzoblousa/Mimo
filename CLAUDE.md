@@ -85,3 +85,11 @@ Antes de considerar uma tarefa de `TASKS.md` concluída, verificar contra os
 critérios de aceite da spec correspondente e registrar evidência em
 `docs/evidence/` (ver `docs/evidence/README.md` para convenção). Para
 mudanças de UI, testar de fato no navegador — não apenas ler o código.
+
+**Nunca instalar ou usar Playwright, Chromium ou `chromium-cli` neste
+projeto** (pedido explícito do usuário), nem mesmo para verificar UI.
+Alternativas: servir o site estático (`python3 -m http.server`) e checar
+com `curl` que os assets/páginas respondem 200 e os JSON são válidos;
+`node --check arquivo.js` para pegar erro de sintaxe; revisão manual do
+código. Se verificação visual em navegador de verdade for necessária,
+parar e perguntar ao usuário como ele prefere validar.

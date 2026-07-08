@@ -15,7 +15,9 @@ Documento de design técnico e visual. Implementa os requisitos de
 │   │   ├── layout.css       # Header, footer, grid, seções
 │   │   └── componentes.css  # Card de produto, modal, filtros, botões
 │   ├── js/
-│   │   ├── produtos.js     # Fetch + render de data/produtos.json
+│   │   ├── config.js       # Fetch de data/config.json (nome, contato, sobre)
+│   │   ├── produtos.js     # Fetch de data/produtos.json + criarCardProduto()
+│   │   ├── inicio.js       # Bootstrap de index.html (usa config.js e produtos.js)
 │   │   ├── filtro.js       # Lógica de filtro/busca do catálogo
 │   │   ├── modal.js        # Abrir/fechar detalhe da peça, focus trap
 │   │   └── contato.js      # Construção de links wa.me a partir de config.json
