@@ -145,11 +145,21 @@ genérico. Implementado em `assets/css/base.css`.
 | `--cor-fundo` | `#FBF3EF` | Fundo geral — creme rosado, nunca branco puro |
 | `--cor-superficie` | `#FFFDFB` | Cards e blocos elevados |
 | `--cor-primaria` | `#EAB4AC` | Rosa claro — destaques suaves, fundos de selo |
-| `--cor-acento` | `#C1594E` | Vermelho pastel queimado — CTAs, links, preço |
+| `--cor-acento` | `#BB5245` | Vermelho pastel queimado — CTAs, links, preço |
 | `--cor-acento-escuro` | `#A8483F` | Hover/active do acento |
 | `--cor-texto` | `#3A2620` | Marrom espresso — texto principal, nunca preto puro |
 | `--cor-texto-suave` | `#7A6058` | Texto secundário/legendas |
 | `--cor-borda` | `#E4D6CC` | Divisores e bordas sutis |
+
+> **Contraste (SPEC-0004)**: todos os pares texto/fundo realmente usados no
+> CSS foram checados contra WCAG AA (4.5:1 para texto normal) com um
+> script de contraste (fórmula de luminância relativa). `--cor-acento`
+> foi ajustado de `#C1594E` para `#BB5245` (mesmo tom, levemente mais
+> escuro) porque o valor original só passava em 4.31:1 como texto de
+> botão/link — a versão atual passa em 4.70:1. `.selo--vendida` usa
+> `--cor-texto` (não `--cor-texto-suave`) sobre `--cor-borda` pelo mesmo
+> motivo (4.06:1 → 10.01:1). Todos os demais pares (texto sobre fundo/
+> superfície, texto sobre `--cor-primaria`) já passavam com folga.
 
 ### Tipografia
 
