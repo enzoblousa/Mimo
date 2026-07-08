@@ -101,7 +101,7 @@
 
 .selo--vendida {
   background-color: var(--cor-borda);
-  color: var(--cor-texto-suave);
+  color: var(--cor-texto);
 }
 
 /* Tag de preço — etiqueta de feira, levemente rotacionada */

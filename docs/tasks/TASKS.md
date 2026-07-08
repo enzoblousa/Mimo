@@ -85,15 +85,35 @@ aplicável (ver `docs/evidence/README.md`).
 
 ## Fase 4 — Não-funcionais (SPEC-0004)
 
+- [x] Auditoria de acessibilidade (revisão de código, sem navegador):
+      `alt` correto em imagens de produto/modal, todos os controles são
+      elementos nativos (`a`/`button`/`input`) logo navegáveis por teclado
+      por padrão, `<dialog>` nativo dá focus trap + Esc de graça,
+      `:focus-visible` global em `base.css`. **Contraste de cor calculado
+      via fórmula WCAG** (não visualmente) — achou 3 pares abaixo de
+      4.5:1 e corrigiu: `--cor-acento` de `#C1594E` para `#BB5245` e
+      `.selo--vendida` trocado para `--cor-texto` (ver DESIGN.md §4, nota
+      de contraste).
+- [x] `scripts/validar-produtos.js`: script Node puro (sem dependências)
+      validando campos obrigatórios, tipos, enums (`tipo`/`status`) e
+      unicidade de `slug`. Testado com dados válidos (10/10 OK) e com 3
+      erros propositais (campo faltando, enum inválido, slug duplicado) —
+      pegou os 3 corretamente.
+- [x] Meta tags de SEO/Open Graph em ambas as páginas (`title`,
+      `description`, `og:title`, `og:description`, `og:type`,
+      `og:locale`). `og:image` fica **pendente** — não faz sentido antes
+      de existirem fotos reais e um domínio público (ADR-0006).
 - [ ] Testar responsividade em 375px / 768px / 1440px — registrar
-      screenshots em `docs/evidence/`.
-- [ ] Auditoria de acessibilidade: `alt` em imagens, navegação por teclado,
-      focus trap no modal, contraste de cor.
-- [ ] `scripts/validar-produtos.js`: script Node puro que valida schema de
-      `produtos.json` (campos obrigatórios, tipos, `slug` único).
+      screenshots em `docs/evidence/`. **Não executado nesta sessão**:
+      exige um navegador real e este projeto não usa Playwright/Chromium
+      (ver CLAUDE.md). Revisão de código confirma breakpoints mobile-first
+      em `layout.css` (640px/768px/1024px), mas isso não substitui olhar a
+      tela de verdade — pendente de verificação manual pelo usuário.
 - [ ] Rodar Lighthouse (mobile) em `index.html` e `catalogo.html` —
-      registrar resultado em `docs/evidence/`.
-- [ ] Meta tags de SEO/Open Graph em ambas as páginas.
+      registrar resultado em `docs/evidence/`. **Não executado nesta
+      sessão** pelo mesmo motivo (Lighthouse depende de Chrome/Chromium).
+      Pendente de execução manual pelo usuário (ex.: aba Lighthouse do
+      Chrome DevTools).
 
 ## Fase 5 — Deploy (ADR-0005, ADR-0006) — **não-bloqueante por enquanto**
 
