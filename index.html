@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mimmo — Cerâmica feita à mão</title>
+    <meta
+      name="description"
+      content="Catálogo de peças de cerâmica feitas à mão pela Mimmo: vasos, xícaras e peças decorativas, disponíveis ou sob encomenda."
+    />
+    <meta property="og:title" content="Mimmo — Cerâmica feita à mão" />
+    <meta
+      property="og:description"
+      content="Catálogo de peças de cerâmica feitas à mão, com carinho, peça por peça."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/componentes.css" />
+  </head>
+  <body>
+    <header class="cabecalho">
+      <div class="cabecalho__conteudo container">
+        <a href="index.html" class="logo" data-nome-loja>Mimmo</a>
+
+        <button
+          class="botao-menu"
+          type="button"
+          data-botao-menu
+          aria-expanded="false"
+          aria-controls="nav-principal"
+        >
+          <span class="sr-only">Abrir menu</span>
+          <span class="botao-menu__linha" aria-hidden="true"></span>
+          <span class="botao-menu__linha" aria-hidden="true"></span>
+          <span class="botao-menu__linha" aria-hidden="true"></span>
+        </button>
+
+        <nav
+          class="nav"
+          id="nav-principal"
+          data-nav
+          aria-label="Navegação principal"
+        >
+          <a href="catalogo.html">Catálogo</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#" data-link-instagram target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="#" data-link-whatsapp target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero__conteudo">
+          <h1 data-nome-loja>Mimmo</h1>
+          <p class="hero__posicionamento" data-posicionamento>
+            Cerâmica feita à mão, com carinho, peça por peça
+          </p>
+          <a href="catalogo.html" class="botao botao--primario">Ver catálogo</a>
+        </div>
+      </section>
+
+      <section class="sobre" id="sobre">
+        <div class="container sobre__conteudo" data-sobre>
+          <p>Carregando...</p>
+        </div>
+      </section>
+
+      <section class="destaques" data-secao-destaques hidden>
+        <div class="container">
+          <h2>Peças em destaque</h2>
+          <div class="grade-produtos" data-grade-destaques></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="rodape">
+      <div class="container rodape__conteudo">
+        <p>&copy; 2026 <span data-nome-loja>Mimmo</span> — feito com carinho.</p>
+        <div class="rodape__links">
+          <a href="#" data-link-instagram target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="#" data-link-whatsapp target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="assets/js/inicio.js"></script>
+  </body>
+</html>

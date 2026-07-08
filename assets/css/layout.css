@@ -1,0 +1,200 @@
+/*
+  Mimmo — layout: header, footer, grid, seções.
+  Consome tokens de base.css. Mobile-first (SPEC-0004).
+*/
+
+.container {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: var(--espaco-4);
+}
+
+/* Cabeçalho */
+
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background-color: var(--cor-fundo);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.cabecalho__conteudo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--espaco-3);
+}
+
+.logo {
+  font-family: var(--fonte-display);
+  font-size: var(--texto-xl);
+  font-weight: 600;
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.botao-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.botao-menu__linha {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--cor-texto);
+  border-radius: 2px;
+}
+
+.nav {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  padding: var(--espaco-4);
+  background-color: var(--cor-fundo);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.nav--aberta {
+  display: flex;
+}
+
+.nav a {
+  color: var(--cor-texto);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nav a:hover {
+  color: var(--cor-acento);
+}
+
+@media (min-width: 48rem) {
+  .botao-menu {
+    display: none;
+  }
+
+  .nav {
+    display: flex;
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    border: none;
+    background: none;
+  }
+}
+
+/* Hero */
+
+.hero {
+  padding-block: var(--espaco-6);
+  text-align: center;
+}
+
+.hero__conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco-4);
+}
+
+.hero h1 {
+  font-size: clamp(var(--texto-3xl), 8vw, 4rem);
+}
+
+.hero__posicionamento {
+  font-size: var(--texto-lg);
+  color: var(--cor-texto-suave);
+  max-width: 32rem;
+}
+
+/* Sobre */
+
+.sobre {
+  padding-block: var(--espaco-6);
+  background-color: var(--cor-superficie);
+}
+
+.sobre__conteudo {
+  max-width: 40rem;
+}
+
+/* Destaques / grade de produtos */
+
+.destaques {
+  padding-block: var(--espaco-6);
+}
+
+.destaques h2 {
+  text-align: center;
+  margin-bottom: var(--espaco-5);
+}
+
+.grade-produtos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espaco-4);
+}
+
+@media (min-width: 40rem) {
+  .grade-produtos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 64rem) {
+  .grade-produtos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Rodapé */
+
+.rodape {
+  border-top: 1px solid var(--cor-borda);
+  padding-block: var(--espaco-4);
+}
+
+.rodape__conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  align-items: center;
+  text-align: center;
+  color: var(--cor-texto-suave);
+  font-size: var(--texto-sm);
+}
+
+.rodape__links {
+  display: flex;
+  gap: var(--espaco-4);
+}
+
+.rodape__links a {
+  color: var(--cor-texto);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (min-width: 40rem) {
+  .rodape__conteudo {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}

@@ -1,0 +1,117 @@
+/*
+  Mimmo — componentes: botões, card de produto, selos, tag de preço.
+  Consome tokens de base.css.
+*/
+
+.botao {
+  display: inline-block;
+  padding: var(--espaco-3) var(--espaco-4);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: var(--raio-organico);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.botao--primario {
+  background-color: var(--cor-acento);
+  color: var(--cor-superficie);
+}
+
+.botao--primario:hover {
+  background-color: var(--cor-acento-escuro);
+  color: var(--cor-superficie);
+  transform: translateY(-2px);
+}
+
+/* Card de produto */
+
+.card-produto {
+  display: block;
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-organico);
+  box-shadow: var(--sombra-suave);
+  text-decoration: none;
+  color: var(--cor-texto);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-produto:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-elevada);
+}
+
+.card-produto__figura {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.card-produto__figura img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-produto__corpo {
+  padding: var(--espaco-4);
+}
+
+.card-produto__nome {
+  font-size: var(--texto-lg);
+  margin-bottom: var(--espaco-1);
+}
+
+.card-produto__categoria {
+  color: var(--cor-texto-suave);
+  font-size: var(--texto-sm);
+  margin-bottom: var(--espaco-3);
+}
+
+.card-produto--vendida {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Selo de status, sobre a imagem */
+
+.selo {
+  position: absolute;
+  top: var(--espaco-2);
+  left: var(--espaco-2);
+  padding: var(--espaco-1) var(--espaco-2);
+  font-size: var(--texto-xs);
+  font-weight: 700;
+  border-radius: var(--raio-tag);
+  background-color: var(--cor-superficie);
+  color: var(--cor-texto);
+}
+
+.selo--disponivel {
+  background-color: var(--cor-primaria);
+}
+
+.selo--sob-encomenda {
+  background-color: var(--cor-superficie);
+  border: 1.5px solid var(--cor-acento);
+  color: var(--cor-acento);
+}
+
+.selo--vendida {
+  background-color: var(--cor-borda);
+  color: var(--cor-texto-suave);
+}
+
+/* Tag de preço — etiqueta de feira, levemente rotacionada */
+
+.tag-preco {
+  display: inline-block;
+  padding: var(--espaco-1) var(--espaco-3);
+  font-family: var(--fonte-display);
+  font-weight: 600;
+  font-size: var(--texto-base);
+  background-color: var(--cor-primaria);
+  color: var(--cor-texto);
+  border-radius: var(--raio-tag);
+  transform: rotate(var(--rotacao-tag));
+}
