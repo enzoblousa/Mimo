@@ -17,10 +17,14 @@ contato.
 - O catálogo exibe todas as peças de `data/produtos.json` como uma grade de
   cards.
 - Cada card mostra: foto principal, nome, categoria, preço formatado em BRL
-  (`R$ 000,00`) e um indicador se a peça está **disponível** ou **vendida**.
-- Peças marcadas como `disponivel: false` aparecem visualmente
-  esmaecidas/com selo "Peça única vendida" e não são clicáveis para contato
-  (ver SPEC-0003).
+  (`R$ 000,00`) e um selo de status conforme o campo `status`
+  (ver `docs/design/DESIGN.md` §2):
+  - `disponivel` → selo "Pronta entrega".
+  - `sob-encomenda` → selo "Sob encomenda" (comum em peças `tipo: "unica"`).
+  - `vendida` → card esmaecido, selo "Vendida", não clicável para contato
+    (ver SPEC-0003 RF-01).
+- Peças `tipo: "unica"` podem opcionalmente exibir um selo adicional "Peça
+  única" no card, para reforçar que não haverá reposição igual.
 
 ### RF-02: Filtro por categoria
 
@@ -56,7 +60,9 @@ contato.
 - [ ] Grade renderiza corretamente com 1, poucas (3-5) e muitas (20+) peças.
 - [ ] Filtro de categoria funciona e reflete exatamente as categorias
       existentes nos dados.
-- [ ] Peça indisponível é visualmente distinta e não oferece CTA de compra.
+- [ ] Peça com `status: "vendida"` é visualmente distinta e não oferece CTA
+      de contato; peça `sob-encomenda` mostra o selo correto e ainda
+      permite contato (SPEC-0003).
 - [ ] Clicar em um card sempre abre o detalhe correto (sem mistura de dados
       entre peças).
 - [ ] Catálogo vazio (`produtos.json` = `[]`) exibe estado vazio amigável, não

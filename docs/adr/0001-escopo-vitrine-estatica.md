@@ -5,7 +5,7 @@
 
 ## Contexto
 
-A Mimo é uma loja de peças de cerâmica feitas à mão. Precisamos de uma landing
+A Mimmo é uma loja de peças de cerâmica feitas à mão. Precisamos de uma landing
 page que funcione como catálogo público das peças disponíveis. O volume de
 peças é pequeno/médio e cada peça é única ou produzida em pequenos lotes
 (característica de artesanato), o que torna um fluxo de e-commerce completo

@@ -12,11 +12,13 @@ uma conversa via WhatsApp ou Instagram.
 
 ### RF-01: CTA por peça
 
-- No detalhe de cada peça disponível (SPEC-0001 RF-04), existe um botão
-  "Perguntar sobre esta peça" que abre um link `wa.me` com mensagem
-  pré-preenchida:
-  `Olá! Tenho interesse na peça "<nome da peça>" (<link ou referência>). Ainda está disponível?`
-- Peças indisponíveis (`disponivel: false`) não mostram este botão.
+- No detalhe de cada peça com `status` diferente de `"vendida"` (SPEC-0001
+  RF-04), existe um botão "Perguntar sobre esta peça" que abre um link
+  `wa.me` com mensagem pré-preenchida, variando pelo `status`
+  (ver `docs/design/DESIGN.md` §2):
+  - `disponivel`: `Olá! Tenho interesse na peça "<nome da peça>". Ainda está disponível?`
+  - `sob-encomenda`: `Olá! Vi a peça "<nome da peça>" sob encomenda. Como funciona pra encomendar?`
+- Peças com `status: "vendida"` não mostram este botão.
 
 ### RF-02: CTA geral
 
