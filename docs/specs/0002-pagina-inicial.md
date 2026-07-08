@@ -5,14 +5,14 @@
 
 ## Objetivo
 
-Apresentar a marca Mimo, transmitir a identidade artesanal/handmade e
+Apresentar a marca Mimmo, transmitir a identidade artesanal/handmade e
 conduzir a visitante até o catálogo.
 
 ## Requisitos funcionais
 
 ### RF-01: Hero
 
-- Seção de abertura com nome da loja ("Mimo"), uma frase de posicionamento
+- Seção de abertura com nome da loja ("Mimmo"), uma frase de posicionamento
   (ex. "Cerâmica feita à mão, peça por peça") e uma imagem/foto de destaque.
 - Botão de CTA principal "Ver catálogo" que rola/navega até a seção/página de
   peças (SPEC-0001).

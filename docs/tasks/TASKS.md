@@ -1,4 +1,4 @@
-# TASKS — Mimo Cerâmica
+# TASKS — Mimmo Cerâmica
 
 Checklist de implementação derivado de `docs/specs/`. Marcar cada item ao
 concluir e anexar evidência correspondente em `docs/evidence/` quando
@@ -7,10 +7,14 @@ aplicável (ver `docs/evidence/README.md`).
 ## Fase 0 — Base do projeto
 
 - [ ] Criar estrutura de pastas conforme `docs/design/DESIGN.md` (§1).
-- [ ] Criar `data/config.json` com dados reais da loja (nome, WhatsApp,
-      Instagram, texto "sobre").
-- [ ] Criar `data/produtos.json` com peças reais (ou dados de exemplo
-      realistas caso ainda não haja fotos/textos finais).
+- [ ] Criar `data/config.json` com dados reais da loja (nome "Mimmo",
+      WhatsApp `5561995793905`, Instagram `@flaviamangabeirab`, texto
+      "sobre" a escrever — ver PRD §2, §5, §7).
+- [ ] Criar `data/produtos.json` com peças de exemplo usando **imagens
+      placeholder** (PRD §7, ADR-0006) até existirem fotos reais das
+      peças da Flávia. Usar preços na faixa R$ 15-30 (PRD §4) e cobrir os
+      dois `tipo` (`unica`, `modelo-repetivel`) e os três `status`
+      (`disponivel`, `sob-encomenda`, `vendida`) para testar a UI.
 - [ ] Criar `assets/css/base.css` com variáveis de cor/tipografia definidas
       na direção visual (DESIGN.md §4).
 
@@ -31,8 +35,9 @@ aplicável (ver `docs/evidence/README.md`).
       busca textual.
 - [ ] Estado vazio ("nenhuma peça encontrada") para busca sem resultado e
       para catálogo vazio.
-- [ ] Indicação visual de peça indisponível (esmaecida, sem CTA de
-      contato).
+- [ ] Selos de `status` (pronta entrega / sob encomenda / vendida) e
+      esmaecimento + remoção de CTA apenas para `status: "vendida"`
+      (SPEC-0001 RF-01 revisado).
 - [ ] `assets/js/modal.js`: modal/detalhe da peça com todas as fotos,
       descrição, medidas, técnica, preço.
 
@@ -57,8 +62,15 @@ aplicável (ver `docs/evidence/README.md`).
       registrar resultado em `docs/evidence/`.
 - [ ] Meta tags de SEO/Open Graph em ambas as páginas.
 
-## Fase 5 — Deploy (ADR-0005)
+## Fase 5 — Deploy (ADR-0005, ADR-0006) — **não-bloqueante por enquanto**
 
+Sem prazo e sem domínio definidos (PRD §8); esta fase fica pendente até
+haver decisão de lançar publicamente. Antes de executá-la, checar
+obrigatoriamente o item de imagens (ADR-0006):
+
+- [ ] **Pré-requisito**: substituir toda imagem placeholder por foto real
+      da peça (ou imagem com licença adequada) — nenhuma foto de terceiro
+      "emprestada" pode ir para produção.
 - [ ] Configurar GitHub Pages para o repositório.
 - [ ] Validar em produção: catálogo carrega, filtro funciona, links de
       WhatsApp abrem corretos.

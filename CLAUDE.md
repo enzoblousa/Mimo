@@ -1,4 +1,4 @@
-# Mimo Cerâmica — Catálogo
+# Mimmo Cerâmica — Catálogo
 
 Landing page/catálogo para uma loja de peças de cerâmica feitas à mão. Este
 projeto segue Spec Driven Development: toda decisão relevante está
@@ -6,6 +6,10 @@ documentada antes do código, em `docs/`.
 
 ## Onde está a documentação
 
+- `docs/PRD.md` — contexto de negócio e produto (por que o site existe, quem
+  é a Flávia Mangabeira, o que ela vende, canais reais de contato). Fonte de
+  verdade para qualquer dúvida de "por que isso é assim" que não seja
+  puramente técnica.
 - `docs/adr/` — decisões arquiteturais (por que a stack e o escopo são o que
   são). Leia antes de propor mudar stack, escopo ou hospedagem.
 - `docs/specs/` — o que o site deve fazer, com critérios de aceite
@@ -30,7 +34,12 @@ TASKS.md → registrar evidência.
   ([ADR-0003](docs/adr/0003-dados-produtos-json-local.md)).
 - Conversão de venda via link de WhatsApp/Instagram, sem formulário próprio
   ([ADR-0004](docs/adr/0004-conversao-via-contato-externo.md)).
-- Hospedagem em GitHub Pages ([ADR-0005](docs/adr/0005-hospedagem-estatica.md)).
+- Hospedagem em GitHub Pages ([ADR-0005](docs/adr/0005-hospedagem-estatica.md)),
+  mas **deploy público está adiado** — fase atual é rodar só localmente, sem
+  domínio nem prazo ([ADR-0006](docs/adr/0006-placeholder-e-deploy-adiado.md)).
+- Imagens placeholder de terceiros são aceitáveis só em ambiente local,
+  nunca em deploy público, até existirem fotos reais das peças
+  ([ADR-0006](docs/adr/0006-placeholder-e-deploy-adiado.md)).
 
 Se uma tarefa parecer exigir reabrir uma dessas (ex.: "adicionar carrinho",
 "migrar para React", "usar um CMS"), pare e confirme com o usuário — isso é
