@@ -49,11 +49,11 @@ function preencherContato(dialog, config) {
 function abrirModal(dialog, produto, config) {
   preencherGaleria(dialog, produto);
   dialog.querySelector("[data-modal-nome]").textContent = produto.nome;
+  dialog.querySelector("[data-modal-categoria]").textContent = produto.categoria;
   dialog.querySelector("[data-modal-descricao]").textContent = produto.descricao;
   dialog.querySelector("[data-modal-preco]").textContent = formatarPreco(produto.preco);
 
   preencherLinhaOpcional(dialog, "[data-modal-linha-medidas]", produto.medidas);
-  preencherLinhaOpcional(dialog, "[data-modal-linha-tecnica]", produto.tecnica);
   preencherContato(dialog, config);
 
   if (!dialog.open) dialog.showModal();

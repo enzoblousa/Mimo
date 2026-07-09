@@ -39,6 +39,11 @@ export function criarCardProduto(produto) {
   nome.textContent = produto.nome;
   texto.appendChild(nome);
 
+  const categoria = document.createElement("p");
+  categoria.className = "card-produto__categoria";
+  categoria.textContent = produto.categoria;
+  texto.appendChild(categoria);
+
   corpo.appendChild(texto);
 
   const preco = document.createElement("span");

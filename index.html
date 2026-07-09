@@ -64,7 +64,6 @@
           </p>
           <div class="hero__acoes">
             <a href="#catalogo" class="botao botao--primario">Ver catálogo</a>
-            <a href="sobre.html" class="botao botao--secundario">Conhecer a Flávia</a>
           </div>
         </div>
       </section>
@@ -79,6 +78,7 @@
           </div>
 
           <div class="filtros">
+            <div class="filtros__lista" data-lista-filtros></div>
             <input
               type="search"
               class="campo-busca"
@@ -117,16 +117,13 @@
       <div class="modal-produto__miniaturas" data-modal-galeria></div>
 
       <div class="modal-produto__corpo">
+        <p class="modal-produto__categoria" data-modal-categoria></p>
         <h2 id="modal-produto-titulo" data-modal-nome></h2>
         <p data-modal-descricao></p>
 
         <dl class="modal-produto__specs">
           <div data-modal-linha-medidas hidden>
             <dt>Medidas</dt>
-            <dd data-valor></dd>
-          </div>
-          <div data-modal-linha-tecnica hidden>
-            <dt>Técnica</dt>
             <dd data-valor></dd>
           </div>
         </dl>
@@ -139,7 +136,7 @@
           data-modal-contato
           target="_blank"
           rel="noopener noreferrer"
-          >Perguntar no Instagram</a
+          >Tenho interesse</a
         >
       </div>
     </dialog>

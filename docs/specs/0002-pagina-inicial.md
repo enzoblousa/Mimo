@@ -20,8 +20,10 @@ pela navegação do header.
 
 - Seção de abertura com nome da loja ("Mimmo"), uma frase de posicionamento
   (ex. "Cerâmica feita à mão, peça por peça") e uma imagem/foto de destaque.
-- CTA "Ver catálogo" (âncora `#catalogo`, mesma página) e CTA "Conhecer a
-  Flávia" (link para `sobre.html`, RF-02).
+- CTA "Ver catálogo" (âncora `#catalogo`, mesma página). O CTA "Conhecer a
+  Flávia" (link para `sobre.html`) foi removido do hero em 2026-07-09
+  (decisão do usuário) — o caminho para `sobre.html` continua existindo via
+  link "Sobre" do header (RF-03).
 
 ### RF-02: Sobre a loja — **página separada `sobre.html`** (2026-07-09)
 
@@ -29,8 +31,8 @@ pela navegação do header.
   hardcode em HTML) vive em `sobre.html`, não na página inicial. A home
   (`index.html`) foca em mostrar as peças (inspiração: ateliedasah.com);
   quem quer conhecer a Flávia/a história da marca navega para `sobre.html`
-  pelo link "Sobre" do header ou pelo CTA "Conhecer a Flávia" do hero
-  (RF-01).
+  pelo link "Sobre" do header (RF-03). O hero deixou de ter um CTA próprio
+  para isso em 2026-07-09 (ver RF-01).
 - **Histórico**: entre 2026-07-08 e 2026-07-09 esta seção esteve
   documentada como "removida da página inicial", mas por engano nunca
   chegou a sair de fato de `index.html` — ela só foi de fato movida para
@@ -57,9 +59,9 @@ pela navegação do header.
 
 - [x] CTA "Ver catálogo" leva à seção do catálogo completo (âncora
       `#catalogo`, mesma página) — RF-01.
-- [x] CTA "Conhecer a Flávia" e link "Sobre" do header levam a
-      `sobre.html`, que exibe o texto lido de `data/config.json`, editável
-      sem tocar em HTML/CSS — RF-02.
+- [x] Link "Sobre" do header leva a `sobre.html`, que exibe o texto lido de
+      `data/config.json`, editável sem tocar em HTML/CSS — RF-02. (CTA
+      "Conhecer a Flávia" do hero removido em 2026-07-09 — ver RF-01.)
 - [ ] Header funciona em desktop e mobile (menu colapsável), em ambas as
       páginas (`index.html`, `sobre.html`).
 - [x] ~~Se não houver peças com `destaque: true`, a seção de destaques não
