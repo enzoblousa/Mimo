@@ -19,7 +19,7 @@ publicados são os mesmos arquivos editados.
 
 JavaScript é usado apenas para:
 - Carregar e renderizar os dados de produtos (`data/produtos.json`) nos cards.
-- Filtro de categoria e busca simples no catálogo.
+- Busca simples no catálogo.
 - Abrir/fechar o modal/página de detalhe da peça.
 
 ## Consequências

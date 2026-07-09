@@ -7,7 +7,7 @@
 
 Seguindo [ADR-0002](0002-stack-html-css-js-vanilla.md), não há backend nem
 build step. Ainda assim precisamos de uma fonte única de verdade para as
-peças do catálogo (nome, descrição, preço, categoria, imagens, disponibilidade)
+peças do catálogo (nome, descrição, preço, imagens, disponibilidade)
 que seja fácil de editar sem conhecimento de programação avançado.
 
 ## Decisão

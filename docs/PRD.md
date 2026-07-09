@@ -57,12 +57,11 @@ implementação.
   não ficam prontas — ver nota de risco na seção 7.
   > **Impacto em SPEC/DESIGN**: com apenas 10 peças, a busca textual
   > (SPEC-0001 RF-03) é ainda menos prioritária do que já estava marcada —
-  > pode ficar para uma fase posterior sem prejuízo de uso. O filtro por
-  > categoria (RF-02) continua valendo, mas com poucas categorias.
-- **Categorias existentes**: Genéricas por ora (ex.: "Decorativas",
-  "Utilitárias") — sem uma lista fechada ainda; o site deve continuar
-  derivando categorias dinamicamente dos dados (RF-02 do SPEC-0001), não
-  fixar essas duas no código.
+  > pode ficar para uma fase posterior sem prejuízo de uso.
+- **Categorias**: removidas do site por completo em 2026-07-09 (decisão
+  do usuário) — o catálogo não agrupa nem filtra peças por categoria; o
+  campo `categoria` não existe mais em `data/produtos.json` (SPEC-0001
+  RF-02).
 - **Faixa de preço** (menor e maior preço de peça): Chute inicial:
   **R$ 15 a R$ 30** por peça (faixa de entrada, ajustável conforme peças
   reais forem definidas).
@@ -169,7 +168,10 @@ implementação.
   (suave/pastel), branco — aconchegante e clean. Consistente com o tom de
   voz "aconchegante, colorido, intimista" (seção 2). **Substitui** a
   hipótese de paleta terrosa/terracota do `docs/design/DESIGN.md` §4,
-  escrita antes desta entrevista — precisa ser corrigida.
+  escrita antes desta entrevista. **Nota (2026-07-09)**: apesar dessa
+  direção já apontar para rosa desde a entrevista original, o código só
+  seguiu com a paleta terracota até esta data — a paleta em tons de rosa
+  (DESIGN.md §4) é quem finalmente implementa esta direção de cor.
 - **Sites/lojas que definitivamente NÃO quer parecer**: Nenhuma referência
   negativa ainda.
 

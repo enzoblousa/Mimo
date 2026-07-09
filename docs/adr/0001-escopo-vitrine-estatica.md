@@ -13,8 +13,8 @@ peças é pequeno/médio e cada peça é única ou produzida em pequenos lotes
 
 ## Decisão
 
-O site será uma **vitrine estática**: lista peças com foto, nome, descrição,
-categoria e preço. Não existe carrinho, checkout ou pagamento online. A
+O site será uma **vitrine estática**: lista peças com foto, nome, descrição
+e preço. Não existe carrinho, checkout ou pagamento online. A
 conversão de venda acontece fora do site, via Instagram (ver
 [ADR-0004](0004-conversao-via-contato-externo.md); WhatsApp fez parte do
 canal original e foi removido em 2026-07-09).

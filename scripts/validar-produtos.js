@@ -8,7 +8,7 @@ const CAMINHO_PRODUTOS = path.join(__dirname, "..", "data", "produtos.json");
 
 const TIPOS_VALIDOS = ["unica", "modelo-repetivel"];
 
-const CAMPOS_STRING_OBRIGATORIOS = ["slug", "nome", "categoria", "descricao"];
+const CAMPOS_STRING_OBRIGATORIOS = ["slug", "nome", "descricao"];
 const CAMPOS_STRING_OPCIONAIS = ["medidas", "tecnica"];
 
 function validarProduto(produto, indice) {

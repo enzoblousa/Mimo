@@ -75,8 +75,6 @@ node scripts/validar-produtos.js
 - Sem dependências externas (sem npm packages em runtime) — ver ADR-0002.
 - JavaScript organizado por responsabilidade em `assets/js/`
   (`produtos.js`, `filtro.js`, `modal.js`, `contato.js`) — ver DESIGN.md §1.
-- Categorias de produto nunca são hardcoded em HTML/JS: sempre derivadas de
-  `data/produtos.json`.
 - Textos institucionais (nome da loja, "sobre", contato) vêm de
   `data/config.json`, nunca duplicados hardcoded em HTML.
 

@@ -16,12 +16,12 @@
 }
 
 .botao--primario {
-  background-color: var(--cor-acento);
-  color: var(--cor-superficie);
+  background-color: var(--cor-primaria);
+  color: var(--cor-texto);
 }
 
 .botao--primario:hover {
-  background-color: var(--cor-acento-escuro);
+  background-color: var(--cor-acento);
   color: var(--cor-superficie);
   transform: translateY(-2px);
 }
@@ -87,7 +87,7 @@
 .card-produto__corpo {
   position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: var(--espaco-3);
   padding: var(--espaco-4);
@@ -102,15 +102,7 @@
   margin-bottom: var(--espaco-1);
 }
 
-.card-produto__categoria {
-  color: var(--cor-texto-suave);
-  font-size: var(--texto-xs);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 0;
-}
-
-/* Preço — carimbo circular, como etiqueta de feira de artesanato */
+/* Preço — carimbo circular, como etiqueta de feira de artesanato (modal) */
 
 .tag-preco {
   flex-shrink: 0;
@@ -122,7 +114,7 @@
   border: 1.5px dashed var(--cor-acento);
   border-radius: 50%;
   font-family: var(--fonte-display);
-  font-weight: 600;
+  font-weight: 400;
   font-size: var(--texto-xs);
   line-height: 1.05;
   text-align: center;
@@ -130,45 +122,33 @@
   rotate: var(--rotacao-tag-preco);
 }
 
-/* Filtros e busca (SPEC-0001 RF-02, RF-03) */
+/* Preço no card — versão simples, sem o carimbo circular do modal */
+
+.card-produto__corpo .tag-preco {
+  flex-shrink: 0;
+  width: auto;
+  height: auto;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-family: var(--fonte-display);
+  font-weight: 300;
+  font-size: var(--texto-lg);
+  line-height: 1;
+  color: var(--cor-acento);
+  rotate: none;
+}
+
+/* Busca (SPEC-0001 RF-03) */
 
 .filtros {
   display: flex;
   flex-wrap: wrap;
   gap: var(--espaco-3);
   align-items: center;
-  justify-content: space-between;
   padding-bottom: var(--espaco-4);
   border-bottom: 1px solid var(--cor-borda);
   margin-bottom: var(--espaco-5);
-}
-
-.filtros__lista {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--espaco-2);
-}
-
-.filtro-item {
-  padding: var(--espaco-1) var(--espaco-3);
-  border: 1.5px solid var(--cor-acento);
-  border-radius: 999px;
-  background-color: transparent;
-  color: var(--cor-acento);
-  font-weight: 600;
-  font-size: var(--texto-sm);
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
-}
-
-.filtro-item:hover {
-  background-color: rgba(156, 61, 23, 0.08);
-}
-
-.filtro-item[aria-pressed="true"] {
-  background-color: var(--cor-acento);
-  color: var(--cor-superficie);
-  transform: scale(1.04);
 }
 
 .campo-busca {
@@ -199,6 +179,7 @@
   padding-block: var(--espaco-5);
   font-family: var(--fonte-display);
   font-style: italic;
+  font-weight: 200;
   font-size: var(--texto-lg);
 }
 
@@ -222,7 +203,7 @@
 }
 
 .modal-produto::backdrop {
-  background-color: rgba(33, 21, 9, 0.55);
+  background-color: rgba(43, 20, 32, 0.55);
   transition: opacity 0.3s ease, overlay 0.3s ease allow-discrete, display 0.3s ease allow-discrete;
   opacity: 1;
 }
@@ -337,13 +318,6 @@
 
 .modal-produto__corpo h2 {
   font-style: italic;
-}
-
-.modal-produto__categoria {
-  color: var(--cor-texto-suave);
-  font-size: var(--texto-xs);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
 .modal-produto__specs {

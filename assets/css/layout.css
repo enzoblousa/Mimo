@@ -16,7 +16,7 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  background-color: rgba(242, 232, 216, 0.85);
+  background-color: rgba(253, 241, 244, 0.85);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--cor-borda);
 }
@@ -35,7 +35,7 @@
   font-family: var(--fonte-display);
   font-style: italic;
   font-size: var(--texto-xl);
-  font-weight: 500;
+  font-weight: 300;
   color: var(--cor-texto);
   text-decoration: none;
 }
@@ -226,7 +226,7 @@
   height: 14rem;
   max-width: 40vw;
   max-height: 40vw;
-  background: repeating-radial-gradient(circle at 50% 50%, var(--cor-oliva) 0 2px, transparent 2px 18px);
+  background: repeating-radial-gradient(circle at 50% 50%, var(--cor-rosa-secundaria) 0 2px, transparent 2px 18px);
   opacity: 0.28;
   animation-duration: 60s;
   animation-direction: reverse;
@@ -241,7 +241,7 @@
 /* Divisor de contas de argila entre seções */
 .divisor-argila {
   height: 1.5rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='24' viewBox='0 0 140 24'%3E%3Ccircle cx='6' cy='12' r='3' fill='%239C3D17'/%3E%3Ccircle cx='32' cy='12' r='2' fill='%2355603C'/%3E%3Ccircle cx='58' cy='12' r='4' fill='%239C3D17' opacity='0.55'/%3E%3Ccircle cx='88' cy='12' r='2' fill='%2355603C'/%3E%3Ccircle cx='114' cy='12' r='3' fill='%239C3D17'/%3E%3Ccircle cx='134' cy='12' r='2' fill='%2355603C' opacity='0.6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='24' viewBox='0 0 140 24'%3E%3Ccircle cx='6' cy='12' r='3' fill='%23B23368'/%3E%3Ccircle cx='32' cy='12' r='2' fill='%23D98BAA'/%3E%3Ccircle cx='58' cy='12' r='4' fill='%23B23368' opacity='0.55'/%3E%3Ccircle cx='88' cy='12' r='2' fill='%23D98BAA'/%3E%3Ccircle cx='114' cy='12' r='3' fill='%23B23368'/%3E%3Ccircle cx='134' cy='12' r='2' fill='%23D98BAA' opacity='0.6'/%3E%3C/svg%3E");
   background-repeat: repeat-x;
   background-position: center;
   background-size: auto 100%;
@@ -265,7 +265,7 @@
   font-family: var(--fonte-display);
   font-style: italic;
   font-size: var(--texto-xl);
-  font-weight: 400;
+  font-weight: 200;
   color: var(--cor-texto);
 }
 
@@ -280,6 +280,7 @@
   margin-top: var(--espaco-3);
   font-family: var(--fonte-display);
   font-style: italic;
+  font-weight: 200;
   font-size: var(--texto-lg);
   color: var(--cor-acento);
 }
@@ -347,7 +348,7 @@
   align-items: center;
   text-align: center;
   font-size: var(--texto-sm);
-  color: rgba(242, 232, 216, 0.7);
+  color: rgba(248, 233, 239, 0.7);
 }
 
 .rodape__conteudo p {

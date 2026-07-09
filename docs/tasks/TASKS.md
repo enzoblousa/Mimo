@@ -54,8 +54,9 @@ aplicável (ver `docs/evidence/README.md`).
 
 - [x] `assets/js/produtos.js`: fetch de `produtos.json` e render dos cards
       (feito na Fase 1, reaproveitado aqui na grade completa).
-- [x] `assets/js/filtro.js`: filtro por categoria (derivado dos dados) +
-      busca textual, combináveis.
+- [x] ~~`assets/js/filtro.js`: filtro por categoria (derivado dos dados) +
+      busca textual, combináveis.~~ Filtro por categoria removido por
+      completo na Fase 4.14 — `filtro.js` hoje só faz busca textual.
 - [x] Estado vazio ("nenhuma peça encontrada") para busca sem resultado e
       para catálogo vazio (`catalogo.html` + `catalogo.js`).
 - [x] ~~Selos de `status` (pronta entrega / sob encomenda / vendida) e
@@ -131,9 +132,16 @@ aplicável (ver `docs/evidence/README.md`).
 
 Ver `docs/superpowers/specs/2026-07-08-redesign-visual-delicado-design.md`.
 
-- [x] Trocar fonte display de Fraunces para Jost, pesos mais leves
-      (`h1`/`h2`/`h3`, `.logo`, `.tag-preco`).
-- [x] Reduzir intensidade de `--raio-organico`, `--rotacao-tag` e sombras.
+- [x] ~~Trocar fonte display de Fraunces para Jost, pesos mais leves
+      (`h1`/`h2`/`h3`, `.logo`, `.tag-preco`).~~ **Correção (2026-07-09)**:
+      nunca foi executado — `--fonte-display` continuou `"Fraunces"` até
+      hoje (mesmo padrão de mismatch da paleta floral, Fase 4.8 vs. 4.13).
+      Implementado de verdade na Fase 4.16.
+- [ ] ~~Reduzir intensidade de `--raio-organico`, `--rotacao-tag` e
+      sombras.~~ Também nunca foi executado — `--raio-organico` continua
+      `4px 32px 4px 32px` (não `10px 14px 10px 16px` como documentado) e
+      a rotação da tag de preço continua `-3deg`. Não corrigido nesta
+      sessão (fora do escopo pedido — só a fonte foi solicitada).
 - [x] Aumentar espaçamento do grid de produtos (`gap`) e padding interno
       do card.
 - [x] Atualizar `docs/design/DESIGN.md` §4 com os novos valores.
@@ -229,25 +237,29 @@ Decisão do usuário: trocar a paleta pastel (rosa claro + vermelho suave)
 por uma paleta extraída de `imagens/foto-flores-exemplo-cores-usar.png`
 (buquê com rosa/magenta, laranja, dourado, verde, azul). Fundo geral e
 header/hero ganham um gradiente floral de 5 tons pastéis; cards continuam
-neutros. Ver `docs/design/DESIGN.md` §4 para a tabela completa de tokens e
-a verificação de contraste WCAG AA.
+neutros.
 
-- [x] `assets/css/base.css`: novos valores de `--cor-primaria`,
+> **Correção (2026-07-09)**: nenhum item abaixo tinha sido de fato
+> implementado — `assets/css/base.css` continuou com os tokens terracota
+> da Fase 0 (mesmo padrão de itens marcados `[x]` sem código
+> correspondente já visto nas Fases 4.5 e 4.7). A paleta floral nunca
+> chegou a existir em código; foi substituída diretamente pela paleta em
+> tons de rosa da Fase 4.13, sem passar por uma implementação real desta
+> fase.
+
+- [ ] ~~`assets/css/base.css`: novos valores de `--cor-primaria`,
       `--cor-acento`, `--cor-acento-escuro`, `--cor-texto-suave`; novos
-      tokens `--cor-flor-*` e `--gradiente-floral`; `body` usa o gradiente.
-- [x] `assets/css/layout.css`: `.cabecalho` e `.nav` (mobile) com fundo
-      sólido `--cor-flor-rosa`; `.hero` com o gradiente floral.
-- [x] Verificação de contraste WCAG AA de todos os pares novos (acento
-      sobre os 5 tons do gradiente, texto-suave sobre os 5 tons, primária)
-      — todos ≥ 4.5:1, documentado em `DESIGN.md` §4.
-- [x] Atualizar `docs/design/DESIGN.md` §4.
-
-> **Verificação parcial**: contraste calculado via fórmula WCAG (não
-> visualmente). CSS servindo 200 num servidor estático local. **Não
-> verificado visualmente num navegador** — sem Playwright/Chromium neste
-> projeto (ver CLAUDE.md). Pendente: usuário abrir `index.html` e
-> confirmar que o gradiente aparece no fundo/header/hero e que os cards
-> continuam legíveis.
+      tokens `--cor-flor-*` e `--gradiente-floral`; `body` usa o
+      gradiente.~~ Nunca implementado — ver correção acima.
+- [ ] ~~`assets/css/layout.css`: `.cabecalho` e `.nav` (mobile) com fundo
+      sólido `--cor-flor-rosa`; `.hero` com o gradiente floral.~~ Nunca
+      implementado.
+- [ ] ~~Verificação de contraste WCAG AA de todos os pares novos (acento
+      sobre os 5 tons do gradiente, texto-suave sobre os 5 tons,
+      primária) — todos ≥ 4.5:1, documentado em `DESIGN.md` §4.~~ A
+      verificação foi feita sobre tokens que nunca chegaram ao CSS.
+- [x] Atualizar `docs/design/DESIGN.md` §4 (isso de fato aconteceu — só o
+      código que não seguiu).
 
 ## Fase 4.9 — Polimento de acabamento (2026-07-08)
 
@@ -255,15 +267,24 @@ Decisão do usuário (via skill frontend-design): refinar a execução dentro
 da identidade já aprovada (paleta floral, Jost, formas orgânicas sutis),
 sem trocar fonte/paleta/estrutura. Só CSS (+ nenhuma mudança de JS).
 
+> **Correção (2026-07-09)**: como a paleta floral da Fase 4.8 nunca existiu
+> em código, as referências a "`--gradiente-floral` do `body`" e "`.hero`
+> herda o gradiente do body" abaixo também nunca corresponderam à
+> realidade — `body` e `.hero` sempre usaram cor sólida (`--cor-fundo`),
+> nunca gradiente. A textura de grão (`--textura-grao`) é real e continua
+> em uso, agora sobre a paleta rosa (Fase 4.13).
+
 - [x] Entrada com fade/subida escalonada no hero (`.hero__conteudo > *`) e
       nos cards do catálogo (`.card-produto:nth-child`), via
       `@keyframes entrar-suave` em `base.css` — respeita
       `prefers-reduced-motion` (regra global já existente).
-- [x] Textura de grão (`--textura-grao`, SVG `feTurbulence` inline) sobre o
-      `--gradiente-floral` do `body`.
-- [x] `.hero` deixou de ter gradiente próprio (evitava uma costura de cor
+- [x] Textura de grão (`--textura-grao`, SVG `feTurbulence` inline) sobre
+      `--cor-fundo` do `body` (não sobre um gradiente — ver correção
+      acima).
+- [ ] ~~`.hero` deixou de ter gradiente próprio (evitava uma costura de cor
       contra o gradiente do `body`) — agora herda o do body e só soma um
-      brilho radial sutil no topo.
+      brilho radial sutil no topo.~~ Nunca existiu gradiente em nenhum dos
+      dois; `.hero` usa cor sólida herdada do `body` desde sempre.
 - [x] Zoom sutil na foto do card ao passar o mouse
       (`.card-produto:hover .card-produto__figura img`).
 - [x] Modal (`<dialog>`) com entrada/saída animada via `@starting-style` +
@@ -398,6 +419,204 @@ Ver ADR-0004 (revisado), SPEC-0003 (reescrito).
 > "Perguntar no Instagram" num card e confirmar que abre o perfil correto
 > em nova aba, e conferir que não sobrou nenhum resquício visual de
 > WhatsApp (ex. espaçamento do header/rodapé após remover o link).
+
+## Fase 4.13 — Paleta em tons de rosa (2026-07-09)
+
+Decisão do usuário: substituir toda a paleta de cor (ainda terracota da
+Fase 0, apesar da Fase 4.8 nunca ter mudado isso de fato) por tons de
+rosa. Diferente da paleta "floral" documentada e nunca implementada na
+Fase 4.8, esta é uma paleta monocromática (família rosa/vinho), e desta
+vez **implementada de verdade** nos três arquivos CSS, não só documentada.
+
+- [x] `assets/css/base.css`: novos valores para todos os tokens de cor
+      (`--cor-fundo`, `--cor-fundo-painel`, `--cor-superficie`,
+      `--cor-primaria`, `--cor-acento`, `--cor-acento-escuro`,
+      `--cor-texto`, `--cor-texto-suave`, `--cor-borda`, `--cor-escuro`,
+      `--cor-escuro-texto`, `--cor-escuro-borda`); novo token
+      `--cor-rosa-secundaria` (substitui `--cor-oliva`); `--cor-mostarda`
+      (nunca usado) removido; `--textura-grao` (matriz de cor do
+      `feColorMatrix`) e `--sombra-suave`/`--sombra-elevada` recalculados
+      para o novo `--cor-texto`.
+- [x] `assets/css/layout.css`: `.cabecalho` (fundo translúcido),
+      `.rodape__conteudo` (texto), `.divisor-argila` (SVG inline) e
+      `.hero__disco--interno` (usava `--cor-oliva`, agora
+      `--cor-rosa-secundaria`) com os novos valores.
+- [x] `assets/css/componentes.css`: `.filtro-item:hover` e
+      `.modal-produto::backdrop` (rgba hardcoded, espelhavam tokens
+      antigos) atualizados para os novos tokens.
+- [x] Verificação de contraste WCAG AA (fórmula de luminância relativa,
+      script Node ad-hoc) de todos os pares texto/fundo e acento/fundo
+      relevantes — todos ≥ 4.5:1 (4.67:1 a 15.3:1), sem necessidade de
+      ajustar nenhum tom. Documentado em `DESIGN.md` §4.
+- [x] Atualizado `docs/design/DESIGN.md` §4 (tabela de cor e nota de
+      contraste), corrigindo também o histórico das Fases 4.8/4.9 (ver
+      correções acima neste arquivo).
+
+> **Verificação**: busca por `#[0-9A-Fa-f]{6}` e `rgba?\(` em
+> `assets/css/*.css` confirma que não sobrou nenhuma cor terracota
+> hardcoded nem referência a `--cor-oliva`/`--cor-mostarda`; CSS servindo
+> 200 num servidor estático local. **Não verificado visualmente num
+> navegador** — sem Playwright/Chromium neste projeto (ver CLAUDE.md).
+> Pendente: usuário abrir `index.html`/`sobre.html` e confirmar que a
+> paleta rosa aparece corretamente (fundo, header, hero, cards, rodapé,
+> modal) e que nada ficou ilegível.
+
+## Fase 4.14 — Remover categorias e toda a lógica de filtro (2026-07-09)
+
+Decisão do usuário: o catálogo deixa de ter categorias — nem campo de
+dado, nem filtro, nem exibição no card/modal. Só resta a busca textual
+(SPEC-0001 RF-03). Ver SPEC-0001 RF-02 (removido).
+
+- [x] `data/produtos.json`: removido o campo `categoria` das 10 peças.
+- [x] `scripts/validar-produtos.js`: `categoria` removido de
+      `CAMPOS_STRING_OBRIGATORIOS`.
+- [x] `assets/js/filtro.js`: removida `categoriasUnicas`; `filtrarProdutos`
+      simplificada para receber só a string de busca (perdeu o parâmetro
+      `categoria`/objeto de estado).
+- [x] `assets/js/inicio.js`: `configurarFiltros` virou `configurarBusca` —
+      não gera mais botões de categoria, só liga o campo de busca.
+- [x] `assets/js/produtos.js`: removido o `<p class="card-produto__categoria">`
+      de `criarCardProduto`.
+- [x] `assets/js/modal.js`: removida a linha que preenchia
+      `[data-modal-categoria]`.
+- [x] `index.html`: removidos `<div class="filtros__lista" data-lista-filtros>`
+      e `<p class="modal-produto__categoria" data-modal-categoria>`.
+- [x] `assets/css/componentes.css`: removidos `.card-produto__categoria`,
+      `.filtros__lista`, `.filtro-item`, `.filtro-item:hover`,
+      `.filtro-item[aria-pressed="true"]` e `.modal-produto__categoria`;
+      `.filtros` perdeu `justify-content: space-between` (só sobrou o
+      campo de busca, não há mais o que espaçar).
+- [x] Atualizado SPEC-0001 (RF-01, RF-02 removido, critérios de aceite),
+      `DESIGN.md` (§1, §2, §5), `PRD.md` §4 e este arquivo.
+
+> **Verificação**: `node --check --input-type=module` em `filtro.js`,
+> `inicio.js`, `produtos.js`, `modal.js` (sintaxe OK); `node
+> scripts/validar-produtos.js` OK (10/10, sem `categoria`); chaves de
+> `componentes.css` balanceadas (contagem manual); `index.html`,
+> `sobre.html`, `data/produtos.json` e os arquivos tocados retornam 200 num
+> servidor estático local; busca por
+> `categoria|filtro-item|filtros__lista|lista-filtros|categoriasUnicas`
+> (case-insensitive) em `.html`/`.js`/`.css`/`.json` não retorna nenhum
+> resultado. **Não verificado visualmente num navegador** — sem
+> Playwright/Chromium neste projeto (ver CLAUDE.md). Pendente: usuário
+> abrir `index.html` e confirmar que a busca continua funcionando e que a
+> barra acima da grade não ficou com espaçamento estranho sem os botões de
+> categoria.
+
+## Fase 4.15 — Simplificar preço no card (2026-07-09)
+
+Decisão do usuário: o preço no card do catálogo deixa de usar o carimbo
+circular tracejado com rotação — vira só o número em destaque, sem
+moldura. O modal de detalhe mantém o carimbo circular (não foi pedido para
+mudar lá).
+
+- [x] `assets/css/componentes.css`: nova regra `.card-produto__corpo
+      .tag-preco` (maior especificidade que `.tag-preco`) zera
+      borda/border-radius/dimensões fixas/rotação e usa
+      `--fonte-display` em peso 500, tamanho `--texto-lg`. `.tag-preco`
+      base (usada pelo modal) não mudou.
+- [x] `.card-produto__corpo`: `align-items` de `flex-start` para `center`
+      — com o preço não sendo mais um círculo de 4.25rem, o alinhamento
+      centralizado com o nome fica mais equilibrado.
+- [x] Atualizado `docs/design/DESIGN.md` §4 (nota de etiqueta de preço,
+      corrigindo também o nome da variável — a versão anterior citava
+      `--rotacao-tag`, que nunca existiu; a real é
+      `--rotacao-tag-preco`).
+
+> **Verificação**: chaves de `componentes.css` balanceadas (contagem
+> manual); `index.html`/`componentes.css` servindo 200 num servidor
+> estático local. **Não verificado visualmente num navegador** — sem
+> Playwright/Chromium neste projeto (ver CLAUDE.md). Pendente: usuário
+> abrir `index.html` e conferir que o preço nos cards aparece simples
+> (sem círculo) e que o modal de detalhe continua com o carimbo circular.
+
+## Fase 4.16 — Fonte display Jost, de verdade (2026-07-09)
+
+Decisão do usuário: trocar a fonte do nome da loja ("Mimmo"), nomes de
+produto e preços por algo "mais soft, leve e vibes". Isso já tinha sido
+decidido e documentado na Fase 4.5 (trocar Fraunces por Jost), mas nunca
+chegou a ser implementado no CSS — confirmado ao ler `base.css` antes de
+mexer. Implementado agora de verdade.
+
+- [x] `assets/css/base.css`: `@import` do Google Fonts trocado de
+      `Fraunces` para `Jost` (pesos 300/400/500/600, itálico 400/500);
+      `--fonte-display` trocado de `"Fraunces", "Iowan Old Style", Georgia,
+      serif` para `"Jost", "Century Gothic", sans-serif`. `--fonte-corpo`
+      (Work Sans) não mudou — não foi pedido.
+- [x] Nenhuma mudança em `layout.css`/`componentes.css` foi necessária —
+      `.logo`, `h1`/`h2`/`h3` (nome de produto no card e no modal) e
+      `.tag-preco` (preço) já consomem `var(--fonte-display)`, então
+      herdam a troca automaticamente.
+- [x] Atualizado `docs/design/DESIGN.md` §4 (Tipografia): corrigida a
+      descrição para bater com o que está de fato implementado agora
+      (incluindo o fallback real, `Century Gothic`, e a correção do corpo
+      de texto, que sempre foi Work Sans e nunca Nunito Sans como
+      documentado antes).
+- [x] Corrigido o item da Fase 4.5 que marcava essa troca como concluída
+      sem nunca ter sido feita (ver acima).
+
+> **Verificação**: chaves de `base.css` balanceadas (contagem manual);
+> `index.html`/`sobre.html`/`base.css` retornam 200 num servidor estático
+> local; URL do Google Fonts para Jost responde 200; busca por
+> `Fraunces` em `assets/` não retorna nenhum resultado. **Não verificado
+> visualmente num navegador** — sem Playwright/Chromium neste projeto
+> (ver CLAUDE.md). Pendente: usuário abrir o site e confirmar que a fonte
+> carregou (Jost, não o fallback) no nome da loja, nomes de peça e preços,
+> incluindo os pesos itálicos (`.logo`, texto de "nenhuma peça encontrada",
+> título do modal).
+
+## Fase 4.17 — Afinar peso da fonte Jost (2026-07-09)
+
+Decisão do usuário: a Jost recém-trocada (Fase 4.16) estava "muito
+grossa" — nenhum uso chegava a `font-weight: 700` (negrito de verdade),
+mas os pesos liam pesado demais para o efeito "soft/leve" pretendido.
+Reduzido em duas rodadas (usuário pediu "deixe mais fino" depois da
+primeira rodada) até os valores finais abaixo.
+
+- [x] `assets/css/base.css`: `@import` do Jost final com os pesos
+      realmente usados (`0,200;0,300;0,400;1,200;1,300`); `h1`/`h2`/`h3`
+      base 400 → 300 → **200**; `h3` (nome de produto no card) 500 → 400
+      → **300**.
+- [x] `assets/css/layout.css`: `.logo` 500 → 400 → **300**;
+      `.sobre__conteudo .sobre__lead` 400 → 300 → **200**;
+      `.sobre__assinatura` ganhou peso explícito (antes caía no padrão do
+      navegador) 300 → **200**.
+- [x] `assets/css/componentes.css`: `.tag-preco` (preço no modal) 600 →
+      500 → **400**; `.card-produto__corpo .tag-preco` (preço no card)
+      500 → 400 → **300**; `.catalogo-vazio` ganhou peso explícito 300 →
+      **200**.
+
+> **Verificação**: chaves dos três arquivos CSS balanceadas (contagem
+> manual); `index.html`/`sobre.html`/CSS servindo 200 num servidor
+> estático local; URL do Google Fonts com os pesos finais responde 200.
+> **Não verificado visualmente num navegador** — sem Playwright/Chromium
+> neste projeto (ver CLAUDE.md). Pendente: usuário abrir o site e
+> confirmar que o nome da loja, nomes de peça e preços ficaram
+> visivelmente mais finos, sem parecer negrito em lugar nenhum.
+
+## Fase 4.18 — Botão primário com rosa mais claro (2026-07-09)
+
+Decisão do usuário: o rosa do botão preenchido (`.botao--primario` — "Ver
+catálogo", "Conhecer a Flávia", "Perguntar no Instagram") ficou mais claro
+em repouso. O botão de contorno (`.botao--secundario`) não mudou — o rosa
+dele é só borda/texto fino, e usar um tom claro deixaria a borda quase
+invisível contra o fundo (contraste calculado ficaria em ~1.65:1, bem
+abaixo do mínimo de 3:1 para componentes de UI).
+
+- [x] `assets/css/componentes.css`: `.botao--primario` passa a usar
+      `var(--cor-primaria)` (rosa claro) com `var(--cor-texto)` (texto
+      escuro) em repouso; no hover, intensifica para `var(--cor-acento)`
+      com `var(--cor-superficie)` (texto claro) — mesma combinação de
+      antes, agora só no hover.
+- [x] Contraste verificado (fórmula de luminância): texto escuro sobre
+      rosa claro em repouso = 8.64:1; texto claro sobre acento no hover =
+      5.74:1 — ambos acima do mínimo de 4.5:1.
+
+> **Verificação**: chaves de `componentes.css` balanceadas; `index.html`/
+> `sobre.html`/CSS servindo 200 num servidor estático local. **Não
+> verificado visualmente num navegador** — sem Playwright/Chromium neste
+> projeto (ver CLAUDE.md). Pendente: usuário abrir o site e conferir o
+> botão em repouso e hover (hero, modal do produto).
 
 ## Fase 5 — Deploy (ADR-0005, ADR-0006) — **não-bloqueante por enquanto**
 
