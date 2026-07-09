@@ -618,6 +618,114 @@ abaixo do mínimo de 3:1 para componentes de UI).
 > projeto (ver CLAUDE.md). Pendente: usuário abrir o site e conferir o
 > botão em repouso e hover (hero, modal do produto).
 
+## Fase 4.19 — Corrigir modal invisível no desktop (bug, 2026-07-09)
+
+Bug relatado pelo usuário: ao clicar num produto (desktop), a página
+rolava e o modal de detalhe não aparecia visível. Causa raiz:
+`.modal-produto` tinha `position: relative`, sobrescrevendo o
+comportamento nativo de `<dialog>` (que via `showModal()` deveria ser
+`position: fixed`, centralizado na viewport). Com `relative`, o modal
+ficava preso no fluxo normal do documento, renderizando no lugar onde a
+tag `<dialog>` está no HTML (depois do rodapé) em vez de centralizado
+sobre a tela — o navegador rolava a página até lá ao mover o foco, mas o
+modal não aparecia numa posição visível/útil.
+
+- [x] `assets/css/componentes.css`: `.modal-produto` trocado de
+      `position: relative` para `position: fixed; inset: 0; margin:
+      auto;` — restaura a centralização nativa do `<dialog>` mantendo a
+      largura/altura já definidas (`width`, `max-height`). Elementos
+      filhos com `position: absolute` (`.modal-produto__fechar`,
+      `.modal-produto__miniaturas` no desktop) continuam funcionando,
+      já que `fixed` também serve como contexto de posicionamento.
+
+> **Nota de processo**: este bug não seria pego pela verificação padrão
+> deste projeto (`curl` retornando 200, `node --check` de sintaxe) —
+> é um bug puramente visual/de layout, só visível rodando o site num
+> navegador de verdade. Reforça o aviso já presente em várias fases
+> anteriores: "não verificado visualmente" realmente significa que bugs
+> como este podem passar despercebidos até o usuário testar manualmente.
+>
+> **Verificação**: chaves de `componentes.css` balanceadas;
+> `index.html`/`componentes.css` servindo 200 num servidor estático
+> local. **Não verificado visualmente num navegador** — sem
+> Playwright/Chromium neste projeto (ver CLAUDE.md). Pendente: usuário
+> abrir um card no desktop e confirmar que o modal aparece centralizado
+> e visível.
+
+## Fase 4.20 — Preço do modal igual ao do card (2026-07-09)
+
+Decisão do usuário: o preço no modal de detalhe (que ainda tinha o
+carimbo circular tracejado com rotação da Fase 0) passa a usar a mesma
+formatação simples aplicada ao card na Fase 4.15 — só o número em
+destaque.
+
+- [x] `assets/css/componentes.css`: `.tag-preco` (base) virou a versão
+      simples (sem borda/`border-radius`/dimensões fixas/rotação); a
+      regra `.card-produto__corpo .tag-preco`, que antes existia só para
+      diferenciar o card do modal, foi removida por ficar redundante —
+      os dois agora herdam o mesmo estilo da base. `.modal-produto__corpo
+      .tag-preco` mantém só o ajuste de margem.
+- [x] `assets/css/base.css`: `--rotacao-tag-preco` removido — ficou sem
+      nenhum uso depois da mudança acima.
+
+> **Verificação**: chaves de `base.css`/`componentes.css` balanceadas;
+> `index.html` e os dois CSS servindo 200 num servidor estático local.
+> **Não verificado visualmente num navegador** — sem Playwright/Chromium
+> neste projeto (ver CLAUDE.md). Pendente: usuário abrir o modal de uma
+> peça e confirmar que o preço aparece igual ao do card (sem carimbo).
+
+## Fase 4.21 — Cursor de mãozinha nos cards (bug, 2026-07-09)
+
+Bug relatado pelo usuário: o cursor não virava "mãozinha" (pointer) ao
+passar o mouse sobre o card de produto, mesmo o card sendo um link
+clicável — dava a impressão de que não era interativo.
+
+- [x] `assets/css/componentes.css`: `.card-produto` ganhou `cursor:
+      pointer` explícito. Como `cursor` é uma propriedade herdada, isso
+      garante que toda a área do card (imagem, nome, preço) mostre o
+      cursor correto, independente de o navegador aplicar ou não o
+      comportamento padrão de "mãozinha" para links nesse contexto.
+
+> **Nota**: enquanto investigava, notei que `.modal-produto__fechar`
+> (botão "×" de fechar o modal) também não declara `cursor: pointer` —
+> elementos `<button>` não ganham mãozinha por padrão nos navegadores
+> (diferente de links). Não corrigido nesta sessão, pois o bug relatado
+> foi especificamente sobre os cards — registrado aqui caso vire
+> problema também.
+>
+> **Verificação**: chaves de `componentes.css` balanceadas;
+> `index.html`/CSS servindo 200 num servidor estático local. **Não
+> verificado visualmente num navegador** — sem Playwright/Chromium neste
+> projeto (ver CLAUDE.md). Pendente: usuário passar o mouse sobre um
+> card e confirmar que o cursor vira mãozinha.
+
+## Fase 4.22 — Hitbox invisível sobre os cards (bug, 2026-07-09)
+
+Bug relatado pelo usuário: cliques em certas áreas do card de produto
+não abriam o modal, em telas de desktop/tablet.
+
+Causa raiz: `assets/css/componentes.css`, regra de `@media (min-width:
+40rem)` aplicava `display: grid` ao `<dialog>` do modal sem o seletor
+`[open]`, sobrescrevendo o `display: none` padrão do navegador para
+diálogo fechado. O modal fechado ficava então `position: fixed`,
+centralizado na tela, invisível (`opacity: 0` via
+`.modal-produto:not([open])`) mas com `pointer-events: auto` — uma
+caixa fantasma roubando cliques de qualquer card por baixo dela.
+
+- [x] `assets/css/componentes.css`: seletor da regra de `display: grid`
+      trocado de `.modal-produto` para `.modal-produto[open]`.
+
+> **Verificação**: excepcionalmente, com autorização explícita do
+> usuário só para esta correção, Playwright foi instalado
+> temporariamente (fora do projeto, sem entrar em `package.json`/deps)
+> para clicar de fato nos cards e inspecionar a caixa do modal fechado;
+> removido por completo depois de usado. Confirmado: dialog fechado
+> volta a `display: none`; amostragem de pontos de clique em todos os
+> 10 cards do catálogo, em 3 viewports (1280px, 800px, 375px), resolve
+> 100% para dentro do próprio card (0 falhas, antes havia falhas nas
+> áreas cobertas pelo modal fantasma); modal ainda abre normalmente ao
+> clicar num card. Ver `docs/evidence/hitbox-2026-07-09-verificacao-clique-cards.md`.
+
 ## Fase 5 — Deploy (ADR-0005, ADR-0006) — **não-bloqueante por enquanto**
 
 Sem prazo e sem domínio definidos (PRD §8); esta fase fica pendente até

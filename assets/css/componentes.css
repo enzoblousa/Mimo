@@ -42,6 +42,7 @@
 
 .card-produto {
   display: block;
+  cursor: pointer;
   background-color: var(--cor-superficie);
   border-radius: var(--raio-organico);
   box-shadow: var(--sombra-suave);
@@ -102,41 +103,15 @@
   margin-bottom: var(--espaco-1);
 }
 
-/* Preço — carimbo circular, como etiqueta de feira de artesanato (modal) */
+/* Preço — número em destaque, mesmo estilo no card e no modal */
 
 .tag-preco {
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 4.25rem;
-  height: 4.25rem;
-  border: 1.5px dashed var(--cor-acento);
-  border-radius: 50%;
-  font-family: var(--fonte-display);
-  font-weight: 400;
-  font-size: var(--texto-xs);
-  line-height: 1.05;
-  text-align: center;
-  color: var(--cor-acento);
-  rotate: var(--rotacao-tag-preco);
-}
-
-/* Preço no card — versão simples, sem o carimbo circular do modal */
-
-.card-produto__corpo .tag-preco {
-  flex-shrink: 0;
-  width: auto;
-  height: auto;
-  padding: 0;
-  border: none;
-  border-radius: 0;
   font-family: var(--fonte-display);
   font-weight: 300;
   font-size: var(--texto-lg);
   line-height: 1;
   color: var(--cor-acento);
-  rotate: none;
 }
 
 /* Busca (SPEC-0001 RF-03) */
@@ -186,7 +161,9 @@
 /* Modal de detalhe da peça (SPEC-0001 RF-04) */
 
 .modal-produto {
-  position: relative;
+  position: fixed;
+  inset: 0;
+  margin: auto;
   width: min(52rem, calc(100vw - var(--espaco-4) * 2));
   max-height: 85vh;
   overflow-y: auto;
@@ -225,7 +202,7 @@
 }
 
 @media (min-width: 40rem) {
-  .modal-produto {
+  .modal-produto[open] {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: start;
