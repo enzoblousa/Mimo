@@ -6,9 +6,8 @@
 
 ## Objetivo
 
-Permitir que uma visitante navegue pelas peças de cerâmica disponíveis,
-filtre por categoria e veja detalhes suficientes para decidir entrar em
-contato.
+Permitir que uma visitante navegue pelas peças de cerâmica disponíveis e
+veja detalhes suficientes para decidir entrar em contato.
 
 ## Requisitos funcionais
 
@@ -16,8 +15,8 @@ contato.
 
 - O catálogo exibe todas as peças de `data/produtos.json` como uma grade de
   cards.
-- Cada card mostra: foto principal, nome, categoria e preço formatado em
-  BRL (`R$ 000,00`).
+- Cada card mostra: foto principal, nome e preço formatado em BRL
+  (`R$ 000,00`).
 - **Removido (2026-07-08, decisão do usuário; campo removido do schema em
   2026-07-09)**: o card e o modal de detalhe não mostram nenhum rótulo/selo
   de estado comercial — nem esmaecimento visual de peça vendida. Toda peça
@@ -31,18 +30,20 @@ contato.
   mesmo para peças `modelo-repetivel` — decisão de PRD §4 para simplificar
   a manutenção semanal do catálogo.
 
-### RF-02: Filtro por categoria
+### RF-02: Categorias — **removido (2026-07-09, decisão do usuário)**
 
-- Existe uma barra de filtros com as categorias presentes no catálogo (ex.:
-  Vasos, Xícaras, Tigelas, Decoração) calculada dinamicamente a partir dos
-  dados — nunca uma lista fixa hardcoded no HTML.
-- Um filtro "Todas" mostra o catálogo completo (estado inicial).
-- Selecionar uma categoria filtra a grade sem recarregar a página.
+> O catálogo teve um filtro por categoria (barra de categorias calculadas
+> dinamicamente a partir de `produtos.json`, com opção "Todas"). O campo
+> `categoria` e toda essa lógica foram removidos por completo — do schema
+> (`data/produtos.json`, `scripts/validar-produtos.js`), do JS
+> (`categoriasUnicas` e a filtragem por categoria em `filtro.js`, a
+> geração de botões em `inicio.js`), do HTML (`.filtros__lista`) e da
+> exibição no card e no modal (`.card-produto__categoria`,
+> `.modal-produto__categoria`). Peças não têm mais categoria alguma.
 
 ### RF-03: Busca textual (opcional, nice-to-have)
 
-- Campo de busca que filtra por nome/descrição da peça, combinável com o
-  filtro de categoria.
+- Campo de busca que filtra por nome/descrição da peça.
 - Se não houver resultado, exibir mensagem amigável ("Nenhuma peça encontrada
   para sua busca").
 
@@ -63,8 +64,9 @@ contato.
 ## Critérios de aceite
 
 - [ ] Grade renderiza corretamente com 1, poucas (3-5) e muitas (20+) peças.
-- [ ] Filtro de categoria funciona e reflete exatamente as categorias
-      existentes nos dados.
+- [x] ~~Filtro de categoria funciona e reflete exatamente as categorias
+      existentes nos dados.~~ Removido (2026-07-09) — não existe mais
+      filtro nem campo `categoria` (RF-02).
 - [x] ~~Peça com `status: "vendida"` é visualmente distinta e não oferece
       CTA de contato; peça `sob-encomenda` mostra o selo correto e ainda
       permite contato.~~ Removido (2026-07-08); campo `status` removido do

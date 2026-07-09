@@ -17,17 +17,17 @@ Documento de design técnico e visual. Implementa os requisitos de
 │   │   ├── base.css        # Reset, variáveis (cor/tipografia), utilitários
 │   │   ├── layout.css       # Header, footer, grid, seções (compartilhado
 │   │   │                    # por index.html e sobre.html)
-│   │   └── componentes.css  # Card de produto, modal, filtros, botões
+│   │   └── componentes.css  # Card de produto, modal, busca, botões
 │   ├── js/
 │   │   ├── config.js       # Fetch de data/config.json (nome, contato, sobre)
 │   │   ├── menu.js         # ativarMenuMobile() — compartilhado por
 │   │   │                   # inicio.js e sobre.js
 │   │   ├── produtos.js     # Fetch de data/produtos.json + criarCardProduto()
-│   │   ├── inicio.js       # Bootstrap de index.html: hero, filtro/busca,
-│   │   │                   # grade, modal (usa todos os módulos abaixo)
+│   │   ├── inicio.js       # Bootstrap de index.html: hero, busca, grade,
+│   │   │                   # modal (usa todos os módulos abaixo)
 │   │   ├── sobre.js        # Bootstrap de sobre.html: identidade, contato,
 │   │   │                   # texto "sobre"
-│   │   ├── filtro.js       # Categorias dinâmicas + busca textual
+│   │   ├── filtro.js       # Busca textual (nome/descrição)
 │   │   ├── contato.js      # Link do CTA por peça → perfil do Instagram
 │   │   └── modal.js        # <dialog> de detalhe, deep-link por slug
 │   └── imagens/
@@ -50,17 +50,16 @@ direto num navegador ou via qualquer servidor estático (ADR-0002).
 
 Segundo o PRD (§4), a Flávia produz **peças únicas/personalizadas** e
 **peças de modelo repetível** ao mesmo tempo — daí o campo `tipo` (a
-natureza da peça). O schema **não tem campo de estado comercial**: um
-campo `status` (`disponivel`/`sob-encomenda`/`vendida`) chegou a existir,
-mas foi removido por completo em 2026-07-09 (decisão do usuário) — ver
-nota abaixo.
+natureza da peça). O schema **não tem campo de estado comercial** (campo
+`status` removido em 2026-07-09) **nem de categoria** (campo `categoria`
+e todo o filtro por categoria removidos em 2026-07-09, decisão do usuário
+— ver SPEC-0001 RF-02).
 
 ```json
 [
   {
     "slug": "vaso-rose-01",
     "nome": "Vaso Rosé",
-    "categoria": "Decorativas",
     "descricao": "Peça modelada à mão, acabamento em tom pastel.",
     "medidas": "Altura 22cm, diâmetro 14cm",
     "tecnica": "Modelagem manual",
@@ -74,7 +73,6 @@ nota abaixo.
   {
     "slug": "peca-unica-02",
     "nome": "Tigela Aconchego",
-    "categoria": "Utilitárias",
     "descricao": "Peça única, feita sob encomenda.",
     "preco": 30.0,
     "tipo": "unica",
@@ -86,9 +84,9 @@ nota abaixo.
 ]
 ```
 
-Campos obrigatórios: `slug`, `nome`, `categoria`, `descricao`, `preco`,
-`tipo`, `imagens` (array com ≥ 1 item). Campos opcionais: `medidas`,
-`tecnica`, `destaque` (default `false`).
+Campos obrigatórios: `slug`, `nome`, `descricao`, `preco`, `tipo`,
+`imagens` (array com ≥ 1 item). Campos opcionais: `medidas`, `tecnica`,
+`destaque` (default `false`).
 
 - `tipo`: `"unica"` (peça personalizada, uma só existe) |
   `"modelo-repetivel"` (mesmo desenho, pode haver mais de uma unidade).
@@ -154,61 +152,72 @@ sobre.html (texto institucional lido de data/config.json)
 ## 4. Direção visual
 
 Sistema de tokens definido a partir do PRD (`docs/PRD.md` §2 e §9) — marca
-nova, tom de voz aconchegante, colorido e intimista. **Paleta floral
-(2026-07-08, decisão do usuário)**: cores extraídas de
-`imagens/foto-flores-exemplo-cores-usar.png` (buquê com rosa/magenta,
-laranja, dourado, verde e azul), substituindo a paleta pastel anterior
-(rosa claro + vermelho suave apenas). Implementado em `assets/css/base.css`.
+nova, tom de voz aconchegante, colorido e intimista.
+
+> **Histórico de paletas**: a paleta original (terracota queimada + oliva,
+> Fase 0) e uma paleta "floral" multi-tom (rosa/laranja/dourado/verde/azul)
+> chegaram a ser **documentadas** em versões anteriores desta seção, mas a
+> paleta floral nunca foi de fato implementada em `assets/css/base.css` —
+> o código seguiu com os tokens terracota da Fase 0 até 2026-07-09. **Paleta
+> em tons de rosa (2026-07-09, decisão do usuário)** substitui a paleta
+> terracota diretamente — implementada e verificada abaixo, desta vez com
+> os tokens realmente atualizados em `base.css`/`layout.css`/`componentes.css`.
 
 ### Cor
 
 | Token | Hex | Uso |
 |---|---|---|
-| `--cor-fundo` | `#FBF3EF` | Fallback sólido do fundo (navegadores sem gradiente) |
-| `--cor-superficie` | `#FFFDFB` | Cards e blocos elevados — permanece neutro de propósito, pra manter foto/texto do produto legíveis mesmo com o fundo colorido |
-| `--cor-primaria` | `#F1B8CC` | Rosa médio — tag de preço, seleção de texto |
-| `--cor-acento` | `#B02857` | Magenta profundo (rosas do buquê) — CTAs, links, filtro ativo |
-| `--cor-acento-escuro` | `#8F2046` | Hover/active do acento |
-| `--cor-texto` | `#3A2620` | Marrom espresso — texto principal, nunca preto puro |
-| `--cor-texto-suave` | `#725A50` | Texto secundário/legendas (escurecido de `#7A6058` pra manter contraste sobre os novos fundos) |
-| `--cor-borda` | `#E4D6CC` | Divisores e bordas sutis |
-| `--cor-flor-rosa` | `#F7D6E2` | Tom 1 do gradiente floral — também fundo sólido do header/nav mobile |
-| `--cor-flor-laranja` | `#FAE7D5` | Tom 2 do gradiente floral |
-| `--cor-flor-amarelo` | `#F7EDD5` | Tom 3 do gradiente floral |
-| `--cor-flor-verde` | `#E5E9D8` | Tom 4 do gradiente floral |
-| `--cor-flor-azul` | `#DEE9F2` | Tom 5 do gradiente floral |
-| `--gradiente-floral` | `linear-gradient(135deg, ...)` | Os 5 tons acima em sequência — usado no `body` (fundo geral) e `.hero` |
+| `--cor-fundo` | `#FDF1F4` | Fundo geral (`body`), sob a textura de grão |
+| `--cor-fundo-painel` | `#F7DFE6` | Painéis levemente destacados (`.sobre`, placeholder de imagem do card) |
+| `--cor-superficie` | `#FFFBFC` | Cards e blocos elevados — quase branco, de propósito, pra manter foto/texto do produto legíveis |
+| `--cor-primaria` | `#F0AEC7` | Rosa médio — tag de preço, seleção de texto |
+| `--cor-acento` | `#B23368` | Rosa/berry profundo — CTAs, links, filtro ativo |
+| `--cor-acento-escuro` | `#8C2350` | Hover/active do acento |
+| `--cor-rosa-secundaria` | `#D98BAA` | Rosa dusty — disco decorativo interno do hero (substitui o antigo `--cor-oliva`) |
+| `--cor-texto` | `#3D1626` | Vinho/ameixa escuro — texto principal, nunca preto puro |
+| `--cor-texto-suave` | `#7A4F60` | Texto secundário/legendas |
+| `--cor-borda` | `#EAD0DA` | Divisores e bordas sutis |
+| `--cor-escuro` | `#2B1420` | Fundo do rodapé |
+| `--cor-escuro-texto` | `#F8E9EF` | Texto sobre `--cor-escuro` |
+| `--cor-escuro-borda` | `#4A2434` | Borda do rodapé |
 
-> **Contraste (SPEC-0004)**: todos os pares texto/fundo relevantes da
-> paleta floral foram checados contra WCAG AA (4.5:1 para texto normal)
-> com a fórmula de luminância relativa. O par mais apertado é
-> `--cor-texto-suave` sobre `--cor-flor-rosa`, em 4.64:1 — todos os demais
-> (inclusive `--cor-acento` sobre cada um dos 5 tons do gradiente, usado em
-> links/hover no header) ficam entre 4.77:1 e 12:1. `--cor-texto-suave` foi
-> escurecido de `#7A6058` para `#725A50` especificamente para essa margem;
-> sem esse ajuste, o par mais apertado ficava em 4.19:1 (abaixo do
-> mínimo). Cards continuam com `--cor-superficie` neutro (branco) — não
-> fazem parte do gradiente colorido, decisão do usuário para manter a
-> grade de produtos legível.
->
-> (Nota histórica: a paleta anterior tinha um ajuste de contraste em
-> `--cor-acento` de `#C1594E` para `#BB5245`, e em `.selo--vendida` — o
-> componente de selo deixou de ser lido pela UI em 2026-07-08 e teve seu
-> código (`.selo*` em `componentes.css`, markup em `index.html`, lógica em
-> `produtos.js`/`modal.js`) e o campo `status` removidos por completo em
-> 2026-07-09, ver SPEC-0001 RF-01, antes desta troca de paleta.)
+`--cor-oliva` e `--cor-mostarda` (paleta terracota) foram removidos — não
+existe mais nenhum tom fora da família rosa/vinho no sistema de cor.
+
+> **Contraste (SPEC-0004)**: todos os pares texto/fundo relevantes foram
+> checados contra WCAG AA (4.5:1 para texto normal) com a fórmula de
+> luminância relativa (script Node ad-hoc, não commitado). Resultados:
+> `--cor-texto` sobre `--cor-fundo`/`--cor-superficie`/`--cor-fundo-painel`
+> entre 12.4:1 e 15.3:1; `--cor-texto-suave` sobre os mesmos três fundos
+> entre 5.3:1 e 6.6:1; `--cor-acento` sobre `--cor-fundo`/`--cor-superficie`/
+> `--cor-fundo-painel` entre 4.67:1 e 5.74:1; `--cor-acento-escuro` sobre
+> `--cor-fundo`/`--cor-superficie` acima de 7.7:1; `--cor-escuro-texto`
+> sobre `--cor-escuro` em 14.6:1; `--cor-acento` sobre `--cor-escuro-texto`
+> (link do CTA no rodapé escuro) em 5.02:1. Todos os pares ficam acima do
+> mínimo de 4.5:1 — nenhum ajuste adicional de tom foi necessário desta vez.
+> Cards continuam com `--cor-superficie` neutro, mesma decisão de sempre
+> (manter a grade de produtos legível).
 
 ### Tipografia
+
+> **Nota (2026-07-09)**: esta seção descrevia Jost como já implementado
+> desde 2026-07-08, mas — mesmo padrão de mismatch já visto na paleta de
+> cor (Fase 4.8 vs. 4.13) — o CSS continuou com `Fraunces` até hoje.
+> Implementado de verdade agora, a pedido do usuário ("fonte mais soft,
+> leve e vibes" para o nome da loja, nomes de produto e preços).
 
 - **Display** (`--fonte-display`): `'Jost', sans-serif` — geométrica, traços
   finos, ar delicado (inspirada em ateliedasah.com — ver
   `docs/superpowers/specs/2026-07-08-redesign-visual-delicado-design.md`).
-  Uso restrito: nome da loja, títulos de seção, preço em destaque. Peso
-  400-500 (título 400, logo e preço 500). Fallback: `system-ui, sans-serif`.
-- **Corpo** (`--fonte-corpo`): `'Nunito Sans', sans-serif` — humanista, com
-  terminações arredondadas que conversam com o clima aconchegante/pastel,
-  sem competir com a serifada. Uso: parágrafos, navegação, botões, labels.
-  Fallback: `system-ui, sans-serif`.
+  Uso restrito: nome da loja (`.logo`, `h1`), nomes de produto (`h2`/`h3`
+  no card e no modal) e preço em destaque (`.tag-preco`). Pesos 300-600
+  carregados; título usa 400, `h3` (nome no card)/`.logo`/preço usam 500,
+  preço do modal usa 600. Fallback: `"Century Gothic", sans-serif`.
+- **Corpo** (`--fonte-corpo`): `'Work Sans', sans-serif` — humanista,
+  sem competir com o display. Uso: parágrafos, navegação, botões, labels.
+  Fallback: `system-ui, sans-serif`. (Nota: versões anteriores desta seção
+  citavam "Nunito Sans" como fonte de corpo — nunca foi implementado; o
+  código sempre usou Work Sans desde a Fase 0.)
 - Escala tipográfica em `base.css` via `--texto-*` (xs/sm/base/lg/xl/2xl/3xl),
   em `rem`, razão ~1.25.
 
@@ -218,9 +227,13 @@ laranja, dourado, verde e azul), substituindo a paleta pastel anterior
   botões usam um raio levemente assimétrico (`--raio-organico:
   10px 14px 10px 16px`) — assimetria sutil, quase imperceptível, ajustada
   para um visual mais delicado (ver nota de redesign abaixo).
-- **Etiqueta de preço**: o preço de cada peça aparece numa "tag" com leve
-  rotação (`--rotacao-tag: -1deg`) — mantém o storytelling de presente
-  (PRD §3) sem o efeito de "colada torta" da versão anterior.
+- **Etiqueta de preço**: no modal de detalhe, o preço aparece num carimbo
+  circular com borda tracejada e leve rotação (`--rotacao-tag-preco:
+  -3deg`) — reforça o storytelling de "feira de artesanato" (PRD §3). No
+  card do catálogo, o preço é **simplificado (2026-07-09, decisão do
+  usuário)**: só o número em destaque (`--fonte-display`, sem carimbo,
+  sem rotação, sem borda) ao lado do nome da peça — prioriza legibilidade
+  na grade em vez do storytelling decorativo.
 - **Sombra**: sombra suave com tom quente (derivada de `--cor-texto`),
   opacidade e blur reduzidos para reforçar o visual mais limpo, nunca
   cinza/preto puro.
@@ -250,7 +263,5 @@ laranja, dourado, verde e azul), substituindo a paleta pastel anterior
   pequeno. Deep-link por `#slug` é tratado via evento `hashchange`
   (`assets/js/modal.js`), tanto para abrir `index.html#slug` direto quanto
   para clique num card dentro da própria página (única, desde 2026-07-08).
-- Filtro de categoria é derivado via `[...new Set(produtos.map(p =>
-  p.categoria))]` — nunca lista hardcoded (RF-02 do SPEC-0001).
 - `scripts/validar-produtos.js` roda com `node scripts/validar-produtos.js`
   antes de cada deploy (documentado em TASKS.md e CLAUDE.md).
