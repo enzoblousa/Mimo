@@ -18,7 +18,7 @@ verificada.
 - **Saída do script de validação**: cole a saída de
   `node scripts/validar-produtos.js` ao rodar antes do deploy.
 - **Prints do site em produção** após deploy (ADR-0005), mostrando catálogo,
-  filtro em uso e um link `wa.me` funcionando.
+  filtro em uso e o link do Instagram funcionando.
 
 ## Convenção de nome
 

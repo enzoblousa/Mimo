@@ -14,11 +14,11 @@ implementação.
 - **Problema a resolver**: A loja ainda não existe — nasceu de uma ideia da
   namorada do autor (Flávia Mangabeira) de vender suas peças de arte/cerâmica
   para amigas via Instagram. O site nasce **junto com a loja**, não depois
-  dela: serve como catálogo público e ponte de contato (WhatsApp/Instagram)
+  dela: serve como catálogo público e ponte de contato (Instagram)
   desde o primeiro dia, em vez de depender só de posts soltos no Instagram
   pessoal.
 - **Visão de sucesso em 1 frase**: Amigas e conhecidas conseguem ver as
-  peças da Flávia organizadas num só lugar e chegam até ela pelo WhatsApp
+  peças da Flávia organizadas num só lugar e chegam até ela pelo Instagram
   para comprar, sem fricção.
 
 ## 2. Contexto de negócio / marca
@@ -69,20 +69,22 @@ implementação.
 - **Peças são únicas (uma de cada) ou pequenos lotes repetíveis?**:
   **Os dois modelos convivem**: peças únicas/personalizadas (feitas sob
   encomenda para a cliente) e peças de modelo repetido (mesmo desenho,
-  disponíveis em mais de uma unidade). Isso muda o modelo de dados: não dá
-  para tratar `disponivel` como um booleano simples — precisamos de um
-  status por peça (ver nota de impacto abaixo).
+  disponíveis em mais de uma unidade). Isso é capturado pelo campo `tipo`
+  do schema (ver nota de impacto abaixo). **O site não indica estado
+  comercial da peça** (disponível/sob encomenda/vendida) — campo `status`
+  removido por completo do schema em 2026-07-09, decisão do usuário (ver
+  SPEC-0001 RF-01, SPEC-0003 RF-01, `docs/design/DESIGN.md` §2).
 - **Controle de estoque/quantidade**: **Decisão: não mostrar quantidade
   restante no site por enquanto** (ex. nada de "restam 2 unidades"). Mesmo
-  para peças de modelo repetível, o site só indica
-  disponível/sob-encomenda/vendida — sem número. Simplifica o schema (não
-  precisa de campo `quantidade`) e evita a Flávia ter que manter uma
-  contagem exata atualizada toda semana.
+  para peças de modelo repetível, o site não indica nenhum estado
+  comercial da peça — sem número, sem rótulo. Simplifica o schema (não
+  precisa de campo `quantidade` nem `status`) e evita a Flávia ter que
+  manter uma contagem exata atualizada toda semana.
 - **Prazo de produção sob encomenda**: **3 dias** após confirmação do
-  pedido, quando a peça não está pronta em mãos. Usar esse prazo no texto
-  do site perto do selo "Sob encomenda" (ex. "Sob encomenda — pronta em
-  até 3 dias após confirmação"), em vez de deixar o termo vago — ajusta
-  SPEC-0001 RF-01.
+  pedido, quando a peça não está pronta em mãos. Esse prazo pode aparecer
+  no texto/descrição da peça em `data/produtos.json` quando fizer sentido
+  (ex. "pronta em até 3 dias após confirmação"), já que não há mais um
+  selo/rótulo de status na UI para ancorar esse texto (SPEC-0001 RF-01).
 - **Entrega**: Foco em entregas na região do **DF (Brasília)**, com
   abertura para enviar a outras cidades/estados mediante combinação. O
   site deve deixar isso claro (ex. no "Sobre" ou perto do CTA de contato),
@@ -94,32 +96,34 @@ implementação.
   realmente simples e rápido (ADR-0003) — este é o fluxo mais frequente de
   manutenção do site, não um caso raro.
 
-> **Nota de impacto em DESIGN/SPEC**: a existência de peças "personalizadas
-> sob encomenda" versus "modelo repetível pronto" exige revisar o schema de
-> `produtos.json` (`docs/design/DESIGN.md`) e o RF-01 do
-> `docs/specs/0001-catalogo-de-pecas.md`, que hoje só previa
-> `disponivel: true/false`. Provável necessidade de um campo tipo
-> `tipo: "unica" | "sob-encomenda" | "modelo-repetivel"` e/ou
-> `status: "disponivel" | "sob-encomenda" | "vendida"`. Ajustar depois de
-> fechar o PRD.
+> **Nota de impacto em DESIGN/SPEC (resolvida)**: a existência de peças
+> "personalizadas sob encomenda" versus "modelo repetível pronto" exigiu
+> revisar o schema de `produtos.json` (`docs/design/DESIGN.md`) e o RF-01
+> do `docs/specs/0001-catalogo-de-pecas.md`, que originalmente só previa
+> `disponivel: true/false`. Resultado: campo `tipo: "unica" |
+> "modelo-repetivel"` foi adicionado e permanece; um campo `status`
+> (`"disponivel" | "sob-encomenda" | "vendida"`) chegou a ser adicionado,
+> depois teve sua leitura pela UI removida (2026-07-08) e por fim foi
+> **removido do schema por completo em 2026-07-09** (decisão do usuário) —
+> não existe mais estado comercial por peça no site.
 
 ## 5. Canais de contato e venda
 
-- **WhatsApp (número real para os links `wa.me`)**: +55 61 9 9579-3905
-  (Flávia Mangabeira) → formato para `wa.me`: **`5561995793905`**
-  (confirmado, 9 dígitos após o DDD).
 - **Instagram (@handle real)**: @flaviamangabeirab (pessoal, por ora — ver
   seção 2 sobre migração futura para Instagram dedicado da loja).
+- **WhatsApp**: removido como canal do site em 2026-07-09 (decisão do
+  usuário) — Instagram é o único canal de contato/conversão. O número
+  (+55 61 9 9579-3905) não é mais usado em nenhum link do site.
 - **Outros canais a linkar** (Elo7, Etsy, e-mail): Nenhum por ora.
-- **Quem responde o WhatsApp/Instagram e com que tempo de resposta
-  esperado**: Flávia Mangabeira. Tempo de resposta não formalizado (não
-  crítico para o site — não vamos prometer SLA de resposta em texto).
+- **Quem responde o Instagram e com que tempo de resposta esperado**:
+  Flávia Mangabeira. Tempo de resposta não formalizado (não crítico para o
+  site — não vamos prometer SLA de resposta em texto).
 
 ## 6. Objetivos e métricas de sucesso
 
 - **Métrica principal de sucesso do site**: Qualitativa por ora — "ter um
-  lugar bonito para mandar o link" e receber mensagens pelo WhatsApp/
-  Instagram a partir dele. Sem meta numérica definida ainda.
+  lugar bonito para mandar o link" e receber mensagens pelo Instagram a
+  partir dele. Sem meta numérica definida ainda.
 - **Meta de curto prazo (3 meses)**: Nenhuma formal — sem prazo (ver seção 8).
 - **Como saberemos que o site "não está funcionando"**: [A PREENCHER, se
   quiser formalizar — por ora, sucesso = existir, estar bonito, e gerar
@@ -172,5 +176,5 @@ implementação.
 ## 10. Fora de escopo (non-goals)
 
 - **Confirmado**: carrinho, checkout e pagamento online continuam fora de
-  escopo. O site é catálogo + contato (WhatsApp/Instagram), consistente com
+  escopo. O site é catálogo + contato (Instagram), consistente com
   ADR-0001 e ADR-0004.

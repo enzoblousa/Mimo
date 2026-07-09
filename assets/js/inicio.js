@@ -1,43 +1,56 @@
+import { ativarMenuMobile } from "./menu.js";
 import { carregarConfig, preencherContato, preencherIdentidade } from "./config.js";
 import { carregarProdutos, criarCardProduto } from "./produtos.js";
+import { categoriasUnicas, filtrarProdutos } from "./filtro.js";
+import { configurarModal } from "./modal.js";
 
-function ativarMenuMobile() {
-  const botao = document.querySelector("[data-botao-menu]");
-  const nav = document.querySelector("[data-nav]");
-  if (!botao || !nav) return;
+function renderizarGrade(produtos) {
+  const grade = document.querySelector("[data-grade-catalogo]");
+  const vazio = document.querySelector("[data-catalogo-vazio]");
+  grade.innerHTML = "";
 
-  botao.addEventListener("click", () => {
-    const aberto = nav.classList.toggle("nav--aberta");
-    botao.setAttribute("aria-expanded", String(aberto));
-  });
+  const semResultado = produtos.length === 0;
+  vazio.hidden = !semResultado;
+  if (semResultado) return;
+
+  produtos.forEach((produto) => grade.appendChild(criarCardProduto(produto)));
 }
 
-function preencherSobre(config) {
-  const container = document.querySelector("[data-sobre]");
-  if (!container) return;
-  container.innerHTML = "";
-  config.sobre
-    .split("\n\n")
-    .filter((paragrafo) => paragrafo.trim().length > 0)
-    .forEach((paragrafo) => {
-      const p = document.createElement("p");
-      p.textContent = paragrafo;
-      container.appendChild(p);
+function configurarFiltros(todosProdutos) {
+  const listaFiltros = document.querySelector("[data-lista-filtros]");
+  const campoBusca = document.querySelector("[data-campo-busca]");
+  const estado = { categoria: "todas", busca: "" };
+
+  function aplicarFiltros() {
+    renderizarGrade(filtrarProdutos(todosProdutos, estado));
+  }
+
+  const categorias = ["todas", ...categoriasUnicas(todosProdutos)];
+  categorias.forEach((categoria) => {
+    const botao = document.createElement("button");
+    botao.type = "button";
+    botao.className = "filtro-item";
+    botao.textContent = categoria === "todas" ? "Todas" : categoria;
+    botao.setAttribute("aria-pressed", String(categoria === "todas"));
+
+    botao.addEventListener("click", () => {
+      estado.categoria = categoria;
+      listaFiltros
+        .querySelectorAll(".filtro-item")
+        .forEach((item) => item.setAttribute("aria-pressed", "false"));
+      botao.setAttribute("aria-pressed", "true");
+      aplicarFiltros();
     });
-}
 
-async function renderizarDestaques() {
-  const secao = document.querySelector("[data-secao-destaques]");
-  const grade = document.querySelector("[data-grade-destaques]");
-  if (!secao || !grade) return;
+    listaFiltros.appendChild(botao);
+  });
 
-  const produtos = await carregarProdutos();
-  const destaques = produtos.filter((produto) => produto.destaque);
+  campoBusca.addEventListener("input", (evento) => {
+    estado.busca = evento.target.value;
+    aplicarFiltros();
+  });
 
-  secao.hidden = destaques.length === 0;
-  if (destaques.length === 0) return;
-
-  destaques.forEach((produto) => grade.appendChild(criarCardProduto(produto)));
+  aplicarFiltros();
 }
 
 async function iniciar() {
@@ -47,9 +60,10 @@ async function iniciar() {
   document.title = `${config.nomeLoja} — ${config.posicionamento}`;
   preencherIdentidade(config);
   preencherContato(config);
-  preencherSobre(config);
 
-  await renderizarDestaques();
+  const produtos = await carregarProdutos();
+  configurarFiltros(produtos);
+  configurarModal(produtos, config);
 }
 
 iniciar().catch((erro) => console.error("Falha ao iniciar a página inicial:", erro));

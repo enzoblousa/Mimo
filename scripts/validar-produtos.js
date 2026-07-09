@@ -7,7 +7,6 @@ const path = require("node:path");
 const CAMINHO_PRODUTOS = path.join(__dirname, "..", "data", "produtos.json");
 
 const TIPOS_VALIDOS = ["unica", "modelo-repetivel"];
-const STATUS_VALIDOS = ["disponivel", "sob-encomenda", "vendida"];
 
 const CAMPOS_STRING_OBRIGATORIOS = ["slug", "nome", "categoria", "descricao"];
 const CAMPOS_STRING_OPCIONAIS = ["medidas", "tecnica"];
@@ -38,10 +37,6 @@ function validarProduto(produto, indice) {
 
   if (!TIPOS_VALIDOS.includes(produto.tipo)) {
     erros.push(`${rotulo}: campo "tipo" precisa ser um de: ${TIPOS_VALIDOS.join(", ")}`);
-  }
-
-  if (!STATUS_VALIDOS.includes(produto.status)) {
-    erros.push(`${rotulo}: campo "status" precisa ser um de: ${STATUS_VALIDOS.join(", ")}`);
   }
 
   if ("destaque" in produto && typeof produto.destaque !== "boolean") {

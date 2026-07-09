@@ -16,16 +16,17 @@ contato.
 
 - O catálogo exibe todas as peças de `data/produtos.json` como uma grade de
   cards.
-- Cada card mostra: foto principal, nome, categoria, preço formatado em BRL
-  (`R$ 000,00`) e um selo de status conforme o campo `status`
-  (ver `docs/design/DESIGN.md` §2):
-  - `disponivel` → selo "Pronta entrega".
-  - `sob-encomenda` → selo **"Sob encomenda — pronta em até 3 dias"**
-    (prazo de produção da Flávia, PRD §4; não deixar o termo vago).
-  - `vendida` → card esmaecido, selo "Vendida", não clicável para contato
-    (ver SPEC-0003 RF-01).
-- Peças `tipo: "unica"` podem opcionalmente exibir um selo adicional "Peça
-  única" no card, para reforçar que não haverá reposição igual.
+- Cada card mostra: foto principal, nome, categoria e preço formatado em
+  BRL (`R$ 000,00`).
+- **Removido (2026-07-08, decisão do usuário; campo removido do schema em
+  2026-07-09)**: o card e o modal de detalhe não mostram nenhum rótulo/selo
+  de estado comercial — nem esmaecimento visual de peça vendida. Toda peça
+  aparece visualmente igual. O campo `status`
+  (`disponivel`/`sob-encomenda`/`vendida`) que existia em
+  `data/produtos.json` (ADR-0003, `docs/design/DESIGN.md` §2) foi removido
+  do schema por completo em 2026-07-09 — não existe mais no dado nem na
+  validação. Ver também SPEC-0003 RF-01 (CTA de contato não varia por
+  estado comercial).
 - O site **não exibe quantidade em estoque** (ex. "restam 2 unidades"),
   mesmo para peças `modelo-repetivel` — decisão de PRD §4 para simplificar
   a manutenção semanal do catálogo.
@@ -64,9 +65,11 @@ contato.
 - [ ] Grade renderiza corretamente com 1, poucas (3-5) e muitas (20+) peças.
 - [ ] Filtro de categoria funciona e reflete exatamente as categorias
       existentes nos dados.
-- [ ] Peça com `status: "vendida"` é visualmente distinta e não oferece CTA
-      de contato; peça `sob-encomenda` mostra o selo correto e ainda
-      permite contato (SPEC-0003).
+- [x] ~~Peça com `status: "vendida"` é visualmente distinta e não oferece
+      CTA de contato; peça `sob-encomenda` mostra o selo correto e ainda
+      permite contato.~~ Removido (2026-07-08); campo `status` removido do
+      schema em 2026-07-09 — toda peça é visualmente igual e sempre tem
+      CTA de contato (SPEC-0003 RF-01).
 - [ ] Clicar em um card sempre abre o detalhe correto (sem mistura de dados
       entre peças).
 - [ ] Catálogo vazio (`produtos.json` = `[]`) exibe estado vazio amigável, não
