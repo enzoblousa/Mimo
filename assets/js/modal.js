@@ -1,4 +1,4 @@
-import { ROTULO_STATUS, formatarPreco } from "./produtos.js";
+import { formatarPreco } from "./produtos.js";
 import { linkContatoProduto } from "./contato.js";
 
 function preencherGaleria(dialog, produto) {
@@ -41,13 +41,9 @@ function preencherLinhaOpcional(dialog, seletor, valor) {
   linha.querySelector("[data-valor]").textContent = valor;
 }
 
-function preencherContato(dialog, produto, config) {
+function preencherContato(dialog, config) {
   const botaoContato = dialog.querySelector("[data-modal-contato]");
-  const link = linkContatoProduto(produto, config);
-  botaoContato.hidden = link === null;
-  if (link) {
-    botaoContato.href = link;
-  }
+  botaoContato.href = linkContatoProduto(config);
 }
 
 function abrirModal(dialog, produto, config) {
@@ -57,13 +53,9 @@ function abrirModal(dialog, produto, config) {
   dialog.querySelector("[data-modal-descricao]").textContent = produto.descricao;
   dialog.querySelector("[data-modal-preco]").textContent = formatarPreco(produto.preco);
 
-  const selo = dialog.querySelector("[data-modal-selo]");
-  selo.className = `selo selo--${produto.status}`;
-  selo.textContent = ROTULO_STATUS[produto.status] ?? produto.status;
-
   preencherLinhaOpcional(dialog, "[data-modal-linha-medidas]", produto.medidas);
   preencherLinhaOpcional(dialog, "[data-modal-linha-tecnica]", produto.tecnica);
-  preencherContato(dialog, produto, config);
+  preencherContato(dialog, config);
 
   if (!dialog.open) dialog.showModal();
 }

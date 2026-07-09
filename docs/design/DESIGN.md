@@ -7,21 +7,29 @@ Documento de design técnico e visual. Implementa os requisitos de
 
 ```
 /
-├── index.html              # Página inicial (SPEC-0002)
-├── catalogo.html           # Catálogo completo (SPEC-0001)
+├── index.html              # Hero (SPEC-0002 RF-01) + catálogo completo
+│                            # (SPEC-0001) — sem página de catálogo separada
+│                            # desde 2026-07-08.
+├── sobre.html               # Página "Sobre" (SPEC-0002 RF-02), separada da
+│                            # home desde 2026-07-09.
 ├── assets/
 │   ├── css/
 │   │   ├── base.css        # Reset, variáveis (cor/tipografia), utilitários
-│   │   ├── layout.css       # Header, footer, grid, seções
+│   │   ├── layout.css       # Header, footer, grid, seções (compartilhado
+│   │   │                    # por index.html e sobre.html)
 │   │   └── componentes.css  # Card de produto, modal, filtros, botões
 │   ├── js/
 │   │   ├── config.js       # Fetch de data/config.json (nome, contato, sobre)
+│   │   ├── menu.js         # ativarMenuMobile() — compartilhado por
+│   │   │                   # inicio.js e sobre.js
 │   │   ├── produtos.js     # Fetch de data/produtos.json + criarCardProduto()
-│   │   ├── inicio.js       # Bootstrap de index.html (usa config.js e produtos.js)
+│   │   ├── inicio.js       # Bootstrap de index.html: hero, filtro/busca,
+│   │   │                   # grade, modal (usa todos os módulos abaixo)
+│   │   ├── sobre.js        # Bootstrap de sobre.html: identidade, contato,
+│   │   │                   # texto "sobre"
 │   │   ├── filtro.js       # Categorias dinâmicas + busca textual
-│   │   ├── contato.js      # Link wa.me por peça (mensagem varia por status)
-│   │   ├── modal.js        # <dialog> de detalhe, deep-link por slug
-│   │   └── catalogo.js     # Bootstrap de catalogo.html (usa os módulos acima)
+│   │   ├── contato.js      # Link do CTA por peça → perfil do Instagram
+│   │   └── modal.js        # <dialog> de detalhe, deep-link por slug
 │   └── imagens/
 │       ├── produtos/<slug>.jpg
 │       └── site/ (hero, sobre, favicon, og-image)
@@ -41,10 +49,11 @@ direto num navegador ou via qualquer servidor estático (ADR-0002).
 ### `data/produtos.json`
 
 Segundo o PRD (§4), a Flávia produz **peças únicas/personalizadas** e
-**peças de modelo repetível** ao mesmo tempo — um booleano `disponivel`
-simples não distingue "vendida", "sob encomenda" e "pronta entrega". O
-schema usa dois campos: `tipo` (a natureza da peça) e `status` (o estado
-comercial atual).
+**peças de modelo repetível** ao mesmo tempo — daí o campo `tipo` (a
+natureza da peça). O schema **não tem campo de estado comercial**: um
+campo `status` (`disponivel`/`sob-encomenda`/`vendida`) chegou a existir,
+mas foi removido por completo em 2026-07-09 (decisão do usuário) — ver
+nota abaixo.
 
 ```json
 [
@@ -57,7 +66,6 @@ comercial atual).
     "tecnica": "Modelagem manual",
     "preco": 25.0,
     "tipo": "modelo-repetivel",
-    "status": "disponivel",
     "destaque": true,
     "imagens": [
       "assets/imagens/produtos/vaso-rose-01-1.jpg"
@@ -70,7 +78,6 @@ comercial atual).
     "descricao": "Peça única, feita sob encomenda.",
     "preco": 30.0,
     "tipo": "unica",
-    "status": "sob-encomenda",
     "destaque": false,
     "imagens": [
       "assets/imagens/produtos/peca-unica-02-1.jpg"
@@ -80,18 +87,23 @@ comercial atual).
 ```
 
 Campos obrigatórios: `slug`, `nome`, `categoria`, `descricao`, `preco`,
-`tipo`, `status`, `imagens` (array com ≥ 1 item). Campos opcionais:
-`medidas`, `tecnica`, `destaque` (default `false`).
+`tipo`, `imagens` (array com ≥ 1 item). Campos opcionais: `medidas`,
+`tecnica`, `destaque` (default `false`).
 
 - `tipo`: `"unica"` (peça personalizada, uma só existe) |
   `"modelo-repetivel"` (mesmo desenho, pode haver mais de uma unidade).
-- `status`: `"disponivel"` (pronta entrega) | `"sob-encomenda"` (feita ao
-  ser encomendada — típico de `tipo: "unica"`) | `"vendida"` (encerrada,
-  não aparece com CTA de contato — ver SPEC-0001 RF-01 e
-  SPEC-0003 RF-01).
+
+> **Campo `status` removido (2026-07-09, decisão do usuário)**: o schema
+> chegou a ter um campo `status` (`"disponivel"` | `"sob-encomenda"` |
+> `"vendida"`). Em 2026-07-08 sua leitura pela UI já tinha sido removida
+> (sem selo/rótulo, sem esmaecimento de peça vendida, sem variação de
+> CTA); em 2026-07-09 o campo foi removido do schema por completo —
+> `data/produtos.json` e `scripts/validar-produtos.js` não conhecem mais
+> `status`. Toda peça é visualmente igual e sempre tem CTA de contato,
+> independente de estado comercial (SPEC-0001 RF-01, SPEC-0003 RF-01).
 
 `slug` é único, usado como `id` para deep-linking do modal
-(`catalogo.html#vaso-rose-01`) e como base do nome de arquivo de imagem.
+(`index.html#vaso-rose-01`) e como base do nome de arquivo de imagem.
 
 > **Nota de risco (PRD §7)**: enquanto não há fotos reais das peças, as
 > imagens em `assets/imagens/produtos/` são placeholders obtidos na
@@ -106,69 +118,93 @@ Campos obrigatórios: `slug`, `nome`, `categoria`, `descricao`, `preco`,
   "nomeLoja": "Mimmo",
   "posicionamento": "Cerâmica feita à mão, peça por peça",
   "sobre": "Texto curto sobre a loja/artesã...",
-  "whatsapp": "5561995793905",
   "instagram": "https://instagram.com/flaviamangabeirab"
 }
 ```
 
-`whatsapp` e `instagram` apontam hoje para os canais **pessoais** da
-Flávia (PRD §2 e §5) — quando a loja migrar para um Instagram dedicado,
-só este arquivo precisa mudar (nenhum HTML/JS é tocado).
+`instagram` aponta hoje para o canal **pessoal** da Flávia (PRD §2 e §5) —
+quando a loja migrar para um Instagram dedicado, só este arquivo precisa
+mudar (nenhum HTML/JS é tocado). O campo `whatsapp` existiu neste schema
+até 2026-07-09, quando o WhatsApp foi removido como canal de contato do
+site (decisão do usuário, ver ADR-0004) — Instagram é o único canal.
 
 ## 3. Fluxo de navegação
 
+Catálogo completo mora em `index.html` desde 2026-07-08 (sem página de
+catálogo separada, sem seção "Destaques" — ver notas de redesign em
+SPEC-0002). Desde 2026-07-09 o site tem uma segunda página, `sobre.html`,
+para o conteúdo institucional (SPEC-0002 RF-02):
+
 ```
-index.html (Hero, Sobre, Destaques)
-   │  CTA "Ver catálogo"
-   ▼
-catalogo.html (Grade + Filtro + Busca)
+index.html (Hero → Grade + Filtro + Busca, tudo na mesma página)
    │  clique em um card
    ▼
-Modal de detalhe (mesma página, via JS)
-   │  CTA "Perguntar sobre esta peça"
+Modal de detalhe (mesma página, via JS, deep-link #slug)
+   │  CTA "Perguntar no Instagram"
    ▼
-WhatsApp (wa.me, nova aba)
+Instagram (perfil da loja, nova aba)
+
+index.html ⇄ sobre.html
+   │  header: link "Sobre" / hero: CTA "Conhecer a Flávia"     (ida)
+   │  header: link "Catálogo" (→ index.html#catalogo)          (volta)
+   ▼
+sobre.html (texto institucional lido de data/config.json)
 ```
 
 ## 4. Direção visual
 
 Sistema de tokens definido a partir do PRD (`docs/PRD.md` §2 e §9) — marca
-nova, tom de voz aconchegante, colorido e intimista, paleta pastel
-explicitamente pedida (rosa claro, vermelho suave, branco), evitando a
-direção terrosa/terracota descartada e o "azul corporativo/gradiente SaaS"
-genérico. Implementado em `assets/css/base.css`.
+nova, tom de voz aconchegante, colorido e intimista. **Paleta floral
+(2026-07-08, decisão do usuário)**: cores extraídas de
+`imagens/foto-flores-exemplo-cores-usar.png` (buquê com rosa/magenta,
+laranja, dourado, verde e azul), substituindo a paleta pastel anterior
+(rosa claro + vermelho suave apenas). Implementado em `assets/css/base.css`.
 
 ### Cor
 
 | Token | Hex | Uso |
 |---|---|---|
-| `--cor-fundo` | `#FBF3EF` | Fundo geral — creme rosado, nunca branco puro |
-| `--cor-superficie` | `#FFFDFB` | Cards e blocos elevados |
-| `--cor-primaria` | `#EAB4AC` | Rosa claro — destaques suaves, fundos de selo |
-| `--cor-acento` | `#BB5245` | Vermelho pastel queimado — CTAs, links, preço |
-| `--cor-acento-escuro` | `#A8483F` | Hover/active do acento |
+| `--cor-fundo` | `#FBF3EF` | Fallback sólido do fundo (navegadores sem gradiente) |
+| `--cor-superficie` | `#FFFDFB` | Cards e blocos elevados — permanece neutro de propósito, pra manter foto/texto do produto legíveis mesmo com o fundo colorido |
+| `--cor-primaria` | `#F1B8CC` | Rosa médio — tag de preço, seleção de texto |
+| `--cor-acento` | `#B02857` | Magenta profundo (rosas do buquê) — CTAs, links, filtro ativo |
+| `--cor-acento-escuro` | `#8F2046` | Hover/active do acento |
 | `--cor-texto` | `#3A2620` | Marrom espresso — texto principal, nunca preto puro |
-| `--cor-texto-suave` | `#7A6058` | Texto secundário/legendas |
+| `--cor-texto-suave` | `#725A50` | Texto secundário/legendas (escurecido de `#7A6058` pra manter contraste sobre os novos fundos) |
 | `--cor-borda` | `#E4D6CC` | Divisores e bordas sutis |
+| `--cor-flor-rosa` | `#F7D6E2` | Tom 1 do gradiente floral — também fundo sólido do header/nav mobile |
+| `--cor-flor-laranja` | `#FAE7D5` | Tom 2 do gradiente floral |
+| `--cor-flor-amarelo` | `#F7EDD5` | Tom 3 do gradiente floral |
+| `--cor-flor-verde` | `#E5E9D8` | Tom 4 do gradiente floral |
+| `--cor-flor-azul` | `#DEE9F2` | Tom 5 do gradiente floral |
+| `--gradiente-floral` | `linear-gradient(135deg, ...)` | Os 5 tons acima em sequência — usado no `body` (fundo geral) e `.hero` |
 
-> **Contraste (SPEC-0004)**: todos os pares texto/fundo realmente usados no
-> CSS foram checados contra WCAG AA (4.5:1 para texto normal) com um
-> script de contraste (fórmula de luminância relativa). `--cor-acento`
-> foi ajustado de `#C1594E` para `#BB5245` (mesmo tom, levemente mais
-> escuro) porque o valor original só passava em 4.31:1 como texto de
-> botão/link — a versão atual passa em 4.70:1. `.selo--vendida` usa
-> `--cor-texto` (não `--cor-texto-suave`) sobre `--cor-borda` pelo mesmo
-> motivo (4.06:1 → 10.01:1). Todos os demais pares (texto sobre fundo/
-> superfície, texto sobre `--cor-primaria`) já passavam com folga.
+> **Contraste (SPEC-0004)**: todos os pares texto/fundo relevantes da
+> paleta floral foram checados contra WCAG AA (4.5:1 para texto normal)
+> com a fórmula de luminância relativa. O par mais apertado é
+> `--cor-texto-suave` sobre `--cor-flor-rosa`, em 4.64:1 — todos os demais
+> (inclusive `--cor-acento` sobre cada um dos 5 tons do gradiente, usado em
+> links/hover no header) ficam entre 4.77:1 e 12:1. `--cor-texto-suave` foi
+> escurecido de `#7A6058` para `#725A50` especificamente para essa margem;
+> sem esse ajuste, o par mais apertado ficava em 4.19:1 (abaixo do
+> mínimo). Cards continuam com `--cor-superficie` neutro (branco) — não
+> fazem parte do gradiente colorido, decisão do usuário para manter a
+> grade de produtos legível.
+>
+> (Nota histórica: a paleta anterior tinha um ajuste de contraste em
+> `--cor-acento` de `#C1594E` para `#BB5245`, e em `.selo--vendida` — o
+> componente de selo deixou de ser lido pela UI em 2026-07-08 e teve seu
+> código (`.selo*` em `componentes.css`, markup em `index.html`, lógica em
+> `produtos.js`/`modal.js`) e o campo `status` removidos por completo em
+> 2026-07-09, ver SPEC-0001 RF-01, antes desta troca de paleta.)
 
 ### Tipografia
 
-- **Display** (`--fonte-display`): `'Fraunces', serif` — serifada de
-  contornos orgânicos e levemente "tortos" (ótica soft/wonky), remete à
-  imperfeição bonita de uma peça feita à mão. Uso restrito: nome da loja,
-  títulos de seção, preço em destaque. Peso 500-600; itálico da família
-  reservado para toques de destaque pontuais (ex. uma palavra no hero).
-  Fallback: `Georgia, serif`.
+- **Display** (`--fonte-display`): `'Jost', sans-serif` — geométrica, traços
+  finos, ar delicado (inspirada em ateliedasah.com — ver
+  `docs/superpowers/specs/2026-07-08-redesign-visual-delicado-design.md`).
+  Uso restrito: nome da loja, títulos de seção, preço em destaque. Peso
+  400-500 (título 400, logo e preço 500). Fallback: `system-ui, sans-serif`.
 - **Corpo** (`--fonte-corpo`): `'Nunito Sans', sans-serif` — humanista, com
   terminações arredondadas que conversam com o clima aconchegante/pastel,
   sem competir com a serifada. Uso: parágrafos, navegação, botões, labels.
@@ -178,20 +214,22 @@ genérico. Implementado em `assets/css/base.css`.
 
 ### Layout e forma — sinal de identidade
 
-- **Cantos "torneados"**: em vez de `border-radius` uniforme, cards, botões
-  e selos usam um raio assimétrico (`--raio-organico:
-  12px 22px 12px 26px`), como se cada elemento tivesse sido moldado à mão
-  — nunca perfeitamente simétrico, mas nunca desalinhado a ponto de parecer
-  erro.
-- **Etiqueta de preço**: o preço de cada peça aparece numa "tag" rotacionada
-  (-2° a -4°), como uma etiqueta de papel amarrada com barbante numa feira
-  de artesanato — reforça o storytelling de presente (PRD §3: peças também
-  compradas como presente). Implementado como componente em
-  `componentes.css` (Fase 2 de TASKS.md), token de rotação definido aqui:
-  `--rotacao-tag: -3deg`.
-- **Sombra**: sombra suave com tom quente (derivada de `--cor-texto` em
-  baixa opacidade), nunca cinza/preto puro — mantém a paleta coesa mesmo
-  em elementos elevados.
+- **Cantos "torneados"**: em vez de `border-radius` uniforme, cards e
+  botões usam um raio levemente assimétrico (`--raio-organico:
+  10px 14px 10px 16px`) — assimetria sutil, quase imperceptível, ajustada
+  para um visual mais delicado (ver nota de redesign abaixo).
+- **Etiqueta de preço**: o preço de cada peça aparece numa "tag" com leve
+  rotação (`--rotacao-tag: -1deg`) — mantém o storytelling de presente
+  (PRD §3) sem o efeito de "colada torta" da versão anterior.
+- **Sombra**: sombra suave com tom quente (derivada de `--cor-texto`),
+  opacidade e blur reduzidos para reforçar o visual mais limpo, nunca
+  cinza/preto puro.
+
+> **Nota de redesign (2026-07-08)**: valores de tipografia e forma acima
+> foram ajustados a partir da direção original (Fraunces, raio
+> `12px 22px 12px 26px`, rotação `-3deg`) para um visual mais delicado,
+> inspirado em ateliedasah.com. A paleta de cor (tabela acima) não mudou.
+> Ver `docs/superpowers/specs/2026-07-08-redesign-visual-delicado-design.md`.
 - **Espaçamento**: generoso, escala em `rem` (`--espaco-1` a `--espaco-6`)
   — "menos é mais", a peça (foto) é sempre o elemento principal do card.
 
@@ -210,8 +248,8 @@ genérico. Implementado em `assets/css/base.css`.
   `<dialog>` é amplo o suficiente hoje (todos os browsers evergreen) para
   não justificar reimplementar focus trap/Esc na mão para este projeto
   pequeno. Deep-link por `#slug` é tratado via evento `hashchange`
-  (`assets/js/modal.js`), tanto para abrir direto de `index.html` quanto
-  para navegação dentro do próprio `catalogo.html`.
+  (`assets/js/modal.js`), tanto para abrir `index.html#slug` direto quanto
+  para clique num card dentro da própria página (única, desde 2026-07-08).
 - Filtro de categoria é derivado via `[...new Set(produtos.map(p =>
   p.categoria))]` — nunca lista hardcoded (RF-02 do SPEC-0001).
 - `scripts/validar-produtos.js` roda com `node scripts/validar-produtos.js`

@@ -8,11 +8,9 @@
     "tecnica": "Modelagem manual",
     "preco": 28.0,
     "tipo": "modelo-repetivel",
-    "status": "disponivel",
     "destaque": true,
     "imagens": [
-      "https://picsum.photos/seed/vaso-rose-1/600/600",
-      "https://picsum.photos/seed/vaso-rose-2/600/600"
+      "assets/imagens/produtos/vaso-rose-1.jpg"
     ]
   },
   {
@@ -24,10 +22,9 @@
     "tecnica": "Torno",
     "preco": 18.0,
     "tipo": "modelo-repetivel",
-    "status": "disponivel",
     "destaque": false,
     "imagens": [
-      "https://picsum.photos/seed/xicara-aconchego-1/600/600"
+      "assets/imagens/produtos/xicara-aconchego-1.jpg"
     ]
   },
   {
@@ -39,10 +36,9 @@
     "tecnica": "Torno",
     "preco": 15.0,
     "tipo": "modelo-repetivel",
-    "status": "disponivel",
     "destaque": false,
     "imagens": [
-      "https://picsum.photos/seed/prato-petit-1/600/600"
+      "assets/imagens/produtos/prato-petit-1.webp"
     ]
   },
   {
@@ -54,10 +50,9 @@
     "tecnica": "Modelagem manual",
     "preco": 30.0,
     "tipo": "unica",
-    "status": "sob-encomenda",
     "destaque": true,
     "imagens": [
-      "https://picsum.photos/seed/tigela-flor-1/600/600"
+      "assets/imagens/produtos/tigela-flor-1.webp"
     ]
   },
   {
@@ -69,10 +64,9 @@
     "tecnica": "Modelagem manual",
     "preco": 20.0,
     "tipo": "modelo-repetivel",
-    "status": "vendida",
     "destaque": false,
     "imagens": [
-      "https://picsum.photos/seed/porta-velas-luna-1/600/600"
+      "assets/imagens/produtos/porta-velas-luna-1.jpg"
     ]
   },
   {
@@ -84,10 +78,9 @@
     "tecnica": "Torno",
     "preco": 22.0,
     "tipo": "modelo-repetivel",
-    "status": "disponivel",
     "destaque": false,
     "imagens": [
-      "https://picsum.photos/seed/caneca-mimmo-1/600/600"
+      "assets/imagens/produtos/caneca-mimmo-1.png"
     ]
   },
   {
@@ -99,10 +92,9 @@
     "tecnica": "Modelagem manual",
     "preco": 26.0,
     "tipo": "unica",
-    "status": "sob-encomenda",
     "destaque": false,
     "imagens": [
-      "https://picsum.photos/seed/vaso-pequeno-terra-1/600/600"
+      "assets/imagens/produtos/vaso-pequeno-terra-1.png"
     ]
   },
   {
@@ -114,10 +106,9 @@
     "tecnica": "Torno",
     "preco": 24.0,
     "tipo": "modelo-repetivel",
-    "status": "disponivel",
     "destaque": false,
     "imagens": [
-      "https://picsum.photos/seed/conjunto-mini-pratos-1/600/600"
+      "assets/imagens/produtos/conjunto-mini-pratos-1.jpg"
     ]
   },
   {
@@ -129,10 +120,9 @@
     "tecnica": "Modelagem manual",
     "preco": 30.0,
     "tipo": "unica",
-    "status": "vendida",
     "destaque": false,
     "imagens": [
-      "https://picsum.photos/seed/escultura-coracao-1/600/600"
+      "assets/imagens/produtos/escultura-coracao-1.webp"
     ]
   },
   {
@@ -144,10 +134,9 @@
     "tecnica": "Torno",
     "preco": 19.0,
     "tipo": "modelo-repetivel",
-    "status": "sob-encomenda",
     "destaque": true,
     "imagens": [
-      "https://picsum.photos/seed/xicara-cha-flor-1/600/600"
+      "assets/imagens/produtos/xicara-cha-flor-1.webp"
     ]
   }
 ]

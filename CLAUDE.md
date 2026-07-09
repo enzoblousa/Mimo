@@ -32,7 +32,8 @@ TASKS.md → registrar evidência.
   ([ADR-0002](docs/adr/0002-stack-html-css-js-vanilla.md)).
 - Dados de produto em `data/produtos.json`, versionado no repo, sem CMS/DB
   ([ADR-0003](docs/adr/0003-dados-produtos-json-local.md)).
-- Conversão de venda via link de WhatsApp/Instagram, sem formulário próprio
+- Conversão de venda via link de Instagram, sem formulário próprio e sem
+  WhatsApp (removido em 2026-07-09)
   ([ADR-0004](docs/adr/0004-conversao-via-contato-externo.md)).
 - Hospedagem em GitHub Pages ([ADR-0005](docs/adr/0005-hospedagem-estatica.md)),
   mas **deploy público está adiado** — fase atual é rodar só localmente, sem

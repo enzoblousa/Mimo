@@ -1,6 +1,6 @@
 /*
-  Mimmo — layout: header, footer, grid, seções.
-  Consome tokens de base.css. Mobile-first (SPEC-0004).
+  Mimmo — layout: header, hero, seções, rodapé.
+  Consome tokens de base.css. Mobile-first.
 */
 
 .container {
@@ -16,7 +16,8 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  background-color: var(--cor-fundo);
+  background-color: rgba(242, 232, 216, 0.85);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--cor-borda);
 }
 
@@ -28,11 +29,24 @@
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
   font-family: var(--fonte-display);
+  font-style: italic;
   font-size: var(--texto-xl);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--cor-texto);
   text-decoration: none;
+}
+
+.logo::before {
+  content: "";
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--cor-acento);
+  box-shadow: inset 0 0 0 2px var(--cor-fundo), inset 0 0 0 3px var(--cor-acento);
 }
 
 .botao-menu {
@@ -46,6 +60,11 @@
   background: none;
   border: none;
   cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.botao-menu:active {
+  transform: scale(0.9);
 }
 
 .botao-menu__linha {
@@ -54,6 +73,21 @@
   height: 2px;
   background-color: var(--cor-texto);
   border-radius: 2px;
+  transition: translate 0.25s ease, rotate 0.25s ease, opacity 0.2s ease;
+}
+
+.botao-menu[aria-expanded="true"] .botao-menu__linha:nth-child(2) {
+  translate: 0 7px;
+  rotate: 45deg;
+}
+
+.botao-menu[aria-expanded="true"] .botao-menu__linha:nth-child(3) {
+  opacity: 0;
+}
+
+.botao-menu[aria-expanded="true"] .botao-menu__linha:nth-child(4) {
+  translate: 0 -7px;
+  rotate: -45deg;
 }
 
 .nav {
@@ -67,16 +101,31 @@
   padding: var(--espaco-4);
   background-color: var(--cor-fundo);
   border-bottom: 1px solid var(--cor-borda);
+  opacity: 0;
+  translate: 0 -0.5rem;
+  transition: opacity 0.2s ease, translate 0.2s ease, display 0.2s allow-discrete;
 }
 
 .nav--aberta {
   display: flex;
+  opacity: 1;
+  translate: 0 0;
+}
+
+@starting-style {
+  .nav--aberta {
+    opacity: 0;
+    translate: 0 -0.5rem;
+  }
 }
 
 .nav a {
   color: var(--cor-texto);
   text-decoration: none;
   font-weight: 600;
+  font-size: var(--texto-sm);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .nav a:hover {
@@ -93,73 +142,173 @@
     position: static;
     flex-direction: row;
     align-items: center;
+    gap: var(--espaco-5);
     padding: 0;
     border: none;
     background: none;
+    opacity: 1;
+    translate: 0 0;
   }
 }
 
 /* Hero */
 
 .hero {
-  padding-block: var(--espaco-6);
-  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--espaco-7) var(--espaco-6);
 }
 
 .hero__conteudo {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: var(--espaco-4);
+  max-width: 40rem;
+}
+
+.hero__conteudo > * {
+  animation: entrar-suave 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero__conteudo > *:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.hero__conteudo > *:nth-child(2) {
+  animation-delay: 0.18s;
+}
+.hero__conteudo > *:nth-child(3) {
+  animation-delay: 0.32s;
 }
 
 .hero h1 {
-  font-size: clamp(var(--texto-3xl), 8vw, 4rem);
+  font-style: italic;
+  font-size: var(--texto-4xl);
 }
 
 .hero__posicionamento {
   font-size: var(--texto-lg);
   color: var(--cor-texto-suave);
-  max-width: 32rem;
+  max-width: 28rem;
 }
 
-/* Sobre */
+.hero__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-3);
+}
+
+/* Disco de torno — motivo decorativo do estúdio de cerâmica */
+.hero__disco {
+  position: absolute;
+  top: 50%;
+  right: -6rem;
+  translate: 0 -50%;
+  width: 26rem;
+  height: 26rem;
+  max-width: 60vw;
+  max-height: 60vw;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle at 50% 50%,
+    var(--cor-acento) 0 2px,
+    transparent 2px 26px
+  );
+  opacity: 0.22;
+  animation: girar-lento 90s linear infinite;
+  pointer-events: none;
+}
+
+.hero__disco--interno {
+  right: -3rem;
+  width: 14rem;
+  height: 14rem;
+  max-width: 40vw;
+  max-height: 40vw;
+  background: repeating-radial-gradient(circle at 50% 50%, var(--cor-oliva) 0 2px, transparent 2px 18px);
+  opacity: 0.28;
+  animation-duration: 60s;
+  animation-direction: reverse;
+}
+
+@media (max-width: 47.99rem) {
+  .hero__disco {
+    opacity: 0.14;
+  }
+}
+
+/* Divisor de contas de argila entre seções */
+.divisor-argila {
+  height: 1.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='24' viewBox='0 0 140 24'%3E%3Ccircle cx='6' cy='12' r='3' fill='%239C3D17'/%3E%3Ccircle cx='32' cy='12' r='2' fill='%2355603C'/%3E%3Ccircle cx='58' cy='12' r='4' fill='%239C3D17' opacity='0.55'/%3E%3Ccircle cx='88' cy='12' r='2' fill='%2355603C'/%3E%3Ccircle cx='114' cy='12' r='3' fill='%239C3D17'/%3E%3Ccircle cx='134' cy='12' r='2' fill='%2355603C' opacity='0.6'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: auto 100%;
+  opacity: 0.55;
+}
+
+/* Seção Sobre */
 
 .sobre {
+  position: relative;
+  background-color: var(--cor-fundo-painel);
   padding-block: var(--espaco-6);
-  background-color: var(--cor-superficie);
+  border-block: 1px solid var(--cor-borda);
 }
 
 .sobre__conteudo {
-  max-width: 40rem;
+  max-width: 42rem;
 }
 
-/* Destaques / grade de produtos */
-
-.destaques {
-  padding-block: var(--espaco-6);
+.sobre__conteudo .sobre__lead {
+  font-family: var(--fonte-display);
+  font-style: italic;
+  font-size: var(--texto-xl);
+  font-weight: 400;
+  color: var(--cor-texto);
 }
 
-.destaques h2 {
-  text-align: center;
-  margin-bottom: var(--espaco-5);
+.sobre__conteudo p {
+  color: var(--cor-texto-suave);
+}
+
+.sobre__assinatura {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  margin-top: var(--espaco-3);
+  font-family: var(--fonte-display);
+  font-style: italic;
+  font-size: var(--texto-lg);
+  color: var(--cor-acento);
+}
+
+.sobre__assinatura::before {
+  content: "";
+  width: 1.75rem;
+  height: 1.5px;
+  background-color: var(--cor-acento);
 }
 
 /* Página do catálogo */
 
 .catalogo {
-  padding-block: var(--espaco-5) var(--espaco-6);
+  padding-block: var(--espaco-6);
 }
 
 .catalogo__cabecalho {
-  text-align: center;
-  margin-bottom: var(--espaco-3);
+  margin-bottom: var(--espaco-4);
+}
+
+.catalogo__cabecalho h2 {
+  max-width: 30rem;
 }
 
 .grade-produtos {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--espaco-4);
+  gap: var(--espaco-5);
 }
 
 @media (min-width: 40rem) {
@@ -172,13 +321,23 @@
   .grade-produtos {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .card-produto--destaque {
+    grid-column: span 2;
+  }
+
+  .card-produto--destaque .card-produto__figura {
+    aspect-ratio: 21 / 9;
+  }
 }
 
 /* Rodapé */
 
 .rodape {
-  border-top: 1px solid var(--cor-borda);
-  padding-block: var(--espaco-4);
+  background-color: var(--cor-escuro);
+  color: var(--cor-escuro-texto);
+  border-top: 1px solid var(--cor-escuro-borda);
+  padding-block: var(--espaco-5);
 }
 
 .rodape__conteudo {
@@ -187,8 +346,12 @@
   gap: var(--espaco-3);
   align-items: center;
   text-align: center;
-  color: var(--cor-texto-suave);
   font-size: var(--texto-sm);
+  color: rgba(242, 232, 216, 0.7);
+}
+
+.rodape__conteudo p {
+  margin: 0;
 }
 
 .rodape__links {
@@ -197,9 +360,15 @@
 }
 
 .rodape__links a {
-  color: var(--cor-texto);
+  color: var(--cor-escuro-texto);
   font-weight: 600;
   text-decoration: none;
+  text-underline-offset: 3px;
+}
+
+.rodape__links a:hover {
+  text-decoration: underline;
+  color: var(--cor-escuro-texto);
 }
 
 @media (min-width: 40rem) {
