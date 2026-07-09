@@ -35,12 +35,17 @@ TASKS.md → registrar evidência.
 - Conversão de venda via link de Instagram, sem formulário próprio e sem
   WhatsApp (removido em 2026-07-09)
   ([ADR-0004](docs/adr/0004-conversao-via-contato-externo.md)).
-- Hospedagem em GitHub Pages ([ADR-0005](docs/adr/0005-hospedagem-estatica.md)),
-  mas **deploy público está adiado** — fase atual é rodar só localmente, sem
-  domínio nem prazo ([ADR-0006](docs/adr/0006-placeholder-e-deploy-adiado.md)).
-- Imagens placeholder de terceiros são aceitáveis só em ambiente local,
-  nunca em deploy público, até existirem fotos reais das peças
-  ([ADR-0006](docs/adr/0006-placeholder-e-deploy-adiado.md)).
+- Hospedagem real é **Vercel** (`mimmopecas.vercel.app`), não GitHub Pages
+  ([ADR-0007](docs/adr/0007-hospedagem-vercel.md), que supera a escolha de
+  hospedagem do [ADR-0005](docs/adr/0005-hospedagem-estatica.md)). Site já
+  está publicamente no ar desde 2026-07-09.
+- Imagens placeholder de terceiros deveriam ficar restritas a ambiente
+  local até existirem fotos reais das peças
+  ([ADR-0006](docs/adr/0006-placeholder-e-deploy-adiado.md)) — **essa
+  regra está atualmente violada em produção**: o deploy foi feito antes
+  das fotos reais existirem, como risco aceito conscientemente pelo
+  usuário (ver nota em ADR-0006, 2026-07-09). Trocar por fotos reais
+  continua sendo prioridade alta e pendente.
 
 Se uma tarefa parecer exigir reabrir uma dessas (ex.: "adicionar carrinho",
 "migrar para React", "usar um CMS"), pare e confirme com o usuário — isso é

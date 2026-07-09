@@ -58,10 +58,16 @@ implementação.
   > **Impacto em SPEC/DESIGN**: com apenas 10 peças, a busca textual
   > (SPEC-0001 RF-03) é ainda menos prioritária do que já estava marcada —
   > pode ficar para uma fase posterior sem prejuízo de uso.
-- **Categorias**: removidas do site por completo em 2026-07-09 (decisão
-  do usuário) — o catálogo não agrupa nem filtra peças por categoria; o
-  campo `categoria` não existe mais em `data/produtos.json` (SPEC-0001
-  RF-02).
+- **Categorias**: reintroduzidas em 2026-07-09 (decisão do usuário) — o
+  catálogo volta a agrupar/filtrar peças por categoria, agora com 6
+  categorias fixas: **Decorativas, Utilitárias, Animais, Porta-copos,
+  Porta-Joias, Para Presentear** (campo `categoria`, enum fechado, ver
+  SPEC-0001 RF-02 e `docs/design/DESIGN.md` §2; "Para Presentear"
+  adicionada depois, mesmo dia). Das 10 peças do catálogo inicial, todas
+  caem em Decorativas ou Utilitárias; as outras 4 categorias ainda não
+  têm peça publicada — aparecem no filtro já preparadas para quando
+  entrarem peças nelas (catálogo cresce toda semana, ver frequência de
+  novas peças abaixo).
 - **Faixa de preço** (menor e maior preço de peça): Chute inicial:
   **R$ 15 a R$ 30** por peça (faixa de entrada, ajustável conforme peças
   reais forem definidas).

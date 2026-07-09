@@ -51,18 +51,18 @@ direto num navegador ou via qualquer servidor estático (ADR-0002).
 Segundo o PRD (§4), a Flávia produz **peças únicas/personalizadas** e
 **peças de modelo repetível** ao mesmo tempo — daí o campo `tipo` (a
 natureza da peça). O schema **não tem campo de estado comercial** (campo
-`status` removido em 2026-07-09) **nem de categoria** (campo `categoria`
-e todo o filtro por categoria removidos em 2026-07-09, decisão do usuário
-— ver SPEC-0001 RF-02).
+`status` removido em 2026-07-09). O campo `categoria` **existe** — foi
+removido e reintroduzido no mesmo dia (2026-07-09, decisões do usuário) —
+agora como enum fixo de 5 valores (ver SPEC-0001 RF-02).
 
 ```json
 [
   {
     "slug": "vaso-rose-01",
     "nome": "Vaso Rosé",
+    "categoria": "Decorativas",
     "descricao": "Peça modelada à mão, acabamento em tom pastel.",
     "medidas": "Altura 22cm, diâmetro 14cm",
-    "tecnica": "Modelagem manual",
     "preco": 25.0,
     "tipo": "modelo-repetivel",
     "destaque": true,
@@ -73,6 +73,7 @@ e todo o filtro por categoria removidos em 2026-07-09, decisão do usuário
   {
     "slug": "peca-unica-02",
     "nome": "Tigela Aconchego",
+    "categoria": "Utilitárias",
     "descricao": "Peça única, feita sob encomenda.",
     "preco": 30.0,
     "tipo": "unica",
@@ -84,10 +85,25 @@ e todo o filtro por categoria removidos em 2026-07-09, decisão do usuário
 ]
 ```
 
-Campos obrigatórios: `slug`, `nome`, `descricao`, `preco`, `tipo`,
-`imagens` (array com ≥ 1 item). Campos opcionais: `medidas`, `tecnica`,
+Campos obrigatórios: `slug`, `nome`, `categoria`, `descricao`, `preco`,
+`tipo`, `imagens` (array com ≥ 1 item). Campos opcionais: `medidas`,
 `destaque` (default `false`).
 
+> **Campo `tecnica` removido (2026-07-09, decisão do usuário)**: o schema
+> chegou a ter um campo opcional `tecnica` (ex. "Torno", "Modelagem
+> manual"), exibido como uma linha a mais no modal de detalhe
+> (`data-modal-linha-tecnica`). Removido por completo — toda peça da
+> Mimmo é feita à mão, então o campo não distinguia nada de fato e virou
+> ruído no schema e no modal. `data/produtos.json` e
+> `scripts/validar-produtos.js` não conhecem mais `tecnica`.
+
+- `categoria`: um dos 6 valores fixos — `"Decorativas"`, `"Utilitárias"`,
+  `"Animais"`, `"Porta-copos"`, `"Porta-Joias"`, `"Para Presentear"`
+  (lista também vive em `CATEGORIAS`, `assets/js/filtro.js`, e é validada
+  em `scripts/validar-produtos.js`). Diferente da implementação original
+  (removida em 2026-07-09), a lista de categorias não é mais calculada a
+  partir dos dados — é fixa, então uma categoria sem nenhuma peça ainda
+  aparece no filtro do catálogo.
 - `tipo`: `"unica"` (peça personalizada, uma só existe) |
   `"modelo-repetivel"` (mesmo desenho, pode haver mais de uma unidade).
 

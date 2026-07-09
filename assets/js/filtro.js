@@ -1,8 +1,20 @@
-export function filtrarProdutos(produtos, busca = "") {
-  const buscaNormalizada = busca.trim().toLowerCase();
-  if (buscaNormalizada === "") return produtos;
+export const CATEGORIAS = [
+  "Para Presentear",
+  "Decorativas",
+  "Utilitárias",
+  "Animais",
+  "Porta-copos",
+  "Porta-Joias",
+];
 
-  return produtos.filter((produto) =>
-    `${produto.nome} ${produto.descricao}`.toLowerCase().includes(buscaNormalizada),
-  );
+export function filtrarProdutos(produtos, { categoria = "todas", busca = "" } = {}) {
+  const buscaNormalizada = busca.trim().toLowerCase();
+
+  return produtos.filter((produto) => {
+    const categoriaOk = categoria === "todas" || produto.categoria === categoria;
+    const buscaOk =
+      buscaNormalizada === "" ||
+      `${produto.nome} ${produto.descricao}`.toLowerCase().includes(buscaNormalizada);
+    return categoriaOk && buscaOk;
+  });
 }

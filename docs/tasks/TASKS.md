@@ -726,19 +726,157 @@ caixa fantasma roubando cliques de qualquer card por baixo dela.
 > áreas cobertas pelo modal fantasma); modal ainda abre normalmente ao
 > clicar num card. Ver `docs/evidence/hitbox-2026-07-09-verificacao-clique-cards.md`.
 
-## Fase 5 — Deploy (ADR-0005, ADR-0006) — **não-bloqueante por enquanto**
+## Fase 4.23 — Remover CTA "Conhecer a Flávia" do hero (2026-07-09)
 
-Sem prazo e sem domínio definidos (PRD §8); esta fase fica pendente até
-haver decisão de lançar publicamente. Antes de executá-la, checar
-obrigatoriamente o item de imagens (ADR-0006):
+Decisão do usuário: o hero da home passa a ter só o CTA "Ver catálogo".
+O caminho para `sobre.html` continua existindo normalmente pelo link
+"Sobre" do header (presente em ambas as páginas).
 
-- [ ] **Pré-requisito**: substituir toda imagem placeholder por foto real
-      da peça (ou imagem com licença adequada) — nenhuma foto de terceiro
-      "emprestada" pode ir para produção.
-- [ ] Configurar GitHub Pages para o repositório.
-- [ ] Validar em produção: catálogo carrega, filtro funciona, link do
-      Instagram abre correto.
-- [ ] Atualizar `docs/evidence/` com prints/links do site em produção.
+- [x] `index.html`: removido `<a href="sobre.html" class="botao
+      botao--secundario">Conhecer a Flávia</a>` de `.hero__acoes`.
+- [x] `docs/specs/0002-pagina-inicial.md`: RF-01, RF-02 e critérios de
+      aceite atualizados — CTA do hero não é mais um caminho documentado
+      para `sobre.html`, só o link "Sobre" do header (RF-03).
+
+> **Nota**: `.botao--secundario` (`assets/css/componentes.css`) ficou sem
+> nenhum uso em HTML depois desta remoção, mas não foi apagado — é uma
+> variante genérica do sistema de botões (par de `.botao--primario`), não
+> algo específico deste CTA; remover extrapolaria o pedido.
+>
+> **Verificação**: `index.html` balanceado (tags abrindo/fechando
+> corretas); servidor estático local retorna 200. **Não verificado
+> visualmente num navegador** — sem Playwright/Chromium neste projeto por
+> padrão (ver CLAUDE.md). Pendente: usuário abrir a home e confirmar que
+> o hero mostra só "Ver catálogo" e que "Sobre" no header ainda funciona.
+
+## Fase 4.24 — Reintroduzir categorias, agora com 5 valores fixos (2026-07-09)
+
+Decisão do usuário: trazer de volta o filtro por categoria (removido na
+Fase 4.14-4.18), desta vez com um conjunto **fixo** de 5 categorias, não
+mais calculado dinamicamente a partir dos dados: **Decorativas,
+Utilitárias, Animais, Porta-copos, Porta-Joias**. Das 10 peças do
+catálogo atual, nenhuma é Animal, Porta-copos ou Porta-Joias — essas 3
+categorias ficam definidas e visíveis no filtro, mas sem peça (retornam
+lista vazia até a Flávia publicar algo nelas).
+
+- [x] `data/produtos.json`: campo `categoria` de volta em todas as 10
+      peças, usando o mapeamento original (Decorativas/Utilitárias) por
+      ser o que reflete cada peça hoje.
+- [x] `scripts/validar-produtos.js`: `categoria` volta a ser campo string
+      obrigatório; nova validação de enum (`CATEGORIAS_VALIDAS`) contra
+      os 5 valores fixos — peça com categoria fora da lista falha a
+      validação.
+- [x] `assets/js/filtro.js`: exporta `CATEGORIAS` (lista fixa de 5,
+      fonte única também usada por `inicio.js`); `filtrarProdutos` volta
+      a aceitar `{ categoria, busca }` e combina os dois filtros com E
+      lógico. Diferente da implementação original (`categoriasUnicas`
+      calculada a partir dos dados), a lista agora é fixa por design —
+      é isso que garante categoria vazia aparecer no filtro.
+- [x] `assets/js/inicio.js`: `configurarFiltros` restaurado — gera os
+      botões de categoria (+ "Todas") a partir de `CATEGORIAS`, plus
+      busca textual; os dois filtros compartilham o mesmo estado.
+- [x] `assets/js/produtos.js`: card volta a mostrar a categoria
+      (`.card-produto__categoria`) abaixo do nome da peça.
+- [x] `assets/js/modal.js`: modal de detalhe volta a mostrar a categoria
+      (`.modal-produto__categoria`) acima do nome.
+- [x] `index.html`: `data-lista-filtros` dentro de `.filtros` (antes do
+      campo de busca); `data-modal-categoria` no corpo do modal.
+- [x] `assets/css/componentes.css`: restaura `.card-produto__categoria`,
+      `.filtros__lista`, `.filtro-item` (+ hover/`aria-pressed`),
+      `.modal-produto__categoria` — cores usando os tokens atuais da
+      paleta rosa (`--cor-acento`), não os valores terracota da
+      implementação original.
+- [x] Docs atualizados: `docs/PRD.md` §4, `docs/specs/0001-catalogo-de-pecas.md`
+      RF-02 e critério de aceite correspondente, `docs/design/DESIGN.md`
+      §2 (schema).
+
+> **Verificação**: `node scripts/validar-produtos.js` — 10/10 peças
+> válidas. `node --check --input-type=module` em todos os `.js` tocados —
+> sem erro de sintaxe. Chaves de `componentes.css` balanceadas. Servidor
+> estático local: `index.html`, `assets/js/inicio.js`, `assets/js/filtro.js`,
+> `assets/css/componentes.css`, `data/produtos.json` retornam 200;
+> `data/produtos.json` servido confirma `categoria` presente em todas as
+> 10 peças (`Decorativas`/`Utilitárias` em uso). **Não verificado
+> visualmente num navegador** — sem Playwright/Chromium neste projeto por
+> padrão (ver CLAUDE.md). Pendente: usuário abrir a home, clicar em cada
+> botão de categoria (incluindo Animais/Porta-copos/Porta-Joias, que
+> devem mostrar o estado vazio) e conferir card/modal mostrando a
+> categoria certa.
+
+## Fase 4.25 — Remover campo "técnica" por completo (2026-07-09)
+
+Decisão do usuário: o campo opcional `tecnica` (ex. "Torno", "Modelagem
+manual"), exibido como uma linha a mais no modal de detalhe, é removido
+por completo — toda peça da Mimmo é feita à mão, então o campo não
+distinguia nada de fato entre as peças, só ruído no schema e no modal.
+
+- [x] `data/produtos.json`: campo `tecnica` removido das 10 peças.
+- [x] `scripts/validar-produtos.js`: `tecnica` removido de
+      `CAMPOS_STRING_OPCIONAIS`.
+- [x] `assets/js/modal.js`: removida a chamada
+      `preencherLinhaOpcional(dialog, "[data-modal-linha-tecnica]",
+      produto.tecnica)`.
+- [x] `index.html`: removido o bloco `data-modal-linha-tecnica`
+      (`<dt>Técnica</dt>`) de `.modal-produto__specs`.
+- [x] Docs atualizados: `docs/design/DESIGN.md` §2 (schema, campos
+      opcionais) e `docs/specs/0001-catalogo-de-pecas.md` RF-04.
+
+> **Verificação**: `node scripts/validar-produtos.js` — 10/10 peças
+> válidas, nenhuma com `tecnica`. `node --check --input-type=module` em
+> `modal.js` — sem erro de sintaxe. **Não verificado visualmente num
+> navegador** — sem Playwright/Chromium neste projeto por padrão (ver
+> CLAUDE.md). Pendente: usuário abrir um card no modal e confirmar que a
+> linha de técnica não aparece mais (só medidas, quando presente).
+
+## Fase 4.26 — 6ª categoria: "Para Presentear" (2026-07-09)
+
+Decisão do usuário: adicionar "Para Presentear" como 6ª categoria fixa,
+ao lado de Decorativas, Utilitárias, Animais, Porta-copos e Porta-Joias
+(Fase 4.24). Nenhuma das 10 peças atuais foi reclassificada — fica
+disponível no filtro, como as outras categorias ainda sem peça, para
+quando a Flávia publicar algo nela.
+
+- [x] `assets/js/filtro.js`: `CATEGORIAS` ganha `"Para Presentear"`.
+- [x] `scripts/validar-produtos.js`: `CATEGORIAS_VALIDAS` ganha
+      `"Para Presentear"`.
+- [x] Docs atualizados: `docs/PRD.md` §4, `docs/specs/0001-catalogo-de-pecas.md`
+      RF-02 e critério de aceite, `docs/design/DESIGN.md` §2 — todos de
+      "5 categorias" para "6 categorias".
+
+> **Verificação**: `node scripts/validar-produtos.js` — 10/10 peças ainda
+> válidas (nenhuma usa a categoria nova, então nada quebra). **Não
+> verificado visualmente num navegador** — sem Playwright/Chromium neste
+> projeto por padrão (ver CLAUDE.md). Pendente: usuário abrir a home e
+> confirmar que o botão "Para Presentear" aparece no filtro e mostra
+> estado vazio ao ser clicado.
+
+## Fase 5 — Deploy (ADR-0005, ADR-0007, ADR-0006)
+
+Deploy público feito em 2026-07-09 pelo usuário, fora do fluxo previsto —
+em **Vercel** (`mimmopecas.vercel.app`), não GitHub Pages (ver
+[ADR-0007](../adr/0007-hospedagem-vercel.md)), e **sem** cumprir antes o
+pré-requisito de imagens do ADR-0006 (decisão consciente do usuário, ver
+nota em ADR-0006). Fase deixa de ser "não-bloqueante" — o site já está no
+ar.
+
+- [ ] **Pendente, prioridade alta**: substituir toda imagem placeholder
+      por foto real da peça (ou imagem com licença adequada) — ADR-0006.
+      Aceito como risco temporário pelo usuário em 2026-07-09; não
+      esquecer.
+- [x] ~~Configurar GitHub Pages para o repositório.~~ Não se aplica —
+      hospedagem real é Vercel (ADR-0007). Deploy na Vercel a partir dos
+      arquivos do repo, sem build step, já está funcionando.
+- [x] Validar em produção: `curl` confirma HTTP 200 em `/`, `/sobre.html`,
+      `/data/produtos.json` (10 produtos, schema OK), `/data/config.json`
+      (link do Instagram presente: `instagram.com/flaviamangabeirab`),
+      `/assets/css/base.css`, `/assets/js/produtos.js`. **Não verificado
+      visualmente num navegador real** (filtro/busca/modal interativos) —
+      sem Playwright/Chromium neste projeto por padrão (ver CLAUDE.md).
+      Recomenda-se o usuário abrir `mimmopecas.vercel.app` e testar
+      manualmente filtro, busca, abrir um card/modal e o link do
+      Instagram.
+- [x] Atualizar `docs/evidence/` com prints/links do site em produção —
+      ver `docs/evidence/deploy-2026-07-09-vercel-producao.md`.
 
 ## Fora de escopo (não fazer sem nova ADR)
 

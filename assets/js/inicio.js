@@ -1,7 +1,7 @@
 import { ativarMenuMobile } from "./menu.js";
 import { carregarConfig, preencherContato, preencherIdentidade } from "./config.js";
 import { carregarProdutos, criarCardProduto } from "./produtos.js";
-import { filtrarProdutos } from "./filtro.js";
+import { CATEGORIAS, filtrarProdutos } from "./filtro.js";
 import { configurarModal } from "./modal.js";
 
 function renderizarGrade(produtos) {
@@ -16,16 +16,41 @@ function renderizarGrade(produtos) {
   produtos.forEach((produto) => grade.appendChild(criarCardProduto(produto)));
 }
 
-function configurarBusca(todosProdutos) {
+function configurarFiltros(todosProdutos) {
+  const listaFiltros = document.querySelector("[data-lista-filtros]");
   const campoBusca = document.querySelector("[data-campo-busca]");
+  const estado = { categoria: "todas", busca: "" };
 
-  function aplicarBusca() {
-    renderizarGrade(filtrarProdutos(todosProdutos, campoBusca.value));
+  function aplicarFiltros() {
+    renderizarGrade(filtrarProdutos(todosProdutos, estado));
   }
 
-  campoBusca.addEventListener("input", aplicarBusca);
+  const categorias = ["todas", ...CATEGORIAS];
+  categorias.forEach((categoria) => {
+    const botao = document.createElement("button");
+    botao.type = "button";
+    botao.className = "filtro-item";
+    botao.textContent = categoria === "todas" ? "Todas" : categoria;
+    botao.setAttribute("aria-pressed", String(categoria === "todas"));
 
-  aplicarBusca();
+    botao.addEventListener("click", () => {
+      estado.categoria = categoria;
+      listaFiltros
+        .querySelectorAll(".filtro-item")
+        .forEach((item) => item.setAttribute("aria-pressed", "false"));
+      botao.setAttribute("aria-pressed", "true");
+      aplicarFiltros();
+    });
+
+    listaFiltros.appendChild(botao);
+  });
+
+  campoBusca.addEventListener("input", (evento) => {
+    estado.busca = evento.target.value;
+    aplicarFiltros();
+  });
+
+  aplicarFiltros();
 }
 
 async function iniciar() {
@@ -37,7 +62,7 @@ async function iniciar() {
   preencherContato(config);
 
   const produtos = await carregarProdutos();
-  configurarBusca(produtos);
+  configurarFiltros(produtos);
   configurarModal(produtos, config);
 }
 
