@@ -18,6 +18,7 @@
     <!-- og:image fica pendente até haver fotos reais e deploy público
          (ADR-0006) — uma URL relativa ou de placeholder não funciona bem
          compartilhada em redes sociais. -->
+    <link rel="icon" type="image/jpeg" href="assets/imagens/site/logo.jpeg" />
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/layout.css" />
     <link rel="stylesheet" href="assets/css/componentes.css" />
@@ -25,7 +26,9 @@
   <body>
     <header class="cabecalho">
       <div class="cabecalho__conteudo container">
-        <a href="index.html" class="logo" data-nome-loja>Mimmo</a>
+        <a href="index.html" class="logo">
+          <img src="assets/imagens/site/logo.jpeg" data-nome-loja alt="Mimmo" />
+        </a>
 
         <button
           class="botao-menu"

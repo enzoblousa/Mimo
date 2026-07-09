@@ -850,6 +850,73 @@ quando a Flávia publicar algo nela.
 > confirmar que o botão "Para Presentear" aparece no filtro e mostra
 > estado vazio ao ser clicado.
 
+## Fase 4.27 — Logo ilustrado no header (2026-07-09)
+
+Usuário forneceu um logo ilustrado real (nome "mimmo" com moldura floral)
+para substituir o logotipo baseado em tipografia usado até então — troca
+já prevista no PRD §7 ("possibilidade de trocar por um logo de verdade no
+futuro sem mudar a estrutura do site").
+
+- [x] Arquivo movido para `assets/imagens/site/logo.jpeg` (convenção de
+      `docs/design/DESIGN.md` §1 para assets de site, distinto de
+      `assets/imagens/produtos/`).
+- [x] `index.html` e `sobre.html`: `.logo` deixa de ser texto
+      (`data-nome-loja` com `Mimmo` hardcoded) e passa a ser
+      `<img src="assets/imagens/site/logo.jpeg" data-nome-loja alt="Mimmo" />`
+      dentro do link para `index.html`.
+- [x] `assets/js/config.js`: `preencherIdentidade` passa a tratar elementos
+      `IMG` com `data-nome-loja` setando `alt` (em vez de `textContent`) —
+      mantém o nome da loja vindo de `data/config.json`, nunca hardcoded
+      (CLAUDE.md), agora também para o texto alternativo da imagem.
+- [x] `assets/css/layout.css`: `.logo` perde estilo de texto (fonte, cor,
+      `::before` decorativo com o pontinho) — a imagem já traz a
+      decoração embutida. Regra nova só cuida de tamanho (`height:
+      2.5rem`, `width: auto`) e alinhamento.
+- [x] Docs atualizados: `docs/PRD.md` §7 (logo agora existe),
+      `docs/design/DESIGN.md` §1 (estrutura de arquivos) e §4
+      (tipografia — `.logo` não usa mais `--fonte-display`).
+
+> **Verificação**: `node --check --input-type=module` em `config.js` —
+> sem erro de sintaxe. CSS de `layout.css` balanceado. Servidor estático
+> local: `index.html`, `sobre.html`, `assets/imagens/site/logo.jpeg` e
+> `assets/css/layout.css` retornam 200. **Não verificado visualmente num
+> navegador** — sem Playwright/Chromium neste projeto por padrão (ver
+> CLAUDE.md). Pendente: usuário abrir a home/sobre e confirmar que o logo
+> aparece bem dimensionado no header (a imagem tem fundo branco sólido,
+> não transparente — pode destacar levemente contra o header rosa claro
+> translúcido; avaliar se vale gerar uma versão com fundo transparente).
+
+## Fase 4.28 — Moldura arredondada no logo + favicon (2026-07-09)
+
+Decisão do usuário: dar ao logo do header uma moldura arredondada, e usar
+o mesmo logo como favicon (ícone na aba do navegador).
+
+- [x] `assets/css/layout.css`: `.logo img` ganha `border-radius: 999px`
+      (a imagem é um retângulo bem mais largo que alto, então isso arredonda
+      as pontas como uma "pílula", sem cortar o conteúdo — um círculo
+      completo cortaria os galhos florais das laterais), borda fina
+      (`--cor-borda`) e sombra suave (`--sombra-suave`), consistente com
+      outros elementos arredondados do site (`.filtro-item`,
+      `.modal-produto__fechar`).
+- [x] `index.html` e `sobre.html`: `<link rel="icon" type="image/jpeg"
+      href="assets/imagens/site/logo.jpeg" />` no `<head>` das duas
+      páginas.
+
+> **Nota**: favicons geralmente são quadrados; `logo.jpeg` é bem mais
+> largo que alto (1600×874). Navegadores vão redimensionar/recortar a
+> imagem para caber no espaço quadrado da aba — o resultado pode ficar
+> apertado ou cortar as bordas do desenho. Implementado como pedido; se o
+> resultado visual não agradar, a solução seria gerar um recorte quadrado
+> dedicado para favicon, não reaproveitar o mesmo arquivo do header.
+>
+> **Verificação**: CSS de `layout.css` balanceado; `index.html`/`sobre.html`
+> confirmados com `<link rel="icon">` apontando para
+> `assets/imagens/site/logo.jpeg`; servidor estático local retorna 200
+> para as páginas e o arquivo de imagem. **Não verificado visualmente num
+> navegador** — sem Playwright/Chromium neste projeto por padrão (ver
+> CLAUDE.md). Pendente: usuário abrir o site e conferir a moldura
+> arredondada do logo no header e o ícone na aba do navegador.
+
 ## Fase 5 — Deploy (ADR-0005, ADR-0007, ADR-0006)
 
 Deploy público feito em 2026-07-09 pelo usuário, fora do fluxo previsto —

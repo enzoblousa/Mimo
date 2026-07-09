@@ -14,7 +14,11 @@ export function preencherContato(config) {
 
 export function preencherIdentidade(config) {
   document.querySelectorAll("[data-nome-loja]").forEach((el) => {
-    el.textContent = config.nomeLoja;
+    if (el.tagName === "IMG") {
+      el.alt = config.nomeLoja;
+    } else {
+      el.textContent = config.nomeLoja;
+    }
   });
   document.querySelectorAll("[data-posicionamento]").forEach((el) => {
     el.textContent = config.posicionamento;

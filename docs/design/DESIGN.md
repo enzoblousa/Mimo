@@ -32,7 +32,7 @@ Documento de design técnico e visual. Implementa os requisitos de
 │   │   └── modal.js        # <dialog> de detalhe, deep-link por slug
 │   └── imagens/
 │       ├── produtos/<slug>.jpg
-│       └── site/ (hero, sobre, favicon, og-image)
+│       └── site/ (logo, hero, sobre, favicon, og-image)
 ├── data/
 │   ├── produtos.json       # Fonte única de verdade das peças (ADR-0003)
 │   └── config.json         # Nome da loja, contato, texto "sobre"
@@ -225,10 +225,15 @@ existe mais nenhum tom fora da família rosa/vinho no sistema de cor.
 - **Display** (`--fonte-display`): `'Jost', sans-serif` — geométrica, traços
   finos, ar delicado (inspirada em ateliedasah.com — ver
   `docs/superpowers/specs/2026-07-08-redesign-visual-delicado-design.md`).
-  Uso restrito: nome da loja (`.logo`, `h1`), nomes de produto (`h2`/`h3`
+  Uso restrito: nome da loja no hero (`h1`), nomes de produto (`h2`/`h3`
   no card e no modal) e preço em destaque (`.tag-preco`). Pesos 300-600
-  carregados; título usa 400, `h3` (nome no card)/`.logo`/preço usam 500,
-  preço do modal usa 600. Fallback: `"Century Gothic", sans-serif`.
+  carregados; título usa 400, `h3` (nome no card)/preço usam 500, preço do
+  modal usa 600. Fallback: `"Century Gothic", sans-serif`.
+
+> **Nota (2026-07-09)**: `.logo` (nome da loja no header) deixou de usar
+> fonte/cor via CSS — o header passou a mostrar a marca como imagem
+> (`assets/imagens/site/logo.jpeg`), não mais como texto estilizado.
+> `.logo` hoje só cuida do tamanho/alinhamento da `<img>`.
 - **Corpo** (`--fonte-corpo`): `'Work Sans', sans-serif` — humanista,
   sem competir com o display. Uso: parágrafos, navegação, botões, labels.
   Fallback: `system-ui, sans-serif`. (Nota: versões anteriores desta seção

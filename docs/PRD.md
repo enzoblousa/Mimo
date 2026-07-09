@@ -147,11 +147,13 @@ implementação.
   > Ver ADR-0006 a ser criado.
 - **Texto "sobre a loja" já existe ou precisa ser escrito**: Precisa ser
   escrito — nada pronto ainda.
-- **Logo/identidade visual já existe?**: **Não existe ainda — decisão:
-  pular por ora.** O site usa um logotipo simples baseado em tipografia
-  (nome "Mimmo" estilizado), sem ilustração/símbolo próprio, com
-  possibilidade de trocar por um logo de verdade no futuro sem mudar a
-  estrutura do site (é só um asset em `assets/imagens/site/`).
+- **Logo/identidade visual já existe?**: **Sim, desde 2026-07-09.** Logo
+  ilustrado (nome "mimmo" com moldura floral) em
+  `assets/imagens/site/logo.jpeg`, usado no header (`.logo`) de
+  `index.html` e `sobre.html`. Até então o site usava um logotipo simples
+  baseado em tipografia (nome "Mimmo" estilizado, sem ilustração/símbolo
+  próprio) — troca feita sem mudar a estrutura do site, como já estava
+  previsto (só um asset em `assets/imagens/site/`).
 
 ## 8. Restrições e prazo
 
