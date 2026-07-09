@@ -31,22 +31,15 @@
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: var(--espaco-2);
-  font-family: var(--fonte-display);
-  font-style: italic;
-  font-size: var(--texto-xl);
-  font-weight: 300;
-  color: var(--cor-texto);
-  text-decoration: none;
 }
 
-.logo::before {
-  content: "";
-  width: 0.85rem;
-  height: 0.85rem;
-  border-radius: 50%;
-  border: 1.5px solid var(--cor-acento);
-  box-shadow: inset 0 0 0 2px var(--cor-fundo), inset 0 0 0 3px var(--cor-acento);
+.logo img {
+  display: block;
+  height: 2.5rem;
+  width: auto;
+  border-radius: 999px;
+  border: 1.5px solid var(--cor-borda);
+  box-shadow: var(--sombra-suave);
 }
 
 .botao-menu {
