@@ -227,13 +227,13 @@ existe mais nenhum tom fora da família rosa/vinho no sistema de cor.
   botões usam um raio levemente assimétrico (`--raio-organico:
   10px 14px 10px 16px`) — assimetria sutil, quase imperceptível, ajustada
   para um visual mais delicado (ver nota de redesign abaixo).
-- **Etiqueta de preço**: no modal de detalhe, o preço aparece num carimbo
-  circular com borda tracejada e leve rotação (`--rotacao-tag-preco:
-  -3deg`) — reforça o storytelling de "feira de artesanato" (PRD §3). No
-  card do catálogo, o preço é **simplificado (2026-07-09, decisão do
-  usuário)**: só o número em destaque (`--fonte-display`, sem carimbo,
-  sem rotação, sem borda) ao lado do nome da peça — prioriza legibilidade
-  na grade em vez do storytelling decorativo.
+- **Etiqueta de preço**: o preço aparece só como número em destaque
+  (`--fonte-display`, peso 300), sem carimbo, sem rotação, sem borda —
+  mesma formatação no card do catálogo e no modal de detalhe
+  (**2026-07-09, decisão do usuário**: modal simplificado para igualar o
+  card). O carimbo circular tracejado com rotação da Fase 0 (referência
+  a "feira de artesanato", PRD §3) foi removido; `--rotacao-tag-preco`
+  não existe mais no schema de tokens.
 - **Sombra**: sombra suave com tom quente (derivada de `--cor-texto`),
   opacidade e blur reduzidos para reforçar o visual mais limpo, nunca
   cinza/preto puro.
