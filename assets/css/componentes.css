@@ -202,7 +202,7 @@
 }
 
 @media (min-width: 40rem) {
-  .modal-produto {
+  .modal-produto[open] {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: start;

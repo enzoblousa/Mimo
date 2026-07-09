@@ -699,6 +699,33 @@ clicável — dava a impressão de que não era interativo.
 > projeto (ver CLAUDE.md). Pendente: usuário passar o mouse sobre um
 > card e confirmar que o cursor vira mãozinha.
 
+## Fase 4.22 — Hitbox invisível sobre os cards (bug, 2026-07-09)
+
+Bug relatado pelo usuário: cliques em certas áreas do card de produto
+não abriam o modal, em telas de desktop/tablet.
+
+Causa raiz: `assets/css/componentes.css`, regra de `@media (min-width:
+40rem)` aplicava `display: grid` ao `<dialog>` do modal sem o seletor
+`[open]`, sobrescrevendo o `display: none` padrão do navegador para
+diálogo fechado. O modal fechado ficava então `position: fixed`,
+centralizado na tela, invisível (`opacity: 0` via
+`.modal-produto:not([open])`) mas com `pointer-events: auto` — uma
+caixa fantasma roubando cliques de qualquer card por baixo dela.
+
+- [x] `assets/css/componentes.css`: seletor da regra de `display: grid`
+      trocado de `.modal-produto` para `.modal-produto[open]`.
+
+> **Verificação**: excepcionalmente, com autorização explícita do
+> usuário só para esta correção, Playwright foi instalado
+> temporariamente (fora do projeto, sem entrar em `package.json`/deps)
+> para clicar de fato nos cards e inspecionar a caixa do modal fechado;
+> removido por completo depois de usado. Confirmado: dialog fechado
+> volta a `display: none`; amostragem de pontos de clique em todos os
+> 10 cards do catálogo, em 3 viewports (1280px, 800px, 375px), resolve
+> 100% para dentro do próprio card (0 falhas, antes havia falhas nas
+> áreas cobertas pelo modal fantasma); modal ainda abre normalmente ao
+> clicar num card. Ver `docs/evidence/hitbox-2026-07-09-verificacao-clique-cards.md`.
+
 ## Fase 5 — Deploy (ADR-0005, ADR-0006) — **não-bloqueante por enquanto**
 
 Sem prazo e sem domínio definidos (PRD §8); esta fase fica pendente até
