@@ -51,3 +51,20 @@ deploy agora.
 - **Não usar nenhum placeholder, esperar fotos reais para começar a
   desenvolver**: rejeitado — atrasaria todo o desenvolvimento do
   catálogo/filtro/modal por um motivo (fotos) que não depende do código.
+
+## Nota (2026-07-09) — checklist de saída não foi seguido antes do deploy
+
+O primeiro deploy público (`mimmopecas.vercel.app`, ver
+[ADR-0007](0007-hospedagem-vercel.md)) foi feito **sem** cumprir o item 3
+desta decisão: as imagens em `assets/imagens/produtos/` continuam sendo
+placeholders de terceiros, não fotos reais das peças da Flávia.
+
+Ao ser avisado, o usuário decidiu explicitamente manter o site no ar
+mesmo assim ("tratarei das imagens em outro momento, mantenha o site no
+ar") — um risco aceito conscientemente, não um esquecimento. Isso não
+altera a decisão original (item 3 continua valendo como meta), só
+registra que, entre 2026-07-09 e o momento em que as fotos reais forem
+adicionadas, o site público está em desacordo com o critério de saída
+que este ADR definiu. `docs/tasks/TASKS.md` Fase 5 mantém o item de
+substituir as imagens como pendência em aberto, agora com prioridade
+alta por já estar em produção.

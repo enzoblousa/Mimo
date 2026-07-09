@@ -726,19 +726,33 @@ caixa fantasma roubando cliques de qualquer card por baixo dela.
 > áreas cobertas pelo modal fantasma); modal ainda abre normalmente ao
 > clicar num card. Ver `docs/evidence/hitbox-2026-07-09-verificacao-clique-cards.md`.
 
-## Fase 5 — Deploy (ADR-0005, ADR-0006) — **não-bloqueante por enquanto**
+## Fase 5 — Deploy (ADR-0005, ADR-0007, ADR-0006)
 
-Sem prazo e sem domínio definidos (PRD §8); esta fase fica pendente até
-haver decisão de lançar publicamente. Antes de executá-la, checar
-obrigatoriamente o item de imagens (ADR-0006):
+Deploy público feito em 2026-07-09 pelo usuário, fora do fluxo previsto —
+em **Vercel** (`mimmopecas.vercel.app`), não GitHub Pages (ver
+[ADR-0007](../adr/0007-hospedagem-vercel.md)), e **sem** cumprir antes o
+pré-requisito de imagens do ADR-0006 (decisão consciente do usuário, ver
+nota em ADR-0006). Fase deixa de ser "não-bloqueante" — o site já está no
+ar.
 
-- [ ] **Pré-requisito**: substituir toda imagem placeholder por foto real
-      da peça (ou imagem com licença adequada) — nenhuma foto de terceiro
-      "emprestada" pode ir para produção.
-- [ ] Configurar GitHub Pages para o repositório.
-- [ ] Validar em produção: catálogo carrega, filtro funciona, link do
-      Instagram abre correto.
-- [ ] Atualizar `docs/evidence/` com prints/links do site em produção.
+- [ ] **Pendente, prioridade alta**: substituir toda imagem placeholder
+      por foto real da peça (ou imagem com licença adequada) — ADR-0006.
+      Aceito como risco temporário pelo usuário em 2026-07-09; não
+      esquecer.
+- [x] ~~Configurar GitHub Pages para o repositório.~~ Não se aplica —
+      hospedagem real é Vercel (ADR-0007). Deploy na Vercel a partir dos
+      arquivos do repo, sem build step, já está funcionando.
+- [x] Validar em produção: `curl` confirma HTTP 200 em `/`, `/sobre.html`,
+      `/data/produtos.json` (10 produtos, schema OK), `/data/config.json`
+      (link do Instagram presente: `instagram.com/flaviamangabeirab`),
+      `/assets/css/base.css`, `/assets/js/produtos.js`. **Não verificado
+      visualmente num navegador real** (filtro/busca/modal interativos) —
+      sem Playwright/Chromium neste projeto por padrão (ver CLAUDE.md).
+      Recomenda-se o usuário abrir `mimmopecas.vercel.app` e testar
+      manualmente filtro, busca, abrir um card/modal e o link do
+      Instagram.
+- [x] Atualizar `docs/evidence/` com prints/links do site em produção —
+      ver `docs/evidence/deploy-2026-07-09-vercel-producao.md`.
 
 ## Fora de escopo (não fazer sem nova ADR)
 
